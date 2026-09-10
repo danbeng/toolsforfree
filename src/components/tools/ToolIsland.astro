@@ -7,6 +7,7 @@ import HashGenerator from './HashGenerator';
 import UuidGenerator from './UuidGenerator';
 import RegexTester from './RegexTester';
 import UnixTimestamp from './UnixTimestamp';
+import CrontabExplainer from './CrontabExplainer';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -19,3 +20,4 @@ const { slug } = Astro.props;
 {slug === 'uuid-generator' && <UuidGenerator client:load />}
 {slug === 'regex-tester' && <RegexTester client:load />}
 {slug === 'unix-timestamp' && <UnixTimestamp client:load />}
+{slug === 'crontab-explainer' && <CrontabExplainer client:load />}
