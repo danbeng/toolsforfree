@@ -1,11 +1,8 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME, SITE_TAGLINE } from '../data/site';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Devtoolbox</title>
-  </head>
-  <body>
-    <p>Devtoolbox</p>
-  </body>
-</html>
+<BaseLayout title={SITE_NAME} description={SITE_TAGLINE} path="/">
+  <h1>{SITE_NAME}</h1>
+  <p>{SITE_TAGLINE}</p>
+</BaseLayout>
