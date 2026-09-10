@@ -1,0 +1,27 @@
+---
+import { ADS_ENABLED, type AdSlotSize } from '../data/ads';
+
+interface Props {
+  size: AdSlotSize;
+}
+
+const { size } = Astro.props;
+const cls = size === 'leaderboard' ? 'ad-leaderboard' : 'ad-rectangle';
+---
+<aside class:list={['ad-slot', cls]} aria-label="Advertisement">
+  {ADS_ENABLED ? null : <span>Ad</span>}
+</aside>
+
+<style>
+  .ad-slot {
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.25rem 0;
+    background: var(--panel);
+  }
+  .ad-leaderboard { width: 100%; max-width: 728px; min-height: 90px; }
+  .ad-rectangle { width: 100%; max-width: 300px; min-height: 250px; }
+</style>
