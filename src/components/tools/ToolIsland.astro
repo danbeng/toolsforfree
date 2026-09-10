@@ -6,6 +6,7 @@ import UrlEncode from './UrlEncode';
 import HashGenerator from './HashGenerator';
 import UuidGenerator from './UuidGenerator';
 import RegexTester from './RegexTester';
+import UnixTimestamp from './UnixTimestamp';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -17,3 +18,4 @@ const { slug } = Astro.props;
 {slug === 'hash-generator' && <HashGenerator client:load />}
 {slug === 'uuid-generator' && <UuidGenerator client:load />}
 {slug === 'regex-tester' && <RegexTester client:load />}
+{slug === 'unix-timestamp' && <UnixTimestamp client:load />}
