@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../data/site';
+---
+<BaseLayout
+  title="Terms"
+  description={`${SITE_NAME} is free and provided as-is, with no warranty that results are correct.`}
+  path="/terms/"
+>
+  <h1>Terms</h1>
+  <p>
+    {SITE_NAME} is free and provided as-is. There is no warranty that results
+    are correct. You are responsible for how you use outputs.
+  </p>
+</BaseLayout>

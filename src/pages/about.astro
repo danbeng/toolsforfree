@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CONTACT_EMAIL, SITE_NAME } from '../data/site';
+---
+<BaseLayout
+  title="About"
+  description={`${SITE_NAME} is a set of free browser tools for developers. No accounts.`}
+  path="/about/"
+>
+  <h1>About</h1>
+  <p>
+    {SITE_NAME} is a set of free browser tools for developers. There are no
+    accounts. Questions? Contact {CONTACT_EMAIL}.
+  </p>
+</BaseLayout>
