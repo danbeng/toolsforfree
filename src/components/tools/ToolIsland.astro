@@ -4,6 +4,7 @@ import JwtDecoder from './JwtDecoder';
 import Base64Tool from './Base64Tool';
 import UrlEncode from './UrlEncode';
 import HashGenerator from './HashGenerator';
+import UuidGenerator from './UuidGenerator';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -13,3 +14,4 @@ const { slug } = Astro.props;
 {slug === 'base64' && <Base64Tool client:load />}
 {slug === 'url-encode' && <UrlEncode client:load />}
 {slug === 'hash-generator' && <HashGenerator client:load />}
+{slug === 'uuid-generator' && <UuidGenerator client:load />}
