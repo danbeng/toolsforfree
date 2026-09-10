@@ -1,0 +1,18 @@
+---
+import { getRelatedTools } from '../data/tools';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const related = getRelatedTools(slug);
+---
+<h2>Related tools</h2>
+<ul>
+  {related.map((t) => (
+    <li>
+      <a href={`/tools/${t.slug}/`}>{t.name}</a>
+    </li>
+  ))}
+</ul>

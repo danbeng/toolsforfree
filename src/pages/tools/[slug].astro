@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import FaqList from '../../components/FaqList.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import ToolIsland from '../../components/tools/ToolIsland.astro';
+import { getCollection } from 'astro:content';
+import { TOOLS, getTool } from '../../data/tools';
+
+export function getStaticPaths() {
+  return TOOLS.filter((t) => t.slug === 'json-formatter').map((tool) => ({
+    params: { slug: tool.slug },
+  }));
+}
+
+const slug = Astro.params.slug!;
+const tool = getTool(slug);
+if (!tool) throw new Error(`Unknown tool ${slug}`);
+
+const pages = await getCollection('toolPages');
+const page = pages.find((p) => p.id === slug);
+if (!page) throw new Error(`Missing content for ${slug}`);
+---
+<BaseLayout title={page.data.title} description={page.data.description} path={`/tools/${slug}/`}>
+  <h1>{page.data.title}</h1>
+  <p>{page.data.intro}</p>
+  <p>Runs locally in your browser. Nothing is uploaded.</p>
+  <AdSlot size="leaderboard" />
+  <ToolIsland slug={slug} />
+  <h2>How to use</h2>
+  <ol>
+    {page.data.howTo.map((step) => <li>{step}</li>)}
+  </ol>
+  <FaqList items={page.data.faq} />
+  <RelatedTools slug={slug} />
+  <AdSlot size="rectangle" />
+</BaseLayout>

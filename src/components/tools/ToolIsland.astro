@@ -1,0 +1,7 @@
+---
+import JsonFormatter from './JsonFormatter';
+
+interface Props { slug: string }
+const { slug } = Astro.props;
+---
+{slug === 'json-formatter' && <JsonFormatter client:load />}

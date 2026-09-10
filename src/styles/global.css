@@ -25,3 +25,19 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 .nav-links { display: flex; gap: 1rem; margin-left: auto; }
 .nav-links a { color: var(--text); text-decoration: none; }
 .nav-links a:hover { color: var(--accent); }
+.tool-panel { background: var(--panel); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; }
+.tool-panel textarea, .tool-panel input, .tool-panel select {
+  width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  font-family: var(--mono); padding: 0.6rem; margin-bottom: 0.75rem;
+}
+.tool-panel button {
+  background: transparent; color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.4rem 0.8rem; cursor: pointer;
+}
+.tool-panel button:disabled { opacity: 0.45; cursor: not-allowed; }
+.tool-error { color: var(--danger); }
+.tool-output { font-family: var(--mono); white-space: pre-wrap; overflow-x: auto; min-height: 6rem; }
+.tool-grid { display: grid; gap: 1rem; }
+@media (min-width: 720px) {
+  .tool-grid.split { grid-template-columns: 1fr 1fr; }
+}
