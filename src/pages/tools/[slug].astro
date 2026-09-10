@@ -8,7 +8,7 @@ import { getCollection } from 'astro:content';
 import { TOOLS, getTool } from '../../data/tools';
 
 export function getStaticPaths() {
-  return TOOLS.filter((t) => ['json-formatter', 'jwt-decoder', 'base64', 'url-encode', 'hash-generator', 'uuid-generator', 'regex-tester', 'unix-timestamp', 'crontab-explainer'].includes(t.slug)).map((tool) => ({
+  return TOOLS.map((tool) => ({
     params: { slug: tool.slug },
   }));
 }

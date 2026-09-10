@@ -8,6 +8,7 @@ import UuidGenerator from './UuidGenerator';
 import RegexTester from './RegexTester';
 import UnixTimestamp from './UnixTimestamp';
 import CrontabExplainer from './CrontabExplainer';
+import ColorConverter from './ColorConverter';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -21,3 +22,4 @@ const { slug } = Astro.props;
 {slug === 'regex-tester' && <RegexTester client:load />}
 {slug === 'unix-timestamp' && <UnixTimestamp client:load />}
 {slug === 'crontab-explainer' && <CrontabExplainer client:load />}
+{slug === 'color-converter' && <ColorConverter client:load />}
