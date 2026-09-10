@@ -5,6 +5,7 @@ import Base64Tool from './Base64Tool';
 import UrlEncode from './UrlEncode';
 import HashGenerator from './HashGenerator';
 import UuidGenerator from './UuidGenerator';
+import RegexTester from './RegexTester';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -15,3 +16,4 @@ const { slug } = Astro.props;
 {slug === 'url-encode' && <UrlEncode client:load />}
 {slug === 'hash-generator' && <HashGenerator client:load />}
 {slug === 'uuid-generator' && <UuidGenerator client:load />}
+{slug === 'regex-tester' && <RegexTester client:load />}
