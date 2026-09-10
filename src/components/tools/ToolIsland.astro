@@ -2,6 +2,7 @@
 import JsonFormatter from './JsonFormatter';
 import JwtDecoder from './JwtDecoder';
 import Base64Tool from './Base64Tool';
+import UrlEncode from './UrlEncode';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -9,3 +10,4 @@ const { slug } = Astro.props;
 {slug === 'json-formatter' && <JsonFormatter client:load />}
 {slug === 'jwt-decoder' && <JwtDecoder client:load />}
 {slug === 'base64' && <Base64Tool client:load />}
+{slug === 'url-encode' && <UrlEncode client:load />}
