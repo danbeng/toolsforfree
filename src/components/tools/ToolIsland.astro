@@ -1,7 +1,9 @@
 ---
 import JsonFormatter from './JsonFormatter';
+import JwtDecoder from './JwtDecoder';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
 ---
 {slug === 'json-formatter' && <JsonFormatter client:load />}
+{slug === 'jwt-decoder' && <JwtDecoder client:load />}
