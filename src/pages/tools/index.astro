@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ToolCard from '../../components/ToolCard.astro';
+import { getToolsByCategory } from '../../data/tools';
+
+const groups = getToolsByCategory();
+const idFor = (category: string) =>
+  `category-${category.toLowerCase()}`;
+---
+<BaseLayout
+  title="All tools"
+  description="Browser-based developer tools. Nothing is uploaded."
+  path="/tools/"
+>
+  <h1>All tools</h1>
+  {groups.map((g) => (
+    <section id={idFor(g.category)}>
+      <h2>{g.category}</h2>
+      {g.tools.map((tool) => <ToolCard tool={tool} />)}
+    </section>
+  ))}
+</BaseLayout>

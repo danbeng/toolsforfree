@@ -1,8 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ToolCard from '../components/ToolCard.astro';
 import { SITE_NAME, SITE_TAGLINE } from '../data/site';
+import { getFeaturedTools, getToolsByCategory } from '../data/tools';
+
+const featured = getFeaturedTools();
+const groups = getToolsByCategory();
 ---
 <BaseLayout title={SITE_NAME} description={SITE_TAGLINE} path="/">
   <h1>{SITE_NAME}</h1>
   <p>{SITE_TAGLINE}</p>
+  <p>
+    {groups.map((g) => (
+      <a href={`/tools/#category-${g.category.toLowerCase()}`}>{g.category}</a>
+    ))}
+  </p>
+  <h2>Featured tools</h2>
+  {featured.map((tool) => <ToolCard tool={tool} />)}
+  <p><a href="/tools/">View all tools</a></p>
 </BaseLayout>
