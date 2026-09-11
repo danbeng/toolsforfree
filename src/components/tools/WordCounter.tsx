@@ -41,27 +41,27 @@ export default function WordCounter({ locale }: { locale: Locale }) {
         <div class="tool-grid card-grid">
           <div class="tool-card">
             <strong>{labels.words}</strong>
-            <p>{metrics.words}</p>
+            <p>{String(metrics.words)}</p>
           </div>
           <div class="tool-card">
             <strong>{labels.chars}</strong>
-            <p>{metrics.charsWithSpaces}</p>
+            <p>{String(metrics.charsWithSpaces)}</p>
           </div>
           <div class="tool-card">
             <strong>{labels.charsNoSpaces}</strong>
-            <p>{metrics.charsWithoutSpaces}</p>
+            <p>{String(metrics.charsWithoutSpaces)}</p>
           </div>
           <div class="tool-card">
             <strong>{labels.lines}</strong>
-            <p>{metrics.lines}</p>
+            <p>{String(metrics.lines)}</p>
           </div>
           <div class="tool-card">
             <strong>{labels.sentences}</strong>
-            <p>{metrics.sentences}</p>
+            <p>{String(metrics.sentences)}</p>
           </div>
           <div class="tool-card">
             <strong>{labels.paragraphs}</strong>
-            <p>{metrics.paragraphs}</p>
+            <p>{String(metrics.paragraphs)}</p>
           </div>
         </div>
       ) : null}
