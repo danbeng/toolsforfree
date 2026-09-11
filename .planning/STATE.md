@@ -1,11 +1,19 @@
 ---
-gsd_state_version: '1.0'
-status: planning
+gsd_state_version: "1.0"
+current_phase: 1
+current_phase_name: Additive tool contract
+current_plan: 1
+status: verifying
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-09-11T06:08:45.686Z"
+last_activity: 2026-09-11
+last_activity_desc: Roadmap created
+state_head: 3e8482b694a4f348371ac0e1a8282d29d5f43daa
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 1
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,8 +29,9 @@ See: .planning/PROJECT.md (updated 2026-09-11)
 ## Current Position
 
 Phase: 1 of 6 (Additive tool contract)
-Plan: — of TBD in current phase
-Status: Ready to plan
+Current Plan: 1
+Total Plans in Phase: 1
+Status: Phase complete — ready for verification
 Last activity: 2026-09-11 — Roadmap created
 
 Progress: [░░░░░░░░░░] 0%
@@ -30,6 +39,7 @@ Progress: [░░░░░░░░░░] 0%
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: —
 - Total execution time: 0 hours
@@ -41,10 +51,16 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: —
 - Trend: —
 
 *Updated after each plan completion*
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 01-additive-tool-contract P01 | 20min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -58,6 +74,10 @@ Recent decisions affecting current work:
 - QR is generate + file decode; no camera / getUserMedia
 - Additive only: do not rewrite the existing ten tools
 - CAT-* owned by Phase 1 as the completeness harness; later phases keep those tests green
+- [Phase 1]: Sibling ToolIsland.test.ts source-reads ToolIsland.astro; asserts includes of slug === kebab per TOOLS slug
+- [Phase 1]: Markdown completeness uses existsSync(URL) from import.meta.url, never URL.pathname
+- [Phase 1]: Grouping assertion uses TOOLS.length; catalog snapshot stays at 10 this phase
+- [Phase 1]: Copied existing ZH markdown into the worktree so the harness could go green; left untracked per the three-path allowlist
 
 ### Pending Todos
 
@@ -78,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-11
-Stopped at: Roadmap written; awaiting orchestrator presentation and approval
+Last session: 2026-09-11T06:08:45.651Z
+Stopped at: Completed 01-01-PLAN.md
 Resume file: None

@@ -9,12 +9,12 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Catalog parity
 
-- [ ] **CAT-01**: Each new tool is registered in `TOOLS` with a unique locked slug, category, `relatedSlugs`, and `featured: false`
-- [ ] **CAT-02**: Each new tool has EN and ZH content-collection markdown (SEO, how-to, FAQ) so `astro build` succeeds
-- [ ] **CAT-03**: `ToolIsland` maps each new slug to its Preact island; a missing branch fails tests rather than rendering a blank panel
-- [ ] **CAT-04**: Heavy libraries (SQL, Markdown, QR, Diff) load only on that tool's page — existing tools such as json-formatter do not inherit those chunks
-- [ ] **CAT-05**: Existing ten tools keep current behavior except catalog/`relatedSlugs` wiring
-- [ ] **CAT-06**: Every new tool uses live in-browser compute, copy, input size guard, EN+ZH island copy, and English lib errors with matching `ZH_ERRORS` in the same slice
+- [x] **CAT-01**: Each new tool is registered in `TOOLS` with a unique locked slug, category, `relatedSlugs`, and `featured: false`
+- [x] **CAT-02**: Each new tool has EN and ZH content-collection markdown (SEO, how-to, FAQ) so `astro build` succeeds
+- [x] **CAT-03**: `ToolIsland` maps each new slug to its Preact island; a missing branch fails tests rather than rendering a blank panel
+- [x] **CAT-04**: Heavy libraries (SQL, Markdown, QR, Diff) load only on that tool's page — existing tools such as json-formatter do not inherit those chunks
+- [x] **CAT-05**: Existing ten tools keep current behavior except catalog/`relatedSlugs` wiring
+- [x] **CAT-06**: Every new tool uses live in-browser compute, copy, input size guard, EN+ZH island copy, and English lib errors with matching `ZH_ERRORS` in the same slice
 
 Locked slugs: `markdown-preview`, `text-diff`, `sql-formatter`, `case-converter`, `password-generator`, `word-counter`, `lorem-ipsum`, `qr-code`.
 
@@ -155,12 +155,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CAT-01 | Phase 1 | Pending |
-| CAT-02 | Phase 1 | Pending |
-| CAT-03 | Phase 1 | Pending |
-| CAT-04 | Phase 1 | Pending |
-| CAT-05 | Phase 1 | Pending |
-| CAT-06 | Phase 1 | Pending |
+| CAT-01 | Phase 1 | Complete |
+| CAT-02 | Phase 1 | Complete |
+| CAT-03 | Phase 1 | Complete |
+| CAT-04 | Phase 1 | Complete |
+| CAT-05 | Phase 1 | Complete |
+| CAT-06 | Phase 1 | Complete |
 | COUNT-01 | Phase 2 | Pending |
 | COUNT-02 | Phase 2 | Pending |
 | COUNT-03 | Phase 2 | Pending |
@@ -206,6 +206,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | QR-07 | Phase 6 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 49 total
 - Mapped to phases: 49
 - Unmapped: 0
