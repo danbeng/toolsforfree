@@ -9,6 +9,7 @@ import RegexTester from './RegexTester';
 import UnixTimestamp from './UnixTimestamp';
 import CrontabExplainer from './CrontabExplainer';
 import ColorConverter from './ColorConverter';
+import WordCounter from './WordCounter';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -23,3 +24,4 @@ const { slug } = Astro.props;
 {slug === 'unix-timestamp' && <UnixTimestamp client:load />}
 {slug === 'crontab-explainer' && <CrontabExplainer client:load />}
 {slug === 'color-converter' && <ColorConverter client:load />}
+{slug === 'word-counter' && <WordCounter client:load locale="en" />}

@@ -97,6 +97,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['hash-generator', 'json-formatter'],
     featured: false,
   },
+  {
+    slug: 'word-counter',
+    name: 'Word Counter',
+    category: 'Text',
+    shortDescription: 'Count words, characters, lines, sentences, and paragraphs locally.',
+    relatedSlugs: ['case-converter', 'regex-tester', 'lorem-ipsum'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [
