@@ -62,6 +62,48 @@ describe('generateLorem', () => {
     expect(WORDS.length).toBeGreaterThanOrEqual(80);
     expect(WORDS.length).toBeLessThanOrEqual(120);
   });
+
+  it('emits a single paragraph without a blank line', () => {
+    const one = generateLorem({ mode: 'paragraphs', count: 1, classic: false });
+    expect(one.ok).toBe(true);
+    if (!one.ok) return;
+    expect(one.text.includes('\n\n')).toBe(false);
+    expect(one.text.trim().length).toBeGreaterThan(0);
+    expect(LATIN_BODY.test(one.text)).toBe(true);
+  });
+
+  it('keeps two non-empty Latin paragraphs separated by a blank line', () => {
+    const two = generateLorem({ mode: 'paragraphs', count: 2, classic: false });
+    expect(two.ok).toBe(true);
+    if (!two.ok) return;
+    expect(two.text.includes('\n\n')).toBe(true);
+    const parts = two.text.split('\n\n');
+    expect(parts).toHaveLength(2);
+    for (const part of parts) {
+      expect(part.trim().length).toBeGreaterThan(0);
+      expect(LATIN_BODY.test(part)).toBe(true);
+    }
+  });
+
+  it('continues from the corpus after the classic opening when count is greater than 5', () => {
+    const result = generateLorem({ mode: 'words', count: 8, classic: true });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.text.startsWith('Lorem ipsum dolor sit amet ')).toBe(true);
+    expect(result.text).not.toBe('Lorem ipsum dolor sit amet.');
+    const tokens = result.text.slice(0, -1).split(' ');
+    expect(tokens).toHaveLength(8);
+    expect(tokens.slice(0, 5)).toEqual(['Lorem', 'ipsum', 'dolor', 'sit', 'amet']);
+    expect(tokens.slice(5)).toEqual([WORDS[0], WORDS[1], WORDS[2]]);
+    expect(LATIN_BODY.test(result.text)).toBe(true);
+  });
+
+  it('returns identical output for the same options', () => {
+    const opts = { mode: 'paragraphs' as const, count: 2, classic: true };
+    const a = generateLorem(opts);
+    const b = generateLorem(opts);
+    expect(a).toEqual(b);
+  });
 });
 
 describe('lorem source', () => {
