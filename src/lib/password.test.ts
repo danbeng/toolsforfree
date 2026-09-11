@@ -11,8 +11,15 @@ const DEFAULTS = {
   excludeSimilar: false,
 };
 
+const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const DIGITS = '0123456789';
 const SYMBOLS = '!@#$%^&*-_=+';
 const SIMILAR = ['i', 'l', '1', 'O', '0'];
+const EMPTY_CHARSET = {
+  ok: false as const,
+  error: 'Select at least one character set',
+};
 
 describe('generatePassword', () => {
   it('returns ok true and length 16 with default options', () => {
@@ -73,12 +80,57 @@ describe('generatePassword', () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.password).toHaveLength(8);
-    expect([...result.password].every((c) => '0123456789'.includes(c))).toBe(true);
+    expect([...result.password].every((c) => DIGITS.includes(c))).toBe(true);
   });
 
-  it('emits only locked symbols for symbols-only', () => {
+  it('emits only lowercase at length 32', () => {
     const result = generatePassword({
-      length: 16,
+      length: 32,
+      lower: true,
+      upper: false,
+      digits: false,
+      symbols: false,
+      excludeSimilar: false,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.password).toHaveLength(32);
+    expect([...result.password].every((c) => LOWER.includes(c))).toBe(true);
+  });
+
+  it('emits only uppercase at length 32', () => {
+    const result = generatePassword({
+      length: 32,
+      lower: false,
+      upper: true,
+      digits: false,
+      symbols: false,
+      excludeSimilar: false,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.password).toHaveLength(32);
+    expect([...result.password].every((c) => UPPER.includes(c))).toBe(true);
+  });
+
+  it('emits only digits at length 32', () => {
+    const result = generatePassword({
+      length: 32,
+      lower: false,
+      upper: false,
+      digits: true,
+      symbols: false,
+      excludeSimilar: false,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.password).toHaveLength(32);
+    expect([...result.password].every((c) => DIGITS.includes(c))).toBe(true);
+  });
+
+  it('emits only locked symbols at length 32', () => {
+    const result = generatePassword({
+      length: 32,
       lower: false,
       upper: false,
       digits: false,
@@ -87,6 +139,7 @@ describe('generatePassword', () => {
     });
     expect(result.ok).toBe(true);
     if (!result.ok) return;
+    expect(result.password).toHaveLength(32);
     expect([...result.password].every((c) => SYMBOLS.includes(c))).toBe(true);
   });
 
@@ -103,6 +156,27 @@ describe('generatePassword', () => {
     if (!result.ok) return;
     expect([...result.password].some((c) => SIMILAR.includes(c))).toBe(false);
   });
+
+  it('strips i l 1 O 0 from a length-128 password with all sets and excludeSimilar', () => {
+    const result = generatePassword({ ...DEFAULTS, length: 128, excludeSimilar: true });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.password).toHaveLength(128);
+    expect([...result.password].some((c) => SIMILAR.includes(c))).toBe(false);
+  });
+
+  it('returns empty-charset error when excludeSimilar cannot invent a charset', () => {
+    expect(
+      generatePassword({
+        length: 16,
+        lower: false,
+        upper: false,
+        digits: false,
+        symbols: false,
+        excludeSimilar: true,
+      }),
+    ).toEqual(EMPTY_CHARSET);
+  });
 });
 
 describe('password.ts CSPRNG source-read', () => {
@@ -111,5 +185,10 @@ describe('password.ts CSPRNG source-read', () => {
   it('uses crypto.getRandomValues and does not use Math.random', () => {
     expect(source.includes('getRandomValues')).toBe(true);
     expect(source.includes('Math.random')).toBe(false);
+  });
+
+  it('rejects biased remainder until x is below the limit', () => {
+    expect(source.includes('x < limit')).toBe(true);
+    expect(source.includes('x % n')).toBe(true);
   });
 });
