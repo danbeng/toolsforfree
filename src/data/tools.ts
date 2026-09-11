@@ -121,6 +121,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['word-counter', 'case-converter', 'password-generator'],
     featured: false,
   },
+  {
+    slug: 'password-generator',
+    name: 'Password Generator',
+    category: 'Generate',
+    shortDescription: 'Generate a password locally with Web Crypto.',
+    relatedSlugs: ['uuid-generator', 'hash-generator', 'lorem-ipsum'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [

@@ -12,6 +12,7 @@ import ColorConverter from './ColorConverter';
 import WordCounter from './WordCounter';
 import CaseConverter from './CaseConverter';
 import LoremIpsum from './LoremIpsum';
+import PasswordGenerator from './PasswordGenerator';
 
 interface Props { slug: string; locale?: 'en' | 'zh' }
 const { slug, locale = 'en' } = Astro.props;
@@ -29,3 +30,4 @@ const { slug, locale = 'en' } = Astro.props;
 {slug === 'word-counter' && <WordCounter client:load locale={locale} />}
 {slug === 'case-converter' && <CaseConverter client:load locale={locale} />}
 {slug === 'lorem-ipsum' && <LoremIpsum client:load locale={locale} />}
+{slug === 'password-generator' && <PasswordGenerator client:load locale={locale} />}
