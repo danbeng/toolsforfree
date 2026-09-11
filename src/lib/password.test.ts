@@ -43,6 +43,20 @@ describe('generatePassword', () => {
     });
   });
 
+  it('rejects NaN length', () => {
+    expect(generatePassword({ ...DEFAULTS, length: Number.NaN })).toEqual({
+      ok: false,
+      error: 'Length must be between 8 and 128',
+    });
+  });
+
+  it('rejects a fractional length', () => {
+    expect(generatePassword({ ...DEFAULTS, length: 16.5 })).toEqual({
+      ok: false,
+      error: 'Length must be between 8 and 128',
+    });
+  });
+
   it('accepts length 8 and 128 when charset is non-empty', () => {
     const eight = generatePassword({ ...DEFAULTS, length: 8 });
     const max = generatePassword({ ...DEFAULTS, length: 128 });

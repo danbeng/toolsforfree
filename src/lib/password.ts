@@ -30,7 +30,7 @@ export function generatePassword(opts: {
   symbols: boolean;
   excludeSimilar: boolean;
 }): PasswordResult {
-  if (opts.length < 8 || opts.length > 128) {
+  if (!Number.isInteger(opts.length) || opts.length < 8 || opts.length > 128) {
     return { ok: false, error: 'Length must be between 8 and 128' };
   }
   let charset = '';

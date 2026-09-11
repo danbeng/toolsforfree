@@ -53,8 +53,12 @@ export default function PasswordGenerator({ locale }: { locale: Locale }) {
           type="number"
           min={8}
           max={128}
+          step={1}
           value={length}
-          onInput={(e) => setLength(Number((e.target as HTMLInputElement).value))}
+          onInput={(e) => {
+            const n = Number((e.target as HTMLInputElement).value);
+            if (Number.isInteger(n)) setLength(n);
+          }}
         />
       </label>
       <label>
