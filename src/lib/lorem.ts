@@ -104,6 +104,9 @@ export const WORDS = [
 const OPENING = ['Lorem', 'ipsum', 'dolor', 'sit', 'amet'] as const;
 const PARAGRAPH_WORDS = 50;
 const COUNT_ERROR = 'Enter a count of at least 1';
+const COUNT_MAX_ERROR = 'Count exceeds the maximum';
+export const MAX_WORDS = 10_000;
+export const MAX_PARAGRAPHS = 200;
 
 export type LoremResult =
   | { ok: true; text: string }
@@ -129,6 +132,10 @@ export function generateLorem(opts: {
   const { mode, count, classic } = opts;
   if (!Number.isInteger(count) || count < 1) {
     return { ok: false, error: COUNT_ERROR };
+  }
+  const max = mode === 'words' ? MAX_WORDS : MAX_PARAGRAPHS;
+  if (count > max) {
+    return { ok: false, error: COUNT_MAX_ERROR };
   }
 
   if (mode === 'words') {

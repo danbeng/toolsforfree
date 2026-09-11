@@ -7,6 +7,9 @@ describe('lorem-ipsum chrome and errors', () => {
     expect(ZH_ERRORS['Enter a count of at least 1']).toBe('请输入至少为 1 的数量');
     expect(localizeError('zh', 'Enter a count of at least 1')).toBe('请输入至少为 1 的数量');
     expect(localizeError('en', 'Enter a count of at least 1')).toBe('Enter a count of at least 1');
+    expect(ZH_ERRORS['Count exceeds the maximum']).toBe('数量超过上限');
+    expect(localizeError('zh', 'Count exceeds the maximum')).toBe('数量超过上限');
+    expect(localizeError('en', 'Count exceeds the maximum')).toBe('Count exceeds the maximum');
   });
 
   it('shares lorem-ipsum chrome keys on en and zh', () => {

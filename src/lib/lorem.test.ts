@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { WORDS, generateLorem } from './lorem';
+import { MAX_PARAGRAPHS, MAX_WORDS, WORDS, generateLorem } from './lorem';
 
 const LATIN_BODY = /^[a-zA-Z\s.,]+$/;
 
@@ -17,6 +17,49 @@ describe('generateLorem', () => {
       ok: false,
       error: 'Enter a count of at least 1',
     });
+  });
+
+  it('rejects a non-integer count', () => {
+    expect(generateLorem({ mode: 'words', count: 3.5, classic: false })).toEqual({
+      ok: false,
+      error: 'Enter a count of at least 1',
+    });
+  });
+
+  it('rejects more than MAX_WORDS', () => {
+    expect(
+      generateLorem({ mode: 'words', count: MAX_WORDS + 1, classic: false }),
+    ).toEqual({
+      ok: false,
+      error: 'Count exceeds the maximum',
+    });
+  });
+
+  it('accepts MAX_WORDS', () => {
+    const result = generateLorem({ mode: 'words', count: MAX_WORDS, classic: false });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.text.slice(0, -1).split(' ')).toHaveLength(MAX_WORDS);
+  });
+
+  it('rejects more than MAX_PARAGRAPHS', () => {
+    expect(
+      generateLorem({ mode: 'paragraphs', count: MAX_PARAGRAPHS + 1, classic: false }),
+    ).toEqual({
+      ok: false,
+      error: 'Count exceeds the maximum',
+    });
+  });
+
+  it('accepts MAX_PARAGRAPHS', () => {
+    const result = generateLorem({
+      mode: 'paragraphs',
+      count: MAX_PARAGRAPHS,
+      classic: false,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.text.split('\n\n')).toHaveLength(MAX_PARAGRAPHS);
   });
 
   it('emits five space-separated Latin words ending with a period', () => {

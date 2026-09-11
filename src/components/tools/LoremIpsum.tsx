@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
-import { generateLorem } from '../../lib/lorem';
+import { generateLorem, MAX_PARAGRAPHS, MAX_WORDS } from '../../lib/lorem';
 import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
 import { t, type Locale } from '../../i18n/ui';
 import { localizeError } from '../../i18n/errors';
@@ -21,14 +21,15 @@ export default function LoremIpsum({ locale }: { locale: Locale }) {
   }
 
   function onGenerate() {
-    if (isTooLarge(count)) {
-      setError(INPUT_TOO_LARGE_MSG);
+    const n = Number(count);
+    const r = generateLorem({ mode, count: n, classic });
+    if (!r.ok) {
+      setError(err(r.error || null));
       setOutput('');
       return;
     }
-    const r = generateLorem({ mode, count: Number(count), classic });
-    if (!r.ok) {
-      setError(err(r.error || null));
+    if (isTooLarge(r.text)) {
+      setError(INPUT_TOO_LARGE_MSG);
       setOutput('');
       return;
     }
@@ -53,6 +54,8 @@ export default function LoremIpsum({ locale }: { locale: Locale }) {
         <input
           type="number"
           min={1}
+          max={mode === 'words' ? MAX_WORDS : MAX_PARAGRAPHS}
+          step={1}
           value={count}
           onInput={(e) => setCount((e.target as HTMLInputElement).value)}
         />
