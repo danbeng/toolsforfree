@@ -155,61 +155,61 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CAT-01 | — | Pending |
-| CAT-02 | — | Pending |
-| CAT-03 | — | Pending |
-| CAT-04 | — | Pending |
-| CAT-05 | — | Pending |
-| CAT-06 | — | Pending |
-| MD-01 | — | Pending |
-| MD-02 | — | Pending |
-| MD-03 | — | Pending |
-| MD-04 | — | Pending |
-| MD-05 | — | Pending |
-| DIFF-01 | — | Pending |
-| DIFF-02 | — | Pending |
-| DIFF-03 | — | Pending |
-| DIFF-04 | — | Pending |
-| DIFF-05 | — | Pending |
-| DIFF-06 | — | Pending |
-| SQL-01 | — | Pending |
-| SQL-02 | — | Pending |
-| SQL-03 | — | Pending |
-| SQL-04 | — | Pending |
-| SQL-05 | — | Pending |
-| SQL-06 | — | Pending |
-| CASE-01 | — | Pending |
-| CASE-02 | — | Pending |
-| CASE-03 | — | Pending |
-| CASE-04 | — | Pending |
-| PASS-01 | — | Pending |
-| PASS-02 | — | Pending |
-| PASS-03 | — | Pending |
-| PASS-04 | — | Pending |
-| PASS-05 | — | Pending |
-| PASS-06 | — | Pending |
-| COUNT-01 | — | Pending |
-| COUNT-02 | — | Pending |
-| COUNT-03 | — | Pending |
-| COUNT-04 | — | Pending |
-| LORM-01 | — | Pending |
-| LORM-02 | — | Pending |
-| LORM-03 | — | Pending |
-| LORM-04 | — | Pending |
-| LORM-05 | — | Pending |
-| QR-01 | — | Pending |
-| QR-02 | — | Pending |
-| QR-03 | — | Pending |
-| QR-04 | — | Pending |
-| QR-05 | — | Pending |
-| QR-06 | — | Pending |
-| QR-07 | — | Pending |
+| CAT-01 | Phase 1 | Pending |
+| CAT-02 | Phase 1 | Pending |
+| CAT-03 | Phase 1 | Pending |
+| CAT-04 | Phase 1 | Pending |
+| CAT-05 | Phase 1 | Pending |
+| CAT-06 | Phase 1 | Pending |
+| COUNT-01 | Phase 2 | Pending |
+| COUNT-02 | Phase 2 | Pending |
+| COUNT-03 | Phase 2 | Pending |
+| COUNT-04 | Phase 2 | Pending |
+| CASE-01 | Phase 2 | Pending |
+| CASE-02 | Phase 2 | Pending |
+| CASE-03 | Phase 2 | Pending |
+| CASE-04 | Phase 2 | Pending |
+| LORM-01 | Phase 2 | Pending |
+| LORM-02 | Phase 2 | Pending |
+| LORM-03 | Phase 2 | Pending |
+| LORM-04 | Phase 2 | Pending |
+| LORM-05 | Phase 2 | Pending |
+| PASS-01 | Phase 2 | Pending |
+| PASS-02 | Phase 2 | Pending |
+| PASS-03 | Phase 2 | Pending |
+| PASS-04 | Phase 2 | Pending |
+| PASS-05 | Phase 2 | Pending |
+| PASS-06 | Phase 2 | Pending |
+| SQL-01 | Phase 3 | Pending |
+| SQL-02 | Phase 3 | Pending |
+| SQL-03 | Phase 3 | Pending |
+| SQL-04 | Phase 3 | Pending |
+| SQL-05 | Phase 3 | Pending |
+| SQL-06 | Phase 3 | Pending |
+| DIFF-01 | Phase 4 | Pending |
+| DIFF-02 | Phase 4 | Pending |
+| DIFF-03 | Phase 4 | Pending |
+| DIFF-04 | Phase 4 | Pending |
+| DIFF-05 | Phase 4 | Pending |
+| DIFF-06 | Phase 4 | Pending |
+| MD-01 | Phase 5 | Pending |
+| MD-02 | Phase 5 | Pending |
+| MD-03 | Phase 5 | Pending |
+| MD-04 | Phase 5 | Pending |
+| MD-05 | Phase 5 | Pending |
+| QR-01 | Phase 6 | Pending |
+| QR-02 | Phase 6 | Pending |
+| QR-03 | Phase 6 | Pending |
+| QR-04 | Phase 6 | Pending |
+| QR-05 | Phase 6 | Pending |
+| QR-06 | Phase 6 | Pending |
+| QR-07 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 50 total
-- Mapped to phases: 0
-- Unmapped: 50 (filled during roadmap)
+- v1 requirements: 49 total
+- Mapped to phases: 49
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-09-11*
-*Last updated: 2026-09-11 after initial definition*
+*Last updated: 2026-09-11 after roadmap creation*
