@@ -39,7 +39,7 @@ describe('TOOLS registry', () => {
   it('groups by category without dropping tools', () => {
     const grouped = getToolsByCategory();
     const count = grouped.reduce((n, g) => n + g.tools.length, 0);
-    expect(count).toBe(10);
+    expect(count).toBe(TOOLS.length);
   });
 
   // Completeness loop is the 8-file contract in .planning/codebase/CONVENTIONS.md.
