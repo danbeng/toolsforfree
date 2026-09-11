@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   TOOLS,
@@ -39,5 +40,15 @@ describe('TOOLS registry', () => {
     const grouped = getToolsByCategory();
     const count = grouped.reduce((n, g) => n + g.tools.length, 0);
     expect(count).toBe(10);
+  });
+
+  // Completeness loop is the 8-file contract in .planning/codebase/CONVENTIONS.md.
+  it('has EN and ZH markdown for every catalog slug', () => {
+    for (const { slug } of TOOLS) {
+      const en = new URL(`../content/tools/${slug}.md`, import.meta.url);
+      const zh = new URL(`../content/tools/zh/${slug}.md`, import.meta.url);
+      expect(existsSync(en), `missing EN markdown for ${slug}`).toBe(true);
+      expect(existsSync(zh), `missing ZH markdown for ${slug}`).toBe(true);
+    }
   });
 });
