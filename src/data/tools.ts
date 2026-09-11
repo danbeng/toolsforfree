@@ -113,6 +113,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['word-counter', 'regex-tester', 'url-encode'],
     featured: false,
   },
+  {
+    slug: 'lorem-ipsum',
+    name: 'Lorem Ipsum Generator',
+    category: 'Generate',
+    shortDescription: 'Generate dummy Latin text in your browser.',
+    relatedSlugs: ['word-counter', 'case-converter', 'password-generator'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [
