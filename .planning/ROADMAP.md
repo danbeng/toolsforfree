@@ -30,7 +30,10 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
   3. Completeness tests pass for the current ten tools (unique slugs, EN+ZH markdown present, ToolIsland branch per catalog slug)
   4. A catalog slug with no ToolIsland branch fails tests rather than rendering a blank panel
   5. Existing tool pages such as json-formatter do not load SQL, Markdown, QR, or Diff chunks; the 8-file additive checklist and island-split rule are documented for later slices
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 01-01-PLAN.md — Completeness harness, catalog invariants, 8-file + island-split conventions
 
 ### Phase 2: Light text and generate tools
 **Goal**: Visitors can count text, convert case/slugs, generate lorem, and generate passwords entirely in the browser at existing-tool parity
@@ -105,7 +108,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Additive tool contract | 0/TBD | Not started | - |
+| 1. Additive tool contract | 0/1 | Not started | - |
 | 2. Light text and generate tools | 0/TBD | Not started | - |
 | 3. SQL formatter | 0/TBD | Not started | - |
 | 4. Text Diff | 0/TBD | Not started | - |
