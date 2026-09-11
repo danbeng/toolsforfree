@@ -20,14 +20,18 @@ function joinCases(value: CaseValue): string {
   return ROW_KEYS.map((key) => value[key]).join('\n');
 }
 
-async function copyRow(value: string) {
-  await navigator.clipboard.writeText(value);
-}
-
 export default function CaseConverter({ locale }: { locale: Locale }) {
   const [input, setInput] = useState('');
+  const [copiedKey, setCopiedKey] = useState<(typeof ROW_KEYS)[number] | null>(null);
   const copy = t(locale);
   const labels = copy.tools['case-converter'];
+
+  async function onCopyRow(key: (typeof ROW_KEYS)[number], value: string) {
+    await navigator.clipboard.writeText(value);
+    setCopiedKey(key);
+    window.setTimeout(() => setCopiedKey(null), 1500);
+  }
+
   const result = useMemo(() => {
     if (isTooLarge(input)) {
       return { error: INPUT_TOO_LARGE_MSG, output: '', value: null as CaseValue | null };
@@ -55,8 +59,8 @@ export default function CaseConverter({ locale }: { locale: Locale }) {
             <label key={key}>
               {labels[key]}
               <input type="text" value={result.value![key]} readOnly spellcheck={false} />
-              <button type="button" onClick={() => copyRow(result.value![key])}>
-                Copy
+              <button type="button" onClick={() => onCopyRow(key, result.value![key])}>
+                {copiedKey === key ? 'Copied' : 'Copy'}
               </button>
             </label>
           ))
