@@ -11,7 +11,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Additive tool contract** - Completeness harness, island-split rule, and no-rewrite of the existing ten
+- [x] **Phase 1: Additive tool contract** - Completeness harness, island-split rule, and no-rewrite of the existing ten (completed 2026-09-11)
 - [ ] **Phase 2: Light text and generate tools** - Word counter, case/slug, lorem, and password generator at catalog parity
 - [ ] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects
 - [ ] **Phase 4: Text Diff** - Two-pane line-level diff with stats and whitespace ignore
@@ -34,7 +34,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
   4. A catalog slug with no ToolIsland branch fails tests rather than rendering a blank panel
   5. Existing tool pages such as json-formatter do not load SQL, Markdown, QR, or Diff chunks; the 8-file additive checklist and island-split rule are documented for later slices
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -128,7 +128,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Additive tool contract | 1/1 | In Progress|  |
+| 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
 | 2. Light text and generate tools | 0/TBD | Not started | - |
 | 3. SQL formatter | 0/TBD | Not started | - |
 | 4. Text Diff | 0/TBD | Not started | - |
