@@ -45,4 +45,29 @@ describe('countWords and countWordsFallback', () => {
     expect(countWords('   ')).toBe(0);
     expect(countWordsFallback('   ')).toBe(0);
   });
+
+  it('counts 你好世界 as 4 on Segmenter and fallback', () => {
+    expect(countWords('你好世界', 'zh-Hans')).toBe(4);
+    expect(countWordsFallback('你好世界')).toBe(4);
+  });
+
+  it('counts hello 世界 as 3 on Segmenter and fallback', () => {
+    expect(countWords('hello 世界', 'zh-Hans')).toBe(3);
+    expect(countWordsFallback('hello 世界')).toBe(3);
+  });
+});
+
+describe('sentences and paragraphs', () => {
+  it('splits sentences on ASCII . ? ! and fullwidth 。？！', () => {
+    expect(countText('Hello. World!').sentences).toBe(2);
+    expect(countText('你好。世界！').sentences).toBe(2);
+    expect(countText('Ready? Go!').sentences).toBe(2);
+    expect(countText('结束？开始！').sentences).toBe(2);
+  });
+
+  it('counts non-empty blank-line blocks as paragraphs', () => {
+    expect(countText('one\n\ntwo').paragraphs).toBe(2);
+    expect(countText('one\n  \ntwo').paragraphs).toBe(2);
+    expect(countText('single').paragraphs).toBe(1);
+  });
 });

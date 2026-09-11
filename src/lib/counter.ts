@@ -27,11 +27,24 @@ export function countWords(text: string, localeTag = 'en'): number {
     const seg = new Intl.Segmenter(localeTag, { granularity: 'word' });
     let n = 0;
     for (const part of seg.segment(text)) {
-      if (part.isWordLike) n += 1;
+      if (!part.isWordLike) continue;
+      const han = part.segment.match(/\p{Script=Han}/gu);
+      n += han && han.length > 0 ? han.length : 1;
     }
     return n;
   }
   return countWordsFallback(text);
+}
+
+function countSentences(text: string): number {
+  const trimmed = text.trim();
+  if (!trimmed) return 0;
+  return trimmed.split(/[.?!。？！]+/).filter((piece) => piece.trim()).length;
+}
+
+function countParagraphs(text: string): number {
+  if (!text.trim()) return 0;
+  return text.split(/\n\s*\n/).filter((block) => block.trim()).length;
 }
 
 export function countText(text: string, localeTag = 'en'): CounterResult {
@@ -52,7 +65,7 @@ export function countText(text: string, localeTag = 'en'): CounterResult {
     charsWithSpaces: text.length,
     charsWithoutSpaces: text.replace(/\s/g, '').length,
     lines: text.split(/\r\n|\n|\r/).length,
-    sentences: 0,
-    paragraphs: 0,
+    sentences: countSentences(text),
+    paragraphs: countParagraphs(text),
   };
 }

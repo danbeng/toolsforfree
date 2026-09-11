@@ -18,6 +18,8 @@ export default function WordCounter({ locale }: { locale: Locale }) {
       `${labels.chars}: ${r.charsWithSpaces}`,
       `${labels.charsNoSpaces}: ${r.charsWithoutSpaces}`,
       `${labels.lines}: ${r.lines}`,
+      `${labels.sentences}: ${r.sentences}`,
+      `${labels.paragraphs}: ${r.paragraphs}`,
     ].join('\n');
     return { error: null, output, metrics: r };
   }, [input, locale, labels]);
@@ -52,6 +54,14 @@ export default function WordCounter({ locale }: { locale: Locale }) {
           <div class="tool-card">
             <strong>{labels.lines}</strong>
             <p>{metrics.lines}</p>
+          </div>
+          <div class="tool-card">
+            <strong>{labels.sentences}</strong>
+            <p>{metrics.sentences}</p>
+          </div>
+          <div class="tool-card">
+            <strong>{labels.paragraphs}</strong>
+            <p>{metrics.paragraphs}</p>
           </div>
         </div>
       ) : null}
