@@ -123,6 +123,30 @@
 - Static chrome, SEO, and routing: `.astro` under `src/pages/` and `src/components/`.
 - Interactive tools: Preact `.tsx` islands; wrap with `src/components/tools/ToolIsland.astro`.
 
+## Adding a tool (8-file checklist)
+
+One slice per tool. Do not land a catalog row without the rest. Clone `JsonFormatter.tsx` plus `src/lib/json.ts`, not `UuidGenerator.tsx` (that island has no lib).
+
+1. Catalog row in `src/data/tools.ts` with unique kebab slug, existing `ToolCategory`, `relatedSlugs`, `featured: false`.
+2. `src/lib` topic module plus colocated test with result union and English errors.
+3. Preact island default export with locale, `ToolShell`, `isTooLarge`.
+4. `ToolIsland.astro` static import plus slug-equals `client:load` branch.
+5. EN and ZH entries in `src/i18n/ui.ts` `tools[slug]` (no new category this milestone).
+6. Every new English lib error added to `ZH_ERRORS` in `src/i18n/errors.ts` in the same slice.
+7. EN markdown `src/content/tools/{slug}.md` with `locale: en`, `howTo` length 3, `faq` 3-5.
+8. ZH markdown `src/content/tools/zh/{slug}.md` with `locale: zh` and the same schema.
+
+The `tools.test.ts` currently-N-tools snapshot updates when the catalog grows. Featured count stays 6. New tools must be `featured: false`; do not add featured-false asserts against tools that are not in the catalog yet.
+
+## Island split (heavy libraries)
+
+- Do not add `src/lib/index.ts` or any `src/lib` barrel; import the concrete file.
+- Heavy deps (SQL, Markdown, QR, Diff) import only from that tool’s `src/lib` or island; light tools stay static imports in `ToolIsland.astro`.
+- Keep `ToolIsland.astro` static imports plus `client:load` because Astro forbids client directives on dynamic tags.
+- Do not convert the existing ten static imports to dynamic `import()`.
+- SQL / Markdown / QR will dynamic-import the fat library inside their island in Phases 3, 5, 6, not at `ToolIsland.astro` top.
+- From the first heavy lib (Phase 3), inspect `dist/_astro/` so `json-formatter` does not inherit those chunks.
+
 ---
 
 *Convention analysis: 2026-09-10*
