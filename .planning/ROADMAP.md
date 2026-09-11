@@ -54,7 +54,13 @@ Plans:
   4. User can generate a password on `password-generator` (length 8–128, default 16; charset toggles; exclude similar; `crypto.getRandomValues` with rejection sampling), copy and regenerate, and see an error if the charset is empty
   5. All four tools are in the catalog with locked slugs, `relatedSlugs`, `featured: false`, EN+ZH markdown/FAQ, live compute, copy, size guard, and matching `ZH_ERRORS`; completeness tests from Phase 1 stay green
 
-**Plans**: TBD
+**Plans:** 4 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Word counter 8-file slice (COUNT-01..04)
+- [ ] 02-02-PLAN.md — Case/slug converter 8-file slice (CASE-01..04)
+- [ ] 02-03-PLAN.md — Lorem ipsum 8-file slice (LORM-01..05)
+- [ ] 02-04-PLAN.md — Password generator 8-file slice (PASS-01..06)
 
 ### Phase 3: SQL formatter
 
@@ -129,7 +135,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
-| 2. Light text and generate tools | 0/TBD | Not started | - |
+| 2. Light text and generate tools | 0/4 | Not started | - |
 | 3. SQL formatter | 0/TBD | Not started | - |
 | 4. Text Diff | 0/TBD | Not started | - |
 | 5. Markdown preview | 0/TBD | Not started | - |
