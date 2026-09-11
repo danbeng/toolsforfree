@@ -17,3 +17,33 @@ describe('lorem-ipsum chrome and errors', () => {
     }
   });
 });
+
+describe('password-generator chrome and errors', () => {
+  it('maps empty charset and length errors in ZH_ERRORS', () => {
+    expect(ZH_ERRORS['Select at least one character set']).toBe('请至少选择一种字符集');
+    expect(ZH_ERRORS['Length must be between 8 and 128']).toBe('长度必须在 8 到 128 之间');
+    expect(localizeError('zh', 'Select at least one character set')).toBe('请至少选择一种字符集');
+    expect(localizeError('zh', 'Length must be between 8 and 128')).toBe('长度必须在 8 到 128 之间');
+    expect(localizeError('en', 'Select at least one character set')).toBe(
+      'Select at least one character set',
+    );
+  });
+
+  it('shares password-generator chrome keys on en and zh', () => {
+    const keys = [
+      'name',
+      'shortDescription',
+      'length',
+      'lowercase',
+      'uppercase',
+      'digits',
+      'symbols',
+      'excludeSimilar',
+      'generate',
+    ];
+    for (const key of keys) {
+      expect(ui.en.tools['password-generator']).toHaveProperty(key);
+      expect(ui.zh.tools['password-generator']).toHaveProperty(key);
+    }
+  });
+});
