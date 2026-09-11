@@ -10,9 +10,10 @@ import UnixTimestamp from './UnixTimestamp';
 import CrontabExplainer from './CrontabExplainer';
 import ColorConverter from './ColorConverter';
 import WordCounter from './WordCounter';
+import CaseConverter from './CaseConverter';
 
-interface Props { slug: string }
-const { slug } = Astro.props;
+interface Props { slug: string; locale?: 'en' | 'zh' }
+const { slug, locale = 'en' } = Astro.props;
 ---
 {slug === 'json-formatter' && <JsonFormatter client:load />}
 {slug === 'jwt-decoder' && <JwtDecoder client:load />}
@@ -24,4 +25,5 @@ const { slug } = Astro.props;
 {slug === 'unix-timestamp' && <UnixTimestamp client:load />}
 {slug === 'crontab-explainer' && <CrontabExplainer client:load />}
 {slug === 'color-converter' && <ColorConverter client:load />}
-{slug === 'word-counter' && <WordCounter client:load locale="en" />}
+{slug === 'word-counter' && <WordCounter client:load locale={locale} />}
+{slug === 'case-converter' && <CaseConverter client:load locale={locale} />}

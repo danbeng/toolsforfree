@@ -105,6 +105,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['case-converter', 'regex-tester', 'lorem-ipsum'],
     featured: false,
   },
+  {
+    slug: 'case-converter',
+    name: 'Case / Slug Converter',
+    category: 'Text',
+    shortDescription: 'Convert letter case and build a URL slug locally.',
+    relatedSlugs: ['word-counter', 'regex-tester', 'url-encode'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [
