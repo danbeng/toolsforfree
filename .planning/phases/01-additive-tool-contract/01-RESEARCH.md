@@ -633,22 +633,18 @@ DATA_b3r6t0hy_END
 
 A1/A2 do **not** need a discuss-phase blocker: fallbacks are already specified (`fileURLToPath`; island-split remains documentation).
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Exact island-coverage file location**
+1. **Exact island-coverage file location** — RESOLVED
+   - Choice: sibling `src/components/tools/ToolIsland.test.ts`.
    - What we know: CONTEXT leaves `tools.test.ts` vs sibling `ToolIsland.test.ts` to discretion.
-   - What's unclear: executor preference only.
-   - Recommendation: sibling `src/components/tools/ToolIsland.test.ts`. Planner should pick that and not present it as a user decision.
+   - Planner/plan 01-01 uses the sibling file.
 
-2. **Whether to assert import lines as well as `slug ===` branches**
-   - What we know: a branch without an import will fail `astro build` / TypeScript, not Vitest.
-   - What's unclear: extra assert is optional.
-   - Recommendation: **do not** assert import lines. `slug === '${slug}'` is the silent-blank failure. Import failures are already loud.
+2. **Whether to assert import lines as well as `slug ===` branches** — RESOLVED
+   - Choice: **do not** assert import lines. `slug === '${slug}'` is the silent-blank failure. Import failures are already loud.
 
-3. **Whether completeness tests should open markdown and check `locale:` frontmatter**
-   - What we know: Zod schema + `[slug].astro` throw cover invalid/missing collections at build.
-   - What's unclear: existsSync-only vs parsing frontmatter.
-   - Recommendation: existence only. Parsing YAML in Vitest is extra surface; `astro build` remains the schema gate. Do not add `astro build` to this phase’s required verification (product freeze; existing ten already build).
+3. **Whether completeness tests should open markdown and check `locale:` frontmatter** — RESOLVED
+   - Choice: existence only (`existsSync` URL). Zod schema + `[slug].astro` throw remain the schema gate at `astro build`. Do not parse YAML in Vitest this phase.
 
 ## Environment Availability
 
