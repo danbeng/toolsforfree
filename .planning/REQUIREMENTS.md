@@ -64,10 +64,10 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### Word / character counter (`word-counter`)
 
-- [ ] **COUNT-01**: User sees word count, character count with spaces, character count without spaces, and line count
-- [ ] **COUNT-02**: User sees sentence and paragraph counts
-- [ ] **COUNT-03**: CJK text is counted with Unicode segmentation (`Intl.Segmenter` or equivalent) so a Chinese paragraph is not "1 word"
-- [ ] **COUNT-04**: Counts update live as the user types
+- [x] **COUNT-01**: User sees word count, character count with spaces, character count without spaces, and line count
+- [x] **COUNT-02**: User sees sentence and paragraph counts
+- [x] **COUNT-03**: CJK text is counted with Unicode segmentation (`Intl.Segmenter` or equivalent) so a Chinese paragraph is not "1 word"
+- [x] **COUNT-04**: Counts update live as the user types
 
 ### Lorem ipsum (`lorem-ipsum`)
 
@@ -161,10 +161,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAT-04 | Phase 1 | Complete |
 | CAT-05 | Phase 1 | Complete |
 | CAT-06 | Phase 1 | Complete |
-| COUNT-01 | Phase 2 | Pending |
-| COUNT-02 | Phase 2 | Pending |
-| COUNT-03 | Phase 2 | Pending |
-| COUNT-04 | Phase 2 | Pending |
+| COUNT-01 | Phase 2 | Complete |
+| COUNT-02 | Phase 2 | Complete |
+| COUNT-03 | Phase 2 | Complete |
+| COUNT-04 | Phase 2 | Complete |
 | CASE-01 | Phase 2 | Pending |
 | CASE-02 | Phase 2 | Pending |
 | CASE-03 | Phase 2 | Pending |
