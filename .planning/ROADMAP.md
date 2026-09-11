@@ -57,9 +57,20 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 02-01-PLAN.md — Word counter 8-file slice (COUNT-01..04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 02-02-PLAN.md — Case/slug converter 8-file slice (CASE-01..04)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 02-03-PLAN.md — Lorem ipsum 8-file slice (LORM-01..05)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 02-04-PLAN.md — Password generator 8-file slice (PASS-01..06)
 
 ### Phase 3: SQL formatter
