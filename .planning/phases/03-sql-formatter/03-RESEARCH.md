@@ -613,18 +613,18 @@ Planner: add a verification step that fails if `dist/_astro/JsonFormatter*.js` m
 
 No other `[ASSUMED]` implementation claims. Tree-shake **sizes** are [VERIFIED: esbuild 0.27.3 via project `node_modules/esbuild` against sql-formatter@15.8.2]. Astro-chunk isolation still needs the build gate (A1) because this session did not run `astro build` after adding the package.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 Resolved for planning — do not re-ask:
 
-1. **English error string** — `'Invalid SQL'` / ZH `'无效的 SQL'` (mirrors `'Invalid JSON'`).
-2. **Standard dialect label** — `Standard SQL` (value `sql`).
-3. **Related slugs** — `['json-formatter', 'regex-tester', 'base64']`. Do not edit existing ten.
-4. **Lib wrap** — yes, `src/lib/sql.ts`.
-5. **T-SQL import name** — `transactsql`.
-6. **Incomplete SQL** — not an error. SQL-05 = catch throw only.
-7. **Clone target** — WordCounter locale wiring + HashGenerator native select + JsonFormatter live memo. Not dirty `useToolUi`.
-8. **Tree-shake** — named `formatDialect` imports do drop unused dialect *implementations* (esbuild 59 kB vs 293 kB). `dialectNameMap` **strings** still appear in the `formatDialect` module even for one dialect. CAT-04 still requires a post-build grep of the json-formatter chunk (A1).
+1. **English error string** — RESOLVED: `'Invalid SQL'` / ZH `'无效的 SQL'` (mirrors `'Invalid JSON'`).
+2. **Standard dialect label** — RESOLVED: `Standard SQL` (value `sql`).
+3. **Related slugs** — RESOLVED: `['json-formatter', 'regex-tester', 'base64']`. Do not edit existing ten.
+4. **Lib wrap** — RESOLVED: yes, `src/lib/sql.ts`.
+5. **T-SQL import name** — RESOLVED: `transactsql`.
+6. **Incomplete SQL** — RESOLVED: not an error. SQL-05 = catch throw only.
+7. **Clone target** — RESOLVED: WordCounter locale wiring + HashGenerator native select + JsonFormatter live memo. Not dirty `useToolUi`.
+8. **Tree-shake** — RESOLVED: named `formatDialect` imports do drop unused dialect *implementations* (esbuild 59 kB vs 293 kB). `dialectNameMap` **strings** still appear in the `formatDialect` module even for one dialect. CAT-04 still requires a post-build grep of the json-formatter chunk (A1).
 
 ## Environment Availability
 
