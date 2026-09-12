@@ -70,4 +70,28 @@ describe('formatSql', () => {
     expect(zh).toContain('不是执行器');
     expect(zh).toContain('方言不是自动检测');
   });
+
+  it('imports sql-formatter only from sql.ts', () => {
+    const sqlSource = readFileSync(new URL('./sql.ts', import.meta.url), 'utf8');
+    const island = readFileSync(
+      new URL('../components/tools/SqlFormatter.tsx', import.meta.url),
+      'utf8',
+    );
+    const toolIsland = readFileSync(
+      new URL('../components/tools/ToolIsland.astro', import.meta.url),
+      'utf8',
+    );
+    const jsonLib = readFileSync(new URL('./json.ts', import.meta.url), 'utf8');
+    const jsonIsland = readFileSync(
+      new URL('../components/tools/JsonFormatter.tsx', import.meta.url),
+      'utf8',
+    );
+    expect(sqlSource).toContain("from 'sql-formatter'");
+    expect(island).toContain('formatSql');
+    expect(island).toContain('../../lib/sql');
+    expect(island).not.toMatch(/from ['"]sql-formatter['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]sql-formatter['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]sql-formatter['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]sql-formatter['"]/);
+  });
 });
