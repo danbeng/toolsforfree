@@ -129,6 +129,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['uuid-generator', 'hash-generator', 'lorem-ipsum'],
     featured: false,
   },
+  {
+    slug: 'sql-formatter',
+    name: 'SQL Formatter',
+    category: 'Format',
+    shortDescription: 'Pretty-print SQL in your browser.',
+    relatedSlugs: ['json-formatter', 'regex-tester', 'base64'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [

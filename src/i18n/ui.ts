@@ -47,6 +47,12 @@ export const ui = {
         excludeSimilar: 'Exclude similar characters',
         generate: 'Generate',
       },
+      'sql-formatter': {
+        name: 'SQL Formatter',
+        shortDescription: 'Pretty-print SQL in your browser.',
+        sql: 'SQL',
+        dialect: 'Dialect',
+      },
     },
   },
   zh: {
@@ -96,6 +102,12 @@ export const ui = {
         symbols: '符号',
         excludeSimilar: '排除相似字符',
         generate: '生成',
+      },
+      'sql-formatter': {
+        name: 'SQL 格式化',
+        shortDescription: '在浏览器里美化打印 SQL。',
+        sql: 'SQL',
+        dialect: '方言',
       },
     },
   },
