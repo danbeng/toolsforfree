@@ -86,10 +86,11 @@ Plans:
   3. User can copy formatted SQL; invalid SQL shows an error instead of silently mangling the input
   4. FAQ states the tool is not an executor and dialect is not autodetection; EN+ZH catalog pages exist; json-formatter does not inherit the SQL chunk
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans executed
 
 Plans:
-- [ ] 03-01-PLAN.md — SQL formatter 8-file slice plus CAT-04 bundle isolation
+
+- [x] 03-01-PLAN.md — SQL formatter 8-file slice plus CAT-04 bundle isolation
 
 ### Phase 4: Text Diff
 
@@ -150,7 +151,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
 | 2. Light text and generate tools | 4/4 | Complete    | 2026-09-12 |
-| 3. SQL formatter | 0/1 | Not started | - |
+| 3. SQL formatter | 1/1 | In Progress|  |
 | 4. Text Diff | 0/TBD | Not started | - |
 | 5. Markdown preview | 0/TBD | Not started | - |
 | 6. QR generate and decode | 0/TBD | Not started | - |
