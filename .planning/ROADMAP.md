@@ -12,7 +12,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Additive tool contract** - Completeness harness, island-split rule, and no-rewrite of the existing ten (completed 2026-09-11)
-- [ ] **Phase 2: Light text and generate tools** - Word counter, case/slug, lorem, and password generator at catalog parity
+- [x] **Phase 2: Light text and generate tools** - Word counter, case/slug, lorem, and password generator at catalog parity (completed 2026-09-12)
 - [ ] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects
 - [ ] **Phase 4: Text Diff** - Two-pane line-level diff with stats and whitespace ignore
 - [ ] **Phase 5: Markdown preview** - Sanitized GFM preview with no remote-image fetch
@@ -54,7 +54,7 @@ Plans:
   4. User can generate a password on `password-generator` (length 8–128, default 16; charset toggles; exclude similar; `crypto.getRandomValues` with rejection sampling), copy and regenerate, and see an error if the charset is empty
   5. All four tools are in the catalog with locked slugs, `relatedSlugs`, `featured: false`, EN+ZH markdown/FAQ, live compute, copy, size guard, and matching `ZH_ERRORS`; completeness tests from Phase 1 stay green
 
-**Plans:** 4/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -146,7 +146,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
-| 2. Light text and generate tools | 4/4 | In Progress|  |
+| 2. Light text and generate tools | 4/4 | Complete    | 2026-09-12 |
 | 3. SQL formatter | 0/TBD | Not started | - |
 | 4. Text Diff | 0/TBD | Not started | - |
 | 5. Markdown preview | 0/TBD | Not started | - |

@@ -48,19 +48,19 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### Case / Slug converter (`case-converter`)
 
-- [ ] **CASE-01**: One paste fans out to UPPER, lower, Title, camelCase, PascalCase, snake_case, kebab-case, and CONSTANT_CASE
-- [ ] **CASE-02**: User also gets a URL slug (lowercase kebab, strip punctuation/marks, collapse repeat hyphens)
-- [ ] **CASE-03**: CJK letters are preserved in the slug (Han must not collapse to empty)
-- [ ] **CASE-04**: User can copy each output row
+- [x] **CASE-01**: One paste fans out to UPPER, lower, Title, camelCase, PascalCase, snake_case, kebab-case, and CONSTANT_CASE
+- [x] **CASE-02**: User also gets a URL slug (lowercase kebab, strip punctuation/marks, collapse repeat hyphens)
+- [x] **CASE-03**: CJK letters are preserved in the slug (Han must not collapse to empty)
+- [x] **CASE-04**: User can copy each output row
 
 ### Password generator (`password-generator`)
 
-- [ ] **PASS-01**: User can set length 8–128 (default 16) and generate a password
-- [ ] **PASS-02**: User can toggle lowercase, uppercase, digits, and symbols
-- [ ] **PASS-03**: User can exclude similar characters (i/l/1/O/0)
-- [ ] **PASS-04**: Generation uses `crypto.getRandomValues` with rejection sampling (not `Math.random`, not biased modulo)
-- [ ] **PASS-05**: User can copy the result and regenerate
-- [ ] **PASS-06**: Empty charset shows an error instead of generating
+- [x] **PASS-01**: User can set length 8–128 (default 16) and generate a password
+- [x] **PASS-02**: User can toggle lowercase, uppercase, digits, and symbols
+- [x] **PASS-03**: User can exclude similar characters (i/l/1/O/0)
+- [x] **PASS-04**: Generation uses `crypto.getRandomValues` with rejection sampling (not `Math.random`, not biased modulo)
+- [x] **PASS-05**: User can copy the result and regenerate
+- [x] **PASS-06**: Empty charset shows an error instead of generating
 
 ### Word / character counter (`word-counter`)
 
@@ -71,11 +71,11 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### Lorem ipsum (`lorem-ipsum`)
 
-- [ ] **LORM-01**: User can generate dummy text from a local corpus (no network fetch)
-- [ ] **LORM-02**: User can generate by paragraphs or by words
-- [ ] **LORM-03**: User can toggle the classic "Lorem ipsum dolor sit amet" opening
-- [ ] **LORM-04**: User can copy the result
-- [ ] **LORM-05**: Generated body is Latin dummy text; chrome/labels are EN+ZH
+- [x] **LORM-01**: User can generate dummy text from a local corpus (no network fetch)
+- [x] **LORM-02**: User can generate by paragraphs or by words
+- [x] **LORM-03**: User can toggle the classic "Lorem ipsum dolor sit amet" opening
+- [x] **LORM-04**: User can copy the result
+- [x] **LORM-05**: Generated body is Latin dummy text; chrome/labels are EN+ZH
 
 ### QR code (`qr-code`)
 
@@ -165,21 +165,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COUNT-02 | Phase 2 | Complete |
 | COUNT-03 | Phase 2 | Complete |
 | COUNT-04 | Phase 2 | Complete |
-| CASE-01 | Phase 2 | Pending |
-| CASE-02 | Phase 2 | Pending |
-| CASE-03 | Phase 2 | Pending |
-| CASE-04 | Phase 2 | Pending |
-| LORM-01 | Phase 2 | Pending |
-| LORM-02 | Phase 2 | Pending |
-| LORM-03 | Phase 2 | Pending |
-| LORM-04 | Phase 2 | Pending |
-| LORM-05 | Phase 2 | Pending |
-| PASS-01 | Phase 2 | Pending |
-| PASS-02 | Phase 2 | Pending |
-| PASS-03 | Phase 2 | Pending |
-| PASS-04 | Phase 2 | Pending |
-| PASS-05 | Phase 2 | Pending |
-| PASS-06 | Phase 2 | Pending |
+| CASE-01 | Phase 2 | Complete |
+| CASE-02 | Phase 2 | Complete |
+| CASE-03 | Phase 2 | Complete |
+| CASE-04 | Phase 2 | Complete |
+| LORM-01 | Phase 2 | Complete |
+| LORM-02 | Phase 2 | Complete |
+| LORM-03 | Phase 2 | Complete |
+| LORM-04 | Phase 2 | Complete |
+| LORM-05 | Phase 2 | Complete |
+| PASS-01 | Phase 2 | Complete |
+| PASS-02 | Phase 2 | Complete |
+| PASS-03 | Phase 2 | Complete |
+| PASS-04 | Phase 2 | Complete |
+| PASS-05 | Phase 2 | Complete |
+| PASS-06 | Phase 2 | Complete |
 | SQL-01 | Phase 3 | Pending |
 | SQL-02 | Phase 3 | Pending |
 | SQL-03 | Phase 3 | Pending |
