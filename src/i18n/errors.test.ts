@@ -50,3 +50,19 @@ describe('password-generator chrome and errors', () => {
     }
   });
 });
+
+describe('sql-formatter chrome and errors', () => {
+  it('maps Invalid SQL in ZH_ERRORS', () => {
+    expect(ZH_ERRORS['Invalid SQL']).toBe('无效的 SQL');
+    expect(localizeError('zh', 'Invalid SQL')).toBe('无效的 SQL');
+    expect(localizeError('en', 'Invalid SQL')).toBe('Invalid SQL');
+  });
+
+  it('shares sql-formatter chrome keys on en and zh', () => {
+    const keys = ['name', 'shortDescription', 'sql', 'dialect'];
+    for (const key of keys) {
+      expect(ui.en.tools['sql-formatter']).toHaveProperty(key);
+      expect(ui.zh.tools['sql-formatter']).toHaveProperty(key);
+    }
+  });
+});
