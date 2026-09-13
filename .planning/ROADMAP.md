@@ -13,7 +13,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
 
 - [x] **Phase 1: Additive tool contract** - Completeness harness, island-split rule, and no-rewrite of the existing ten (completed 2026-09-11)
 - [x] **Phase 2: Light text and generate tools** - Word counter, case/slug, lorem, and password generator at catalog parity (completed 2026-09-12)
-- [ ] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects
+- [x] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects (completed 2026-09-13)
 - [ ] **Phase 4: Text Diff** - Two-pane line-level diff with stats and whitespace ignore
 - [ ] **Phase 5: Markdown preview** - Sanitized GFM preview with no remote-image fetch
 - [ ] **Phase 6: QR generate and decode** - PNG QR from text plus in-browser file decode, no camera
@@ -86,7 +86,7 @@ Plans:
   3. User can copy formatted SQL; invalid SQL shows an error instead of silently mangling the input
   4. FAQ states the tool is not an executor and dialect is not autodetection; EN+ZH catalog pages exist; json-formatter does not inherit the SQL chunk
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -151,7 +151,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
 | 2. Light text and generate tools | 4/4 | Complete    | 2026-09-12 |
-| 3. SQL formatter | 1/1 | In Progress|  |
+| 3. SQL formatter | 1/1 | Complete    | 2026-09-13 |
 | 4. Text Diff | 0/TBD | Not started | - |
 | 5. Markdown preview | 0/TBD | Not started | - |
 | 6. QR generate and decode | 0/TBD | Not started | - |

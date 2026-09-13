@@ -39,12 +39,12 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### SQL formatter (`sql-formatter`)
 
-- [ ] **SQL-01**: User can paste SQL and see pretty-printed output as they type
-- [ ] **SQL-02**: User can choose dialect from a short list: Standard, PostgreSQL, MySQL, SQLite, T-SQL, BigQuery (named `formatDialect` imports; not `format()` + string language)
-- [ ] **SQL-03**: Keywords are UPPERCASE and indent is 2 spaces by default
-- [ ] **SQL-04**: User can copy formatted SQL
-- [ ] **SQL-05**: Invalid SQL shows an error instead of silently mangling the input
-- [ ] **SQL-06**: FAQ states the tool is not an executor and dialect is not autodetection
+- [x] **SQL-01**: User can paste SQL and see pretty-printed output as they type
+- [x] **SQL-02**: User can choose dialect from a short list: Standard, PostgreSQL, MySQL, SQLite, T-SQL, BigQuery (named `formatDialect` imports; not `format()` + string language)
+- [x] **SQL-03**: Keywords are UPPERCASE and indent is 2 spaces by default
+- [x] **SQL-04**: User can copy formatted SQL
+- [x] **SQL-05**: Invalid SQL shows an error instead of silently mangling the input
+- [x] **SQL-06**: FAQ states the tool is not an executor and dialect is not autodetection
 
 ### Case / Slug converter (`case-converter`)
 
@@ -180,12 +180,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PASS-04 | Phase 2 | Complete |
 | PASS-05 | Phase 2 | Complete |
 | PASS-06 | Phase 2 | Complete |
-| SQL-01 | Phase 3 | Pending |
-| SQL-02 | Phase 3 | Pending |
-| SQL-03 | Phase 3 | Pending |
-| SQL-04 | Phase 3 | Pending |
-| SQL-05 | Phase 3 | Pending |
-| SQL-06 | Phase 3 | Pending |
+| SQL-01 | Phase 3 | Complete |
+| SQL-02 | Phase 3 | Complete |
+| SQL-03 | Phase 3 | Complete |
+| SQL-04 | Phase 3 | Complete |
+| SQL-05 | Phase 3 | Complete |
+| SQL-06 | Phase 3 | Complete |
 | DIFF-01 | Phase 4 | Pending |
 | DIFF-02 | Phase 4 | Pending |
 | DIFF-03 | Phase 4 | Pending |
