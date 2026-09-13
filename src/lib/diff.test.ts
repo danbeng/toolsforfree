@@ -86,4 +86,28 @@ describe('diffText', () => {
     expect(en.toLowerCase()).toMatch(/nothing is uploaded/);
     expect(zh).toContain('不会上传');
   });
+
+  it('imports the diff package only from diff.ts', () => {
+    const diffSource = readFileSync(new URL('./diff.ts', import.meta.url), 'utf8');
+    const island = readFileSync(
+      new URL('../components/tools/TextDiff.tsx', import.meta.url),
+      'utf8',
+    );
+    const toolIsland = readFileSync(
+      new URL('../components/tools/ToolIsland.astro', import.meta.url),
+      'utf8',
+    );
+    const jsonLib = readFileSync(new URL('./json.ts', import.meta.url), 'utf8');
+    const jsonIsland = readFileSync(
+      new URL('../components/tools/JsonFormatter.tsx', import.meta.url),
+      'utf8',
+    );
+    expect(diffSource).toContain("from 'diff'");
+    expect(island).toContain('diffText');
+    expect(island).toContain('../../lib/diff');
+    expect(island).not.toMatch(/from ['"]diff['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]diff['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]diff['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]diff['"]/);
+  });
 });
