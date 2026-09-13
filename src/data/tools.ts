@@ -137,6 +137,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['json-formatter', 'regex-tester', 'base64'],
     featured: false,
   },
+  {
+    slug: 'text-diff',
+    name: 'Text Diff',
+    category: 'Text',
+    shortDescription: 'Compare two texts line by line in your browser.',
+    relatedSlugs: ['word-counter', 'case-converter', 'json-formatter'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [

@@ -41,3 +41,29 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 @media (min-width: 720px) {
   .tool-grid.split { grid-template-columns: 1fr 1fr; }
 }
+.diff-lines {
+  max-height: 384px;
+  overflow-y: auto;
+  overflow-x: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.diff-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border-left: 3px solid transparent;
+  padding-left: 4px;
+}
+.diff-line--add {
+  color: #3dd68c;
+  background: #13291f;
+  border-left-color: #3dd68c;
+}
+.diff-line--del {
+  color: #f07178;
+  border-left-color: #f07178;
+}
+.diff-line--eq {
+  color: var(--muted);
+}
