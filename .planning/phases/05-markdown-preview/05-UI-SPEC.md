@@ -1,10 +1,11 @@
 ---
 phase: "5"
 slug: "markdown-preview"
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: "2026-09-13"
+reviewed_at: "2026-09-13T14:30:00Z"
 ---
 
 # Phase 5 — UI Design Contract
@@ -202,12 +203,12 @@ Applicable state considerations resolved: 8 covered, 0 backstop, 0 unresolved. L
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
-- [ ] Dimension 7 Inventory Provenance: PASS
+- [x] Dimension 1 Copywriting: PASS (FLAG accepted: ToolShell `Copy` is locked chrome)
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
+- [x] Dimension 7 Inventory Provenance: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-09-13 — 7/7 PASS (Dim 1 FLAG is locked ToolShell Copy).
