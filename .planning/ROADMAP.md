@@ -106,7 +106,12 @@ Plans:
   4. Identical texts show a clear "No differences" state
   5. EN+ZH pages, catalog entry, related tools, and copy chrome exist for `text-diff`
 
-**Plans**: TBD
+**Plans:** 1/1 plans
+
+Plans:
+
+- [ ] 04-01-PLAN.md — Text Diff 8-file slice plus CAT-04 bundle isolation
+
 **UI hint**: yes
 
 ### Phase 5: Markdown preview
@@ -152,6 +157,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Additive tool contract | 1/1 | Complete    | 2026-09-11 |
 | 2. Light text and generate tools | 4/4 | Complete    | 2026-09-12 |
 | 3. SQL formatter | 1/1 | Complete    | 2026-09-13 |
-| 4. Text Diff | 0/TBD | Not started | - |
+| 4. Text Diff | 0/1 | Planned | - |
 | 5. Markdown preview | 0/TBD | Not started | - |
 | 6. QR generate and decode | 0/TBD | Not started | - |
