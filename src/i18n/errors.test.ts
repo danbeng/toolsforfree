@@ -66,3 +66,28 @@ describe('sql-formatter chrome and errors', () => {
     }
   });
 });
+
+describe('text-diff chrome', () => {
+  it('shares text-diff chrome keys on en and zh', () => {
+    const keys = [
+      'name',
+      'shortDescription',
+      'original',
+      'changed',
+      'added',
+      'removed',
+      'ignoreWhitespace',
+      'noDifferences',
+      'emptyHeading',
+      'emptyBody',
+      'noDifferencesBody',
+      'tooLargeOriginal',
+      'tooLargeChanged',
+      'tooLargeBoth',
+    ];
+    for (const key of keys) {
+      expect(ui.en.tools['text-diff']).toHaveProperty(key);
+      expect(ui.zh.tools['text-diff']).toHaveProperty(key);
+    }
+  });
+});
