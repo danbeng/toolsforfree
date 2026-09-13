@@ -1,10 +1,11 @@
 ---
 phase: "4"
 slug: "text-diff"
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: "2026-09-13"
+reviewed_at: "2026-09-13T05:20:00Z"
 ---
 
 # Phase 4 — UI Design Contract
@@ -127,6 +128,8 @@ Stats display: `{n} {added}` and `{n} {removed}` with the numeric `n` at Stat ro
 
 ## Layout
 
+**Primary visual anchor:** After either pane has text, the per-line `diff-lines` list (or the No differences heading when texts match) is the island's focal point. While both panes are empty, the two textareas are the anchor. Stats numbers (20px/600) support the list; they are not the focal point.
+
 Vertical order **inside** `ToolShell` children, then the existing error + output wrap:
 
 1. **Stats row** — two `.tool-card` tiles (Added, Removed) in a 2-column grid. Hidden when both panes are empty (idle). Visible whenever at least one pane has characters, including identical texts (`0` / `0`).
@@ -193,12 +196,12 @@ Applicable state considerations resolved: 8 covered, 0 backstop, 0 unresolved. L
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
-- [ ] Dimension 7 Inventory Provenance: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS (FLAG resolved: primary visual anchor declared in Layout)
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
+- [x] Dimension 7 Inventory Provenance: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-09-13 — 7/7 PASS after Dimension 2 FLAG closed in Layout.
