@@ -30,12 +30,12 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### Text Diff (`text-diff`)
 
-- [ ] **DIFF-01**: User can paste original and changed text in two panes
-- [ ] **DIFF-02**: User sees line-level add/delete highlighting (not only a unified dump in `<pre>`)
-- [ ] **DIFF-03**: User can ignore leading/trailing whitespace
-- [ ] **DIFF-04**: User sees lines-added and lines-removed stats
-- [ ] **DIFF-05**: Identical texts show a clear "No differences" state
-- [ ] **DIFF-06**: Each pane is size-capped (existing char limit applied per side)
+- [x] **DIFF-01**: User can paste original and changed text in two panes
+- [x] **DIFF-02**: User sees line-level add/delete highlighting (not only a unified dump in `<pre>`)
+- [x] **DIFF-03**: User can ignore leading/trailing whitespace
+- [x] **DIFF-04**: User sees lines-added and lines-removed stats
+- [x] **DIFF-05**: Identical texts show a clear "No differences" state
+- [x] **DIFF-06**: Each pane is size-capped (existing char limit applied per side)
 
 ### SQL formatter (`sql-formatter`)
 
@@ -186,12 +186,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SQL-04 | Phase 3 | Complete |
 | SQL-05 | Phase 3 | Complete |
 | SQL-06 | Phase 3 | Complete |
-| DIFF-01 | Phase 4 | Pending |
-| DIFF-02 | Phase 4 | Pending |
-| DIFF-03 | Phase 4 | Pending |
-| DIFF-04 | Phase 4 | Pending |
-| DIFF-05 | Phase 4 | Pending |
-| DIFF-06 | Phase 4 | Pending |
+| DIFF-01 | Phase 4 | Complete |
+| DIFF-02 | Phase 4 | Complete |
+| DIFF-03 | Phase 4 | Complete |
+| DIFF-04 | Phase 4 | Complete |
+| DIFF-05 | Phase 4 | Complete |
+| DIFF-06 | Phase 4 | Complete |
 | MD-01 | Phase 5 | Pending |
 | MD-02 | Phase 5 | Pending |
 | MD-03 | Phase 5 | Pending |
