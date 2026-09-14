@@ -148,6 +148,45 @@ describe('QrCode island source', () => {
   });
 });
 
+describe('qr package isolation', () => {
+  it('imports qr and qr/decode.js only from qr.ts', () => {
+    const qrSource = readFileSync(new URL('./qr.ts', import.meta.url), 'utf8');
+    const island = readFileSync(
+      new URL('../components/tools/QrCode.tsx', import.meta.url),
+      'utf8',
+    );
+    const toolIsland = readFileSync(
+      new URL('../components/tools/ToolIsland.astro', import.meta.url),
+      'utf8',
+    );
+    const jsonLib = readFileSync(new URL('./json.ts', import.meta.url), 'utf8');
+    const jsonIsland = readFileSync(
+      new URL('../components/tools/JsonFormatter.tsx', import.meta.url),
+      'utf8',
+    );
+    expect(qrSource).toContain("from 'qr'");
+    expect(qrSource).toContain("from 'qr/decode.js'");
+    expect(qrSource).not.toMatch(/from ['"]qr\/dom\.js['"]/);
+    expect(qrSource).not.toMatch(/from ['"]jsdom['"]/);
+    expect(island).toContain('encodeQr');
+    expect(island).toContain('decodeQr');
+    expect(island).toContain('../../lib/qr');
+    expect(island).not.toMatch(/from ['"]qr['"]/);
+    expect(island).not.toMatch(/from ['"]qr\/decode\.js['"]/);
+    expect(island).not.toMatch(/from ['"]qr\/dom\.js['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]qr['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]qr\/decode\.js['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]qr\/dom\.js['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]qr['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]qr\/decode\.js['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]qr\/dom\.js['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]qr['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]qr\/decode\.js['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]qr\/dom\.js['"]/);
+    expect(qrSource + island).not.toMatch(/getUserMedia|mediaDevices|rearCamera|selfieCamera/);
+  });
+});
+
 describe('qr-code FAQ', () => {
   it('locks EN and ZH local-only and never-camera wording', () => {
     const en = readFileSync(new URL('../content/tools/qr-code.md', import.meta.url), 'utf8');
