@@ -15,6 +15,7 @@ import LoremIpsum from './LoremIpsum';
 import PasswordGenerator from './PasswordGenerator';
 import SqlFormatter from './SqlFormatter';
 import TextDiff from './TextDiff';
+import MarkdownPreview from './MarkdownPreview';
 
 interface Props { slug: string; locale?: 'en' | 'zh' }
 const { slug, locale = 'en' } = Astro.props;
@@ -35,3 +36,4 @@ const { slug, locale = 'en' } = Astro.props;
 {slug === 'password-generator' && <PasswordGenerator client:load locale={locale} />}
 {slug === 'sql-formatter' && <SqlFormatter client:load locale={locale} />}
 {slug === 'text-diff' && <TextDiff client:load locale={locale} />}
+{slug === 'markdown-preview' && <MarkdownPreview client:load locale={locale} />}

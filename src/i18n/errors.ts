@@ -4,6 +4,7 @@ export const ZH_ERRORS: Record<string, string> = {
   'Select at least one character set': '请至少选择一种字符集',
   'Length must be between 8 and 128': '长度必须在 8 到 128 之间',
   'Invalid SQL': '无效的 SQL',
+  'Input too large to process in the browser.': '输入过长，无法在浏览器中处理。',
 };
 
 export function localizeError(locale: 'en' | 'zh', error: string | null): string | null {

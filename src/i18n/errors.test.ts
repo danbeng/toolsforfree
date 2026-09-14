@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { ZH_ERRORS, localizeError } from './errors';
 import { ui } from './ui';
+import { INPUT_TOO_LARGE_MSG } from '../lib/limits';
 
 describe('lorem-ipsum chrome and errors', () => {
   it('maps Enter a count of at least 1 in ZH_ERRORS', () => {
@@ -89,5 +90,23 @@ describe('text-diff chrome', () => {
       expect(ui.en.tools['text-diff']).toHaveProperty(key);
       expect(ui.zh.tools['text-diff']).toHaveProperty(key);
     }
+  });
+});
+
+describe('markdown-preview chrome and errors', () => {
+  it('shares markdown-preview chrome keys on en and zh', () => {
+    const keys = ['name', 'shortDescription', 'markdown', 'preview'];
+    for (const key of keys) {
+      expect(ui.en.tools['markdown-preview']).toHaveProperty(key);
+      expect(ui.zh.tools['markdown-preview']).toHaveProperty(key);
+    }
+  });
+
+  it('maps INPUT_TOO_LARGE_MSG in ZH_ERRORS', () => {
+    expect(ZH_ERRORS[INPUT_TOO_LARGE_MSG]).toBe('输入过长，无法在浏览器中处理。');
+    expect(localizeError('zh', INPUT_TOO_LARGE_MSG)).toBe(
+      '输入过长，无法在浏览器中处理。',
+    );
+    expect(localizeError('en', INPUT_TOO_LARGE_MSG)).toBe(INPUT_TOO_LARGE_MSG);
   });
 });

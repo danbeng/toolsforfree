@@ -145,6 +145,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['word-counter', 'case-converter', 'json-formatter'],
     featured: false,
   },
+  {
+    slug: 'markdown-preview',
+    name: 'Markdown Preview',
+    category: 'Format',
+    shortDescription: 'Preview GitHub-flavored Markdown in your browser.',
+    relatedSlugs: ['json-formatter', 'text-diff', 'word-counter'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [

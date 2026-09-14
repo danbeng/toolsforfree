@@ -69,6 +69,12 @@ export const ui = {
         tooLargeChanged: 'Changed text is too large to process in the browser.',
         tooLargeBoth: 'Original and changed text are too large to process in the browser.',
       },
+      'markdown-preview': {
+        name: 'Markdown Preview',
+        shortDescription: 'Preview GitHub-flavored Markdown in your browser.',
+        markdown: 'Markdown',
+        preview: 'Preview',
+      },
     },
   },
   zh: {
@@ -140,6 +146,12 @@ export const ui = {
         tooLargeOriginal: '原文过长，无法在浏览器中处理。',
         tooLargeChanged: '改后文本过长，无法在浏览器中处理。',
         tooLargeBoth: '原文和改后文本都过长，无法在浏览器中处理。',
+      },
+      'markdown-preview': {
+        name: 'Markdown 预览',
+        shortDescription: '在浏览器里预览 GitHub 风格 Markdown。',
+        markdown: 'Markdown',
+        preview: '预览',
       },
     },
   },

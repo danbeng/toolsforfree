@@ -9,8 +9,8 @@ import {
 } from './tools';
 
 describe('TOOLS registry', () => {
-  it('has exactly 16 tools', () => {
-    expect(TOOLS).toHaveLength(16);
+  it('has exactly 17 tools', () => {
+    expect(TOOLS).toHaveLength(17);
   });
 
   it('uses unique slugs', () => {
