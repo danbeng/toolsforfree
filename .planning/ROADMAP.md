@@ -15,7 +15,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
 - [x] **Phase 2: Light text and generate tools** - Word counter, case/slug, lorem, and password generator at catalog parity (completed 2026-09-12)
 - [x] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects (completed 2026-09-13)
 - [x] **Phase 4: Text Diff** - Two-pane line-level diff with stats and whitespace ignore (completed 2026-09-13)
-- [ ] **Phase 5: Markdown preview** - Sanitized GFM preview with no remote-image fetch
+- [x] **Phase 5: Markdown preview** - Sanitized GFM preview with no remote-image fetch (completed 2026-09-14)
 - [ ] **Phase 6: QR generate and decode** - PNG QR from text plus in-browser file decode, no camera
 
 ## Phase Details
@@ -128,10 +128,11 @@ Plans:
   4. User can copy the sanitized HTML; empty input shows an empty preview, not placeholder copy
   5. EN+ZH pages and catalog wiring exist; `marked` and DOMPurify load only on this tool's page
 
-**Plans:** 1 plans
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 05-01-PLAN.md — Markdown preview 8-file slice plus CAT-04 bundle isolation
+
+- [x] 05-01-PLAN.md — Markdown preview 8-file slice plus CAT-04 bundle isolation
 
 **UI hint**: yes
 
@@ -162,5 +163,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Light text and generate tools | 4/4 | Complete    | 2026-09-12 |
 | 3. SQL formatter | 1/1 | Complete    | 2026-09-13 |
 | 4. Text Diff | 1/1 | Complete    | 2026-09-13 |
-| 5. Markdown preview | 0/1 | Not started | - |
+| 5. Markdown preview | 1/1 | Complete    | 2026-09-14 |
 | 6. QR generate and decode | 0/TBD | Not started | - |

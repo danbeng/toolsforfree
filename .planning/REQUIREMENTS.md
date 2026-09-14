@@ -22,11 +22,11 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### Markdown preview (`markdown-preview`)
 
-- [ ] **MD-01**: User can paste Markdown and see a live GFM preview (headings, lists, links, code fences, tables, strikethrough, task lists)
-- [ ] **MD-02**: Preview HTML is sanitized with DOMPurify before render (Marked's removed `sanitize` option is never used)
-- [ ] **MD-03**: Remote images are forbidden by default so the preview does not fetch the network
-- [ ] **MD-04**: User can copy the sanitized HTML
-- [ ] **MD-05**: Empty input shows an empty preview, not placeholder copy
+- [x] **MD-01**: User can paste Markdown and see a live GFM preview (headings, lists, links, code fences, tables, strikethrough, task lists)
+- [x] **MD-02**: Preview HTML is sanitized with DOMPurify before render (Marked's removed `sanitize` option is never used)
+- [x] **MD-03**: Remote images are forbidden by default so the preview does not fetch the network
+- [x] **MD-04**: User can copy the sanitized HTML
+- [x] **MD-05**: Empty input shows an empty preview, not placeholder copy
 
 ### Text Diff (`text-diff`)
 
@@ -192,11 +192,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DIFF-04 | Phase 4 | Complete |
 | DIFF-05 | Phase 4 | Complete |
 | DIFF-06 | Phase 4 | Complete |
-| MD-01 | Phase 5 | Pending |
-| MD-02 | Phase 5 | Pending |
-| MD-03 | Phase 5 | Pending |
-| MD-04 | Phase 5 | Pending |
-| MD-05 | Phase 5 | Pending |
+| MD-01 | Phase 5 | Complete |
+| MD-02 | Phase 5 | Complete |
+| MD-03 | Phase 5 | Complete |
+| MD-04 | Phase 5 | Complete |
+| MD-05 | Phase 5 | Complete |
 | QR-01 | Phase 6 | Pending |
 | QR-02 | Phase 6 | Pending |
 | QR-03 | Phase 6 | Pending |

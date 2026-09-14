@@ -25,16 +25,16 @@ A visitor can open any of the eight new tools, run it entirely in the browser, a
 - ✓ EN + ZH tool pages, header/footer, lang switch, sitemap — existing
 - ✓ Tool catalog (`src/data/tools.ts`) as routing source of truth — existing
 - ✓ Browser-local processors in `src/lib` + Preact islands + ToolShell — existing
+- ✓ Word / character counter — Phase 2
+- ✓ Case / Slug converter — Phase 2
+- ✓ Lorem ipsum generator — Phase 2
+- ✓ Password generator — Phase 2
+- ✓ SQL formatter — Phase 3
+- ✓ Text Diff — Phase 4
+- ✓ Markdown preview (sanitized GFM, remote images stripped) — Phase 5
 
 ### Active
 
-- [ ] Markdown preview (render Markdown to HTML in the browser)
-- [ ] Text Diff (compare two texts, show a readable diff)
-- [ ] SQL formatter (pretty-print SQL in the browser)
-- [ ] Case / Slug converter (upper/lower/title/camel/snake/kebab + URL slug)
-- [ ] Password generator (length, charset options, copy result)
-- [ ] Word / character counter (counts for pasted text)
-- [ ] Lorem ipsum generator (paragraphs/words, copy result)
 - [ ] QR code generate + decode (text/URL → QR image download; image → decoded text, still in-browser)
 
 Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via ToolIsland/ToolShell, catalog entry + related slugs, EN and ZH routes, content-collection SEO/how-to/FAQ in both locales.
@@ -70,11 +70,11 @@ Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | — Pending |
-| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product, not a follow-up | — Pending |
-| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | — Pending |
-| No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | — Pending |
-| Brownfield additive milestone, not a greenfield site | Code and map already exist | — Pending |
+| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | 7/8 shipped through Phase 5; QR remains |
+| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product, not a follow-up | Honored through Phase 5 (catalog 17, featured 6) |
+| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Pending Phase 6 |
+| No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
+| Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
 
 ## Evolution
 
@@ -94,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-11 after initialization*
+*Last updated: 2026-09-14 after Phase 5*

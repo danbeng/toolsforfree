@@ -1,19 +1,19 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 4
-current_phase_name: Text Diff
+current_phase: 6
+current_phase_name: QR generate and decode
 current_plan: Not started
 status: planning
-stopped_at: Phase 03 complete, ready to plan Phase 4
-last_updated: "2026-09-13T01:38:04.506Z"
-last_activity: 2026-09-13
-last_activity_desc: Phase 03 complete, transitioned to Phase 4
-state_head: 54740f3609907b67bcd59b24d4bbfc4302e03572
+stopped_at: Phase 5 complete, ready to plan Phase 6
+last_updated: "2026-09-14T08:35:22.257Z"
+last_activity: 2026-09-14
+last_activity_desc: Phase 5 complete, transitioned to Phase 6
+state_head: 4492d84d411620bf42e18c0c8f0bafe451420cb5
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 8
+  completed_plans: 8
   percent: 17
 ---
 
@@ -21,18 +21,18 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-11)
+See: .planning/PROJECT.md (updated 2026-09-14)
 
 **Core value:** A visitor can open any of the eight new tools, run it entirely in the browser, and get a correct result without sending data anywhere — with the same EN/ZH, SEO, and catalog treatment as the tools already shipped.
-**Current focus:** Phase 03 — SQL formatter
+**Current focus:** Phase 6 — QR generate and decode
 
 ## Current Position
 
-Phase: 4 — Text Diff
+Phase: 6 — QR generate and decode
 Current Plan: Not started
 Total Plans in Phase: 1
 Status: Ready to plan
-Last activity: 2026-09-13 — Phase 03 complete, transitioned to Phase 4
+Last activity: 2026-09-14 — Phase 5 complete, transitioned to Phase 6
 
 Progress: [██░░░░░░░░] 17%
 
@@ -40,7 +40,7 @@ Progress: [██░░░░░░░░] 17%
 
 **Velocity:**
 
-- Total plans completed: 6
+- Total plans completed: 8
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -51,6 +51,8 @@ Progress: [██░░░░░░░░] 17%
 | 1 | 1 | - | - |
 | 02 | 4 | - | - |
 | 03 | 1 | - | - |
+| 4 | 1 | - | - |
+| 5 | 1 | - | - |
 
 **Recent Trend:**
 
@@ -87,10 +89,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 1 planning should confirm ToolIsland dynamic import vs per-slug wrappers (bundler)
-- Phase 3: confirm `formatDialect` tree-shakes in Astro 7 / Vite
-- Phase 5: DOMPurify config (forbid img vs hook)
-- Phase 6: `qr@0.7` file-decode quality; spike before locking decode path
+- Phase 6: spike generate + in-browser file-decode libraries before locking (no camera / getUserMedia)
+- Dirty main i18n/pages/visual CSS remains uncommitted; do not pop stash@{0}
 
 ## Deferred Items
 
@@ -100,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-11T06:08:45.651Z
-Stopped at: Phase 03 complete, ready to plan Phase 4
-Resume file: None
+Last session: 2026-09-14T08:40:00Z
+Stopped at: Phase 5 complete, ready to plan Phase 6
+Resume file: .planning/ROADMAP.md

@@ -1,9 +1,10 @@
 ---
 phase: 05-markdown-preview
 verified: 2026-09-14T05:27:14Z
-status: human_needed
+status: passed
 score: 7/7 must-haves verified
 covered_files:
+
   - .planning/REQUIREMENTS.md
   - .planning/phases/05-markdown-preview/05-01-PLAN.md
   - .planning/phases/05-markdown-preview/05-01-SUMMARY.md
@@ -21,6 +22,7 @@ covered_files:
   - src/lib/markdown.test.ts
   - src/lib/markdown.ts
   - src/styles/global.css
+
 covered_digest: "v1:sha256:a4e3b267d433f5c47e6a7929f94591938556c8abb29cd8ce5c8dee3316bf41a8"
 behavior_unverified: 0
 overrides_applied: 0
@@ -30,6 +32,7 @@ decision_coverage:
   not_honored: []
   reason: no trackable decisions
 human_verification:
+
   - test: "Open /tools/markdown-preview/ (and /zh/tools/markdown-preview/ if that tree is being served): Markdown source left/top and Preview right/bottom; paste headings/lists/tables/tasks/fences and see live HTML in .md-preview without a Generate button; empty source leaves the preview blank with no Start typing copy; paste a script tag and a remote image — no alert, no network image request, no broken-image icon; Copy writes sanitized HTML not source Markdown; oversize source shows 输入过长，无法在浏览器中处理。 on ZH or the English too-large string on EN; homepage featured count still six."
     expected: "Split layout (side-by-side at 720px, stacked below, source first); live GFM in .md-preview; blank idle pane with Copy disabled; XSS/img stripped with no network fetch; Copy payload is sanitized HTML; too-large uses INPUT_TOO_LARGE_MSG / ZH map and skips parse; featured stays six."
     why_human: "PLAN deferred this to end-of-phase human-check. No jsdom/tsx island tests. Grep cannot see clipboard contents, 720px split, live typing, network panel, or ZH chrome in a real browser."
