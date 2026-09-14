@@ -16,6 +16,7 @@ import PasswordGenerator from './PasswordGenerator';
 import SqlFormatter from './SqlFormatter';
 import TextDiff from './TextDiff';
 import MarkdownPreview from './MarkdownPreview';
+import QrCode from './QrCode';
 
 interface Props { slug: string; locale?: 'en' | 'zh' }
 const { slug, locale = 'en' } = Astro.props;
@@ -37,3 +38,4 @@ const { slug, locale = 'en' } = Astro.props;
 {slug === 'sql-formatter' && <SqlFormatter client:load locale={locale} />}
 {slug === 'text-diff' && <TextDiff client:load locale={locale} />}
 {slug === 'markdown-preview' && <MarkdownPreview client:load locale={locale} />}
+{slug === 'qr-code' && <QrCode client:load locale={locale} />}

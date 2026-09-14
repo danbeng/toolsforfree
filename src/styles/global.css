@@ -159,3 +159,11 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
   text-decoration: line-through;
   color: var(--text);
 }
+.qr-preview {
+  width: min(256px, 100%);
+  aspect-ratio: 1;
+  height: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}

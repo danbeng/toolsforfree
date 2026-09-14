@@ -153,6 +153,14 @@ export const TOOLS: Tool[] = [
     relatedSlugs: ['json-formatter', 'text-diff', 'word-counter'],
     featured: false,
   },
+  {
+    slug: 'qr-code',
+    name: 'QR Code',
+    category: 'Generate',
+    shortDescription: 'Generate a QR from text or decode an image in your browser.',
+    relatedSlugs: ['uuid-generator', 'password-generator', 'hash-generator'],
+    featured: false,
+  },
 ];
 
 const CATEGORY_ORDER: ToolCategory[] = [

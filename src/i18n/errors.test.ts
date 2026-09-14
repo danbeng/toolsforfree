@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { ZH_ERRORS, localizeError } from './errors';
 import { ui } from './ui';
-import { INPUT_TOO_LARGE_MSG } from '../lib/limits';
+import { INPUT_TOO_LARGE_MSG, IMAGE_TOO_LARGE_MSG } from '../lib/limits';
+import { QR_ENCODE_FAIL_MSG, QR_NOT_FOUND_MSG } from '../lib/qr';
 
 describe('lorem-ipsum chrome and errors', () => {
   it('maps Enter a count of at least 1 in ZH_ERRORS', () => {
@@ -108,5 +109,48 @@ describe('markdown-preview chrome and errors', () => {
       '输入过长，无法在浏览器中处理。',
     );
     expect(localizeError('en', INPUT_TOO_LARGE_MSG)).toBe(INPUT_TOO_LARGE_MSG);
+  });
+});
+
+describe('qr-code chrome and errors', () => {
+  it('shares qr-code chrome keys on en and zh', () => {
+    const keys = [
+      'name',
+      'shortDescription',
+      'generateSection',
+      'decodeSection',
+      'text',
+      'ecc',
+      'preview',
+      'downloadPng',
+      'image',
+    ];
+    for (const key of keys) {
+      expect(ui.en.tools['qr-code']).toHaveProperty(key);
+      expect(ui.zh.tools['qr-code']).toHaveProperty(key);
+    }
+  });
+
+  it('maps image-cap, not-found, not-an-image, encode-fail, and text-cap in ZH_ERRORS', () => {
+    expect(ZH_ERRORS[IMAGE_TOO_LARGE_MSG]).toBe('图片过大，无法在浏览器中处理。');
+    expect(localizeError('zh', IMAGE_TOO_LARGE_MSG)).toBe(
+      '图片过大，无法在浏览器中处理。',
+    );
+    expect(ZH_ERRORS[QR_NOT_FOUND_MSG]).toBe('图片中未找到二维码。');
+    expect(localizeError('zh', QR_NOT_FOUND_MSG)).toBe('图片中未找到二维码。');
+    expect(ZH_ERRORS['Could not read this file as an image.']).toBe(
+      '无法将此文件作为图片读取。',
+    );
+    expect(localizeError('zh', 'Could not read this file as an image.')).toBe(
+      '无法将此文件作为图片读取。',
+    );
+    expect(ZH_ERRORS[QR_ENCODE_FAIL_MSG]).toBe('无法将这段文本编码为二维码。');
+    expect(localizeError('zh', QR_ENCODE_FAIL_MSG)).toBe(
+      '无法将这段文本编码为二维码。',
+    );
+    expect(ZH_ERRORS[INPUT_TOO_LARGE_MSG]).toBe('输入过长，无法在浏览器中处理。');
+    expect(localizeError('zh', INPUT_TOO_LARGE_MSG)).toBe(
+      '输入过长，无法在浏览器中处理。',
+    );
   });
 });

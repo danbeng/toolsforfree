@@ -16,6 +16,7 @@
     "dompurify": "^3.4.15",
     "marked": "^18.0.13",
     "preact": "^10.29.8",
+    "qr": "^0.7.0",
     "sql-formatter": "^15.8.2"
   },
   "devDependencies": {
