@@ -1,9 +1,10 @@
 ---
 phase: 06-qr-code
 verified: 2026-09-14T10:33:26Z
-status: human_needed
+status: passed
 score: 7/7 must-haves verified
 covered_files:
+
   - .planning/REQUIREMENTS.md
   - .planning/phases/06-qr-code/06-01-PLAN.md
   - .planning/phases/06-qr-code/06-01-SUMMARY.md
@@ -22,6 +23,7 @@ covered_files:
   - src/lib/qr.test.ts
   - src/lib/qr.ts
   - src/styles/global.css
+
 covered_digest: "v1:sha256:847b34821759cec9455e328542ad65ce8c747276e730ef2a307465e76276c9be"
 behavior_unverified: 0
 overrides_applied: 0
@@ -31,6 +33,7 @@ decision_coverage:
   not_honored: []
   reason: no trackable decisions
 human_verification:
+
   - test: "Open /tools/qr-code/ (and /zh/tools/qr-code/ if that tree is being served): Generate section above Decode; text/ECC left or top and 256 by 256 preview right or bottom; type a URL and see live black-on-white modules with no Generate button; clear text: blank .qr-preview, Download disabled, no sample QR; Download is qr-code.png not GIF; select a generated PNG and Copy writes the decoded string; oversize image shows 图片过大，无法在浏览器中处理。 on ZH or the English image-cap string on EN; no camera prompt; homepage featured count still six."
     expected: "Stacked generate then decode; live black-on-white QR; idle preview blank with Download disabled; PNG download named qr-code.png; Copy payload is decoded text; image-cap error distinct from text-cap; no camera; featured stays six."
     why_human: "PLAN deferred this to end-of-phase human-check. No Playwright/tsx island tests. Grep cannot see clipboard contents, downloaded PNG bytes, 720px split, live typing, camera permission prompt, or ZH chrome in a real browser."

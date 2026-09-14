@@ -32,10 +32,11 @@ A visitor can open any of the eight new tools, run it entirely in the browser, a
 - ✓ SQL formatter — Phase 3
 - ✓ Text Diff — Phase 4
 - ✓ Markdown preview (sanitized GFM, remote images stripped) — Phase 5
+- ✓ QR code generate + decode (PNG download + in-browser file decode, no camera) — Phase 6
 
 ### Active
 
-- [ ] QR code generate + decode (text/URL → QR image download; image → decoded text, still in-browser)
+*(none — locked eight shipped)*
 
 Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via ToolIsland/ToolShell, catalog entry + related slugs, EN and ZH routes, content-collection SEO/how-to/FAQ in both locales.
 
@@ -70,9 +71,9 @@ Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | 7/8 shipped through Phase 5; QR remains |
-| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product, not a follow-up | Honored through Phase 5 (catalog 17, featured 6) |
-| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Pending Phase 6 |
+| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | All eight shipped through Phase 6 (catalog 18, featured 6) |
+| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product, not a follow-up | Honored through Phase 6 (catalog 18, featured 6) |
+| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
 | No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
 | Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
 
@@ -94,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-14 after Phase 5*
+*Last updated: 2026-09-14 after Phase 6*

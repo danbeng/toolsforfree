@@ -16,7 +16,7 @@ This milestone adds eight browser-local tools to the existing Devtoolbox catalog
 - [x] **Phase 3: SQL formatter** - In-browser pretty-print with named dialects (completed 2026-09-13)
 - [x] **Phase 4: Text Diff** - Two-pane line-level diff with stats and whitespace ignore (completed 2026-09-13)
 - [x] **Phase 5: Markdown preview** - Sanitized GFM preview with no remote-image fetch (completed 2026-09-14)
-- [ ] **Phase 6: QR generate and decode** - PNG QR from text plus in-browser file decode, no camera
+- [x] **Phase 6: QR generate and decode** - PNG QR from text plus in-browser file decode, no camera (completed 2026-09-14)
 
 ## Phase Details
 
@@ -149,11 +149,11 @@ Plans:
   3. Oversize image files are rejected with a byte-cap error; the tool never requests camera / `getUserMedia`
   4. EN+ZH pages and catalog wiring exist; QR library chunks do not land on json-formatter; Phase 1 completeness tests stay green for all 18 tools
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 
-- [ ] 06-01-PLAN.md — QR generate/decode 8-file slice plus CAT-04 bundle isolation
+- [x] 06-01-PLAN.md — QR generate/decode 8-file slice plus CAT-04 bundle isolation
 
 **UI hint**: yes
 
@@ -169,4 +169,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. SQL formatter | 1/1 | Complete    | 2026-09-13 |
 | 4. Text Diff | 1/1 | Complete    | 2026-09-13 |
 | 5. Markdown preview | 1/1 | Complete    | 2026-09-14 |
-| 6. QR generate and decode | 0/1 | Not started | - |
+| 6. QR generate and decode | 1/1 | Complete    | 2026-09-14 |

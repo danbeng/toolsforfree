@@ -79,13 +79,13 @@ Categories: Markdown + SQL → Format; Diff + Case + Word → Text; Password + L
 
 ### QR code (`qr-code`)
 
-- [ ] **QR-01**: User can enter text or a URL and see a QR preview
-- [ ] **QR-02**: User can download the QR as PNG
-- [ ] **QR-03**: User can choose error correction L / M / Q / H (default M)
-- [ ] **QR-04**: User can select an image file and decode the payload entirely in the browser
-- [ ] **QR-05**: User can copy the decoded payload
-- [ ] **QR-06**: Oversize image files are rejected with a byte-cap error (not only the text char cap)
-- [ ] **QR-07**: The tool never requests camera / `getUserMedia`
+- [x] **QR-01**: User can enter text or a URL and see a QR preview
+- [x] **QR-02**: User can download the QR as PNG
+- [x] **QR-03**: User can choose error correction L / M / Q / H (default M)
+- [x] **QR-04**: User can select an image file and decode the payload entirely in the browser
+- [x] **QR-05**: User can copy the decoded payload
+- [x] **QR-06**: Oversize image files are rejected with a byte-cap error (not only the text char cap)
+- [x] **QR-07**: The tool never requests camera / `getUserMedia`
 
 ## v2 Requirements
 
@@ -197,13 +197,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MD-03 | Phase 5 | Complete |
 | MD-04 | Phase 5 | Complete |
 | MD-05 | Phase 5 | Complete |
-| QR-01 | Phase 6 | Pending |
-| QR-02 | Phase 6 | Pending |
-| QR-03 | Phase 6 | Pending |
-| QR-04 | Phase 6 | Pending |
-| QR-05 | Phase 6 | Pending |
-| QR-06 | Phase 6 | Pending |
-| QR-07 | Phase 6 | Pending |
+| QR-01 | Phase 6 | Complete |
+| QR-02 | Phase 6 | Complete |
+| QR-03 | Phase 6 | Complete |
+| QR-04 | Phase 6 | Complete |
+| QR-05 | Phase 6 | Complete |
+| QR-06 | Phase 6 | Complete |
+| QR-07 | Phase 6 | Complete |
 
 **Coverage:**
 
