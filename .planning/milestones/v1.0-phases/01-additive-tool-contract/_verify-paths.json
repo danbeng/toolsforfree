@@ -1,0 +1,56 @@
+{
+  "status": "not_applicable",
+  "commands": [
+    {
+      "command": "npm test",
+      "status": "not_applicable",
+      "severity": "none",
+      "reason": null,
+      "form": null,
+      "rawTarget": null,
+      "target": null,
+      "manifest": null,
+      "script": null,
+      "sentinel": false,
+      "base": "G:\\海外练手项目",
+      "plan": "01-01-PLAN.md",
+      "task": "End-to-end catalog completeness — island branch plus EN/ZH markdown for every TOOLS slug"
+    },
+    {
+      "command": "npm test",
+      "status": "not_applicable",
+      "severity": "none",
+      "reason": null,
+      "form": null,
+      "rawTarget": null,
+      "target": null,
+      "manifest": null,
+      "script": null,
+      "sentinel": false,
+      "base": "G:\\海外练手项目",
+      "plan": "01-01-PLAN.md",
+      "task": "Lock catalog snapshot, featured six, and grouping via TOOLS.length"
+    },
+    {
+      "command": "npm test",
+      "status": "not_applicable",
+      "severity": "none",
+      "reason": null,
+      "form": null,
+      "rawTarget": null,
+      "target": null,
+      "manifest": null,
+      "script": null,
+      "sentinel": false,
+      "base": "G:\\海外练手项目",
+      "plan": "01-01-PLAN.md",
+      "task": "Append 8-file checklist and island-split rule to CONVENTIONS.md"
+    }
+  ],
+  "counts": {
+    "blocker": 0,
+    "warning": 0,
+    "total": 3
+  },
+  "readError": null
+}

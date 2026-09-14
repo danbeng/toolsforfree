@@ -1,0 +1,43 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": null,
+  "phases": [
+    {
+      "number": "1",
+      "name": "Additive tool contract",
+      "status": "complete"
+    },
+    {
+      "number": "2",
+      "name": "Light text and generate tools",
+      "status": "complete"
+    },
+    {
+      "number": "3",
+      "name": "SQL formatter",
+      "status": "complete"
+    },
+    {
+      "number": "4",
+      "name": "Text Diff",
+      "status": "complete"
+    },
+    {
+      "number": "5",
+      "name": "Markdown preview",
+      "status": "complete"
+    },
+    {
+      "number": "6",
+      "name": "QR generate and decode",
+      "status": "complete"
+    }
+  ],
+  "next": {
+    "command": "/gsd:progress",
+    "label": "Show progress",
+    "reason": "Unsure of state — showing progress"
+  },
+  "updated_at": "2026-09-14T11:12:50.889Z"
+}

@@ -1,0 +1,35 @@
+{
+  "status": "ok",
+  "commands": [
+    {
+      "command": "npm test",
+      "statement": "non-zero exit, Vitest reports failed tests, output lacks \"ToolIsland coverage\", or output lacks \"has EN and ZH markdown for every catalog slug\"",
+      "status": "ok",
+      "severity": "none",
+      "plan": "01-01-PLAN.md",
+      "task": "End-to-end catalog completeness — island branch plus EN/ZH markdown for every TOOLS slug"
+    },
+    {
+      "command": "npm test",
+      "statement": "non-zero exit, Vitest reports failed tests, or the grouping test still compares the reduced count to a numeric 10 instead of TOOLS.length",
+      "status": "ok",
+      "severity": "none",
+      "plan": "01-01-PLAN.md",
+      "task": "Lock catalog snapshot, featured six, and grouping via TOOLS.length"
+    },
+    {
+      "command": "npm test",
+      "statement": "non-zero exit, Vitest reports failed tests, or CONVENTIONS.md lacks both headings Adding a tool (8-file checklist) and Island split (heavy libraries)",
+      "status": "ok",
+      "severity": "none",
+      "plan": "01-01-PLAN.md",
+      "task": "Append 8-file checklist and island-split rule to CONVENTIONS.md"
+    }
+  ],
+  "counts": {
+    "blocker": 0,
+    "warning": 0,
+    "total": 3
+  },
+  "readError": null
+}
