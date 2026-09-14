@@ -117,4 +117,34 @@ describe('renderMarkdown', () => {
     expect(zh).toContain('不会上传');
     expect(zh).toMatch(/远程图片/);
   });
+
+  it('imports marked and dompurify only from markdown.ts', () => {
+    const mdSource = readFileSync(new URL('./markdown.ts', here), 'utf8');
+    const island = readFileSync(
+      new URL('../components/tools/MarkdownPreview.tsx', here),
+      'utf8',
+    );
+    const toolIsland = readFileSync(
+      new URL('../components/tools/ToolIsland.astro', here),
+      'utf8',
+    );
+    const jsonLib = readFileSync(new URL('./json.ts', here), 'utf8');
+    const jsonIsland = readFileSync(
+      new URL('../components/tools/JsonFormatter.tsx', here),
+      'utf8',
+    );
+    expect(mdSource).toContain("from 'marked'");
+    expect(mdSource).toContain("from 'dompurify'");
+    expect(island).toContain('renderMarkdown');
+    expect(island).toContain('../../lib/markdown');
+    expect(island).not.toMatch(/from ['"]marked['"]/);
+    expect(island).not.toMatch(/from ['"]dompurify['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]marked['"]/);
+    expect(toolIsland).not.toMatch(/from ['"]dompurify['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]marked['"]/);
+    expect(jsonLib).not.toMatch(/from ['"]dompurify['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]marked['"]/);
+    expect(jsonIsland).not.toMatch(/from ['"]dompurify['"]/);
+    expect(mdSource).not.toMatch(/from ['"]jsdom['"]/);
+  });
 });
