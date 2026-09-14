@@ -149,7 +149,12 @@ Plans:
   3. Oversize image files are rejected with a byte-cap error; the tool never requests camera / `getUserMedia`
   4. EN+ZH pages and catalog wiring exist; QR library chunks do not land on json-formatter; Phase 1 completeness tests stay green for all 18 tools
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+
+- [ ] 06-01-PLAN.md — QR generate/decode 8-file slice plus CAT-04 bundle isolation
+
 **UI hint**: yes
 
 ## Progress
@@ -164,4 +169,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. SQL formatter | 1/1 | Complete    | 2026-09-13 |
 | 4. Text Diff | 1/1 | Complete    | 2026-09-13 |
 | 5. Markdown preview | 1/1 | Complete    | 2026-09-14 |
-| 6. QR generate and decode | 0/TBD | Not started | - |
+| 6. QR generate and decode | 0/1 | Not started | - |
