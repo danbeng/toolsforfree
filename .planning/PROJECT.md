@@ -1,12 +1,22 @@
-# Devtoolbox — More Tools Milestone
+# Devtoolbox — Frontend Polish
 
 ## What This Is
 
-Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. This milestone adds eight missing catalog tools at the same standard as the existing ten: Preact island + `src/lib` processor + EN/ZH pages + SEO/how-to/FAQ markdown + catalog/related-tools wiring.
+Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. The v1.0 milestone shipped 18 tools (10 existing + 8 new). This milestone optimizes the frontend visual layer: light/dark theme toggle, responsive mobile navigation, wider card grids, consistent spacing scale, and polished interactive chrome.
 
 ## Core Value
 
-A visitor can open any of the eight new tools, run it entirely in the browser, and get a correct result without sending data anywhere — with the same EN/ZH, SEO, and catalog treatment as the tools already shipped.
+A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
+
+## Current Milestone: v1.1 Frontend Polish
+
+**Goal:** Optimize frontend visual presentation across the entire site — theme toggle, mobile nav, wider grids, spacing scale, button/panel/FAQ polish.
+
+**Target features:**
+- Light mode + theme toggle (CSS variables split light/dark, system preference detection, manual toggle, localStorage persistence)
+- Mobile hamburger menu (header nav collapse at ≤640px, accessible ☰ button)
+- Card grid 3-column at wide screens + CSS variable spacing scale (4/8/12/16/24/32/48)
+- Button hover/active states, tool-panel refinement, FAQ `<details>` collapsible
 
 ## Requirements
 
@@ -36,36 +46,49 @@ A visitor can open any of the eight new tools, run it entirely in the browser, a
 
 ### Active
 
-*(none — locked eight shipped)*
-
-Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via ToolIsland/ToolShell, catalog entry + related slugs, EN and ZH routes, content-collection SEO/how-to/FAQ in both locales.
+- [ ] Light/dark theme with CSS variable split and system preference detection
+- [ ] Theme toggle in header with localStorage persistence
+- [ ] Mobile hamburger menu at ≤640px with accessible keyboard support
+- [ ] Card grid 3-column layout at ≥1080px breakpoint
+- [ ] CSS variable spacing scale (4/8/12/16/24/32/48)
+- [ ] Button hover/active/focus-visible polish
+- [ ] Tool-panel chrome refinement (consistent borders, shadows, spacing)
+- [ ] FAQ `<details>` collapsible instead of always-visible `<dl>`
 
 ### Out of Scope
 
-- General image processing (compress, crop, format convert, OCR) — not this milestone; QR decode is the only image-in exception
-- Accounts, saved history, cloud APIs, server-side file upload — site remains static / browser-local
-- Rewriting the existing ten tools — they only get catalog/related-tool links if needed
-- Additional languages or a new site/domain — stay EN + ZH
-- JWT verification, HMAC as a new product surface, YAML↔JSON, HTML encode, number-base converter, CSS/JS minify — considered and deferred; not in the locked eight
-- QR scanning via camera stream — decode is from an uploaded/selected image file in the browser, not a live camera app
+- Rewriting existing tool logic — visual layer only, no `src/lib` changes
+- Adding new tools — this milestone is pure visual polish
+- Component framework migration — stay Astro + Preact, no React/Vue/Svelte
+- Tailwind or CSS-in-JS — stay with custom CSS variables and global.css
+- Accessibility audit overhaul — fix obvious issues (mobile nav, contrast), not a full WCAG pass
+- Animation library — CSS transitions only, no Framer Motion / GSAP
+- Server-side rendering or SPA hydration beyond existing Preact islands
+- Additional languages — stay EN + ZH
 
 ## Context
 
 - Brownfield on `G:\海外练手项目`. Codebase already mapped (`.planning/codebase/`).
 - Product name: Devtoolbox. Tagline: "Browser-based developer tools. Nothing is uploaded."
-- Stack in use: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree (not middleware i18n).
+- Stack: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree (not middleware i18n).
 - Catalog (`TOOLS` in `src/data/tools.ts`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
-- Existing categories: Format, Auth, Encode, Generate, Text, Time, Color. New tools will need category assignments (likely Format / Text / Generate; QR may need a new category or sit under Generate).
-- Motivation: close competitor gaps vs developer-tool sites and light consumer utilities, without becoming a TinyWow-scale kitchen sink.
-- Target batch size: 6–10 tools; locked list is 8.
+- Current global.css is dark-only (`color-scheme: dark` hardcoded in `:root`). No light mode tokens exist.
+- Fonts: IBM Plex Mono + IBM Plex Sans + Syne via Google Fonts CDN (already preconnected).
+- Body background has a distinctive grid-line pattern that needs light-mode adaptation.
+- Header is sticky with backdrop blur; nav links wrap on mobile without a hamburger menu.
+- `card-grid` is 1-col → 2-col at 720px; no 3-col breakpoint.
+- Tool-panel chrome uses LED indicator concept; buttons are minimal (border + accent).
+- FAQ uses `<dl>` with no collapse mechanism.
+- Dirty main has uncommitted i18n/pages/visual CSS overlay — work from HEAD, not dirty.
 
 ## Constraints
 
-- **Privacy / architecture**: All tool computation in the browser (`src/lib`); no new API routes for tool logic — matches SITE_TAGLINE and existing pattern
-- **Parity**: New tools must match existing tool quality (UI chrome, copy-to-clipboard, errors, EN+ZH, FAQ) — user-stated definition of done
-- **Stack**: Stay on Astro + Preact + current catalog/content-collection pattern — do not introduce a new app framework
-- **QR decode**: In-browser only (selected image file); no server OCR/decode API
-- **Do not rewrite**: Existing ten tools are validated; this milestone is additive
+- **Visual only**: No changes to `src/lib/*` tool logic or `src/data/tools.ts` catalog entries — visual layer is isolated to CSS and component templates
+- **Stack**: Stay on Astro + Preact + custom CSS variables — no Tailwind, no CSS-in-JS, no new framework
+- **Baseline**: Work from HEAD commit, not the dirty CSS overlay on main
+- **Privacy**: All tool computation stays in the browser; theme toggle is localStorage-only, no server state
+- **Bilingual parity**: Theme toggle and mobile nav must work in both EN and ZH trees
+- **Do not rewrite tools**: Existing tool UI components get CSS-level polish only, not structural rewrites
 
 ## Key Decisions
 
@@ -76,6 +99,9 @@ Each new tool must ship at existing-tool parity: `src/lib` logic, Preact UI via 
 | QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
 | No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
 | Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
+| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Pending |
+| CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Pending |
+| Hamburger menu via pure CSS + checkbox (no JS framework dependency) | Lightweight, works with Astro static output | Pending |
 
 ## Evolution
 
@@ -95,4 +121,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-14 after v1.0 More Tools milestone*
+*Last updated: 2026-09-15 after v1.1 Frontend Polish milestone start*
