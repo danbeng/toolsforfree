@@ -1,0 +1,1 @@
+{"content":"diff@9.0.0 ESM from 'diff'; sideEffects false on libesm/package.json; named diffLines esbuild minify 3446 bytes; createTwoFilesPatch 7682 bytes and contains Index: and @@ . CAT-04 grep oneChangePerToken newlineIsToken createTwoFilesPatch.","source":"web","provider":"tavily","confidence":"LOW","fetched_at":"2026-09-13T02:06:07.290Z","ttl":86400000,"kind":"web"}

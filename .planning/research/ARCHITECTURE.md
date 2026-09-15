@@ -1,500 +1,603 @@
-# Architecture Research
+# Architecture Research: Visual Polish Milestone
 
-**Domain:** Brownfield Astro + Preact Devtoolbox — additive 8-tool catalog expansion
-**Researched:** 2026-09-11
-**Confidence:** HIGH (existing pattern, from source); MEDIUM (Astro island JS splitting / `client:only` exception path)
+**Domain:** Static Astro 7 + Preact site, CSS variable theming, responsive layout, interactive chrome
+**Researched:** 2026-09-15
+**Confidence:** HIGH
 
-Do not redesign the site. Each of the eight tools is one more vertical slice through the catalog already used by the ten shipped tools. Routing, layout, i18n trees, ToolShell, and content-collection schema stay.
-
-## Standard Architecture
-
-### System Overview
+## System Overview: Visual Polish Integration
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  Astro SSG pages (unchanged)                                    │
-│  EN: src/pages/tools/[slug].astro                               │
-│  ZH: src/pages/zh/tools/[slug].astro  (locale = 'zh' only)      │
-│  getStaticPaths() = TOOLS.map(slug)  ← add a row, get both URLs │
-├────────────────────────────┬────────────────────────────────────┤
-│  BaseLayout + Header/Footer│  Content collections (SEO only)    │
-│  LangSwitch, AdSlot, FAQ,  │  src/content/tools/{slug}.md       │
-│  RelatedTools, ToolCard    │  src/content/tools/zh/{slug}.md    │
-└──────────────┬─────────────┴─────────────────┬──────────────────┘
-               │                               │
-               ▼                               ▼
-┌──────────────────────────┐     ┌────────────────────────────────┐
-│ Catalog (source of truth)│     │ i18n                           │
-│ src/data/tools.ts        │     │ ui.ts  copy.tools[slug]        │
-│ ToolCategory + TOOLS[]   │     │        copy.categories[Cat]    │
-│ relatedSlugs / featured  │     │ errors.ts  EN→ZH map           │
-└──────────────┬───────────┘     │ useToolUi(locale)              │
-               │                 └────────────────────────────────┘
-               ▼
-┌─────────────────────────────────────────────────────────────────┐
-│ ToolIsland.astro  — explicit slug → island, NOT dynamic import  │
-│ {slug === 'word-counter' && <WordCounter client:load locale />} │
-│ …same for the other 7. Missing branch = blank island, no error. │
+│                        <head> (blocking inline script)           │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │  ThemeInit.astro  ── reads localStorage / matchMedia ──>  │  │
+│  │  sets document.documentElement.dataset.theme BEFORE paint  │  │
+│  └───────────────────────────────────────────────────────────┘  │
 ├─────────────────────────────────────────────────────────────────┤
-│ Preact islands  src/components/tools/*.tsx                      │
-│   useState/useMemo → isTooLarge → src/lib/*.ts → ToolShell      │
-│ ToolShell  chrome + copy-to-clipboard + error/output <pre>      │
+│                        global.css (CSS custom properties)        │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐    │
+│  │ :root (shared)  │  │ :root[data-    │  │ :root[data-    │    │
+│  │ fonts, radius,  │  │ theme="dark"]  │  │ theme="light"] │    │
+│  │ spacing scale   │  │ dark palette   │  │ light palette  │    │
+│  └────────────────┘  └────────────────┘  └────────────────┘    │
 ├─────────────────────────────────────────────────────────────────┤
-│ Pure lib  src/lib/{tool}.ts + colocated {tool}.test.ts          │
-│ Result union: { ok: true, … } | { ok: false, error: string }    │
-│ Browser-local only. No API routes. No workers.                  │
+│                        Astro Components (static)                 │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ Header.astro  │  │ Footer.astro │  │ FaqList.astro│          │
+│  │ + ThemeToggle │  │ (unchanged)  │  │ → <details>  │          │
+│  │ + MobileMenu  │  │              │  │              │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+├─────────────────────────────────────────────────────────────────┤
+│                        Preact Islands (client:load)              │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │  ToolShell.tsx  ── inherits CSS vars, no theme logic ──>  │   │
+│  │  All 18 tool .tsx components ── CSS-only polish ──>       │   │
+│  └──────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-Eight new islands plug in at three seams only: `TOOLS` row, `ToolIsland` branch, `src/lib` + `*.tsx` + EN/ZH markdown + `ui.ts` / `errors.ts`. No new `.astro` page files.
+## Integration Points
 
-### Component Responsibilities
+### Where Visual Features Touch Existing Components
 
-| Component | Responsibility | Talks to | Typical implementation |
-|-----------|----------------|----------|------------------------|
-| `TOOLS` catalog | Slug, category, related graph, featured | `[slug].astro` paths, home, `/tools/`, RelatedTools, ToolCard | Append 8 rows in `src/data/tools.ts` |
-| `[slug].astro` EN/ZH | SSG page shell; throw if catalog or markdown missing | `TOOLS`, `toolPages` collection, `ToolIsland`, FAQ, RelatedTools | **Do not edit** except if schema/copy slots change |
-| `toolPages` collection | Localized title/intro/howTo(3)/faq(3–5) | Page template only — never the island | `src/content/tools/{slug}.md` + `zh/{slug}.md` |
-| `ToolIsland.astro` | Slug → Preact island with `client:load` | One matching `*.tsx` | Add one boolean branch + static import |
-| Tool `*.tsx` | Input state, size guard, call lib, labels | `useToolUi`, `src/lib`, `ToolShell` | Copy `JsonFormatter.tsx` / `UuidGenerator.tsx` / `Base64Tool.tsx` |
-| `ToolShell` | Chrome, error `role="alert"`, text output + Copy | Island only | Reuse as-is; extra preview/image goes in **children**, not a rewrite |
-| `src/lib/*.ts` | Pure transform; English error strings | Island + Vitest | `{ ok:true } \| { ok:false, error }` like `json.ts` |
-| `src/lib/limits.ts` | Shared 100k-char cap | Every text island | Reuse `isTooLarge`. Add a **byte** cap helper for QR files only |
-| `src/i18n/ui.ts` | EN+ZH labels; `categories`; `tools[slug]` | ToolCard, RelatedTools, islands | Both locales required (`as const`) |
-| `src/i18n/errors.ts` | Map lib English errors → ZH | `useToolUi().err` | Add a row per new English error |
-| Home / tools index | Featured six + category groups | `getFeaturedTools`, `getToolsByCategory` | No code change if category union + `CATEGORY_ORDER` stay in sync |
+| Feature | New Files | Modified Files | Integration Mechanism |
+|---------|-----------|----------------|----------------------|
+| Light/dark theme | `ThemeInit.astro`, `ThemeToggle.astro` | `global.css`, `BaseLayout.astro`, `Header.astro` | CSS custom properties + `data-theme` attribute + blocking `<script>` |
+| Mobile hamburger | `MobileMenu.astro` (or inline in Header) | `Header.astro`, `global.css` | CSS `:checked` pseudo-class, no JS framework |
+| 3-col card grid | none | `global.css` | Single `@media` breakpoint addition |
+| Spacing scale | none | `global.css` | CSS custom properties in `:root` |
+| Button/panel polish | none | `global.css` | Existing selectors, enhanced states |
+| FAQ collapsible | none | `FaqList.astro`, `global.css` | `<details>/<summary>` semantic HTML |
 
-## Recommended Project Structure
+## New vs Modified: Explicit List
 
-```
-src/
-├── data/tools.ts                 # append 8 Tool rows + relatedSlugs
-├── data/tools.test.ts            # bump length 10 → 18; keep unique-slug + category-sum checks
-├── lib/
-│   ├── limits.ts                 # keep INPUT_MAX_CHARS; add INPUT_MAX_BYTES for QR
-│   ├── word-count.ts             # + word-count.test.ts
-│   ├── case.ts                   # + case.test.ts
-│   ├── lorem.ts                  # + lorem.test.ts
-│   ├── password.ts               # + password.test.ts
-│   ├── sql.ts                    # + sql.test.ts
-│   ├── diff.ts                   # + diff.test.ts
-│   ├── markdown.ts               # + markdown.test.ts
-│   └── qr.ts                     # + qr.test.ts  (generate + decode)
-├── components/
-│   ├── ToolShell.tsx             # reuse; optional extra children only
-│   └── tools/
-│       ├── ToolIsland.astro      # 8 new static imports + client:load branches
-│       ├── WordCounter.tsx
-│       ├── CaseConverter.tsx
-│       ├── LoremIpsum.tsx
-│       ├── PasswordGenerator.tsx
-│       ├── SqlFormatter.tsx
-│       ├── TextDiff.tsx
-│       ├── MarkdownPreview.tsx
-│       └── QrCode.tsx
-├── content/tools/
-│   ├── {slug}.md                 # locale: en
-│   └── zh/{slug}.md              # locale: zh; collection id becomes zh/{slug}
-├── i18n/ui.ts                    # copy.tools[slug] EN+ZH; no new category keys
-├── i18n/errors.ts                # new English errors
-└── pages/                        # DO NOT add tool routes; [slug].astro already enumerates TOOLS
-```
+### NEW Files (2-3 total)
 
-### Structure Rationale
+| File | Type | Purpose | Why New |
+|------|------|---------|---------|
+| `src/components/ThemeInit.astro` | Astro (inline script) | Blocking `<script is:inline>` in `<head>` that reads `localStorage.theme` and `matchMedia('(prefers-color-scheme: dark)')`, sets `document.documentElement.dataset.theme` before first paint | Must execute synchronously in `<head>` to prevent FOUC; cannot be a Preact island (too late in lifecycle) |
+| `src/components/ThemeToggle.astro` | Astro (static) | Button with sun/moon SVG icons, inline click handler that toggles `data-theme` + writes `localStorage` | Static Astro component, not Preact island; the button is stateless (CSS handles icon visibility via `data-theme` selector) |
 
-- **`src/data/tools.ts`:** Routing source of truth. Markdown is SEO only. Switching `getStaticPaths` to `getCollection('toolPages')` would desync EN/ZH and featured/related — do not.
-- **`src/lib/` one module per tool:** Matches `json.ts`, `jwt.ts`, … Colocated Vitest. No barrel `lib/index.ts` (would drag QR/markdown deps into unrelated tests/islands).
-- **`src/components/tools/`:** One PascalCase island per slug. `ToolIsland.astro` must statically import them — Astro `client:*` does not work on dynamic tags.
-- **Content `zh/` subdirectory:** Existing matcher is `p.id === slug \|\| p.id.endsWith('/' + slug)`. Keep that; do not flatten ZH files.
-- **No new pages:** EN+ZH `[slug].astro` already throw `Unknown tool` / `Missing content` at build. A catalog row without markdown fails the build on purpose.
+### MODIFIED Files (4-6 total)
 
-### Locked slugs (kebab-case, match existing style)
+| File | Changes | Scope of Change |
+|------|---------|-----------------|
+| `src/styles/global.css` | Split `:root` tokens into light/dark via `data-theme` selectors; add spacing scale vars; add 3-col grid breakpoint; enhance button/panel/FAQ styles | Largest change; affects every visual element |
+| `src/layouts/BaseLayout.astro` | Import + render `ThemeInit` in `<head>` (before `<meta charset>` for earliest execution) | 2-line addition |
+| `src/components/Header.astro` | Import `ThemeToggle.astro`; add hamburger menu markup; restructure `.nav-links` for collapse | Moderate restructure of nav section |
+| `src/components/FaqList.astro` | Change `<dl>/<dt>/<dd>` to `<details>/<summary>/<p>` | Template rewrite, no logic change |
+| `src/i18n/ui.ts` | Add `themeLight`, `themeDark`, `menuToggle` string keys to both `en` and `zh` dictionaries | Small addition, i18n parity |
+| `src/data/site.ts` | No change needed | -- |
 
-| Tool | Slug | Island | Lib |
-|------|------|--------|-----|
-| Word / character counter | `word-counter` | `WordCounter.tsx` | `word-count.ts` |
-| Case / Slug converter | `case-converter` | `CaseConverter.tsx` | `case.ts` |
-| Lorem ipsum generator | `lorem-ipsum` | `LoremIpsum.tsx` | `lorem.ts` |
-| Password generator | `password-generator` | `PasswordGenerator.tsx` | `password.ts` |
-| SQL formatter | `sql-formatter` | `SqlFormatter.tsx` | `sql.ts` |
-| Text Diff | `text-diff` | `TextDiff.tsx` | `diff.ts` |
-| Markdown preview | `markdown-preview` | `MarkdownPreview.tsx` | `markdown.ts` |
-| QR generate + decode | `qr-code` | `QrCode.tsx` | `qr.ts` |
+### UNTOUCHED Files
 
-Do not use `case-slug` or `qr-generator`. One slug per product surface; encode/decode (QR) and case/slug are modes inside one island, same as `base64`.
+| Category | Files | Why |
+|----------|-------|-----|
+| Tool logic | `src/lib/*.ts` | Constraint: visual-only milestone |
+| Tool islands | `src/components/tools/*.tsx` | Tool UIs inherit CSS vars automatically; no component-level changes needed |
+| ToolShell | `src/components/ToolShell.tsx` | Already uses CSS classes; will inherit polish from `global.css` |
+| Tool catalog | `src/data/tools.ts` | No routing changes |
+| Content | `src/content/tools/*.md` | SEO copy unchanged |
+| Pages | `src/pages/**/*.astro` | Pages compose from modified components; no page-level changes |
+| Config | `astro.config.mjs` | No integration changes |
 
-## Category Assignments
+## Recommended Architecture
 
-Existing union: `Format | Auth | Encode | Generate | Text | Time | Color`.
+### Pattern 1: `data-theme` Attribute Theming (Not Class-Based)
 
-| Slug | Category | Why |
-|------|----------|-----|
-| `markdown-preview` | **Format** | Markup → readable output, sibling of JSON |
-| `sql-formatter` | **Format** | Pretty-print, sibling of JSON |
-| `text-diff` | **Text** | Two strings in, comparison out, sibling of regex |
-| `case-converter` | **Text** | String transforms. Not Encode (Encode is Base64/URL percent-encoding) |
-| `word-counter` | **Text** | Text analysis |
-| `password-generator` | **Generate** | Like UUID / hash |
-| `lorem-ipsum` | **Generate** | Generates text |
-| `qr-code` | **Generate** | Generates an artifact (image); decode is the inverse mode |
+**What:** Instead of toggling a `.dark` class on `<html>`, set `document.documentElement.dataset.theme = 'light' | 'dark'`. CSS targets via `:root[data-theme="dark"]` and `:root[data-theme="light"]`.
 
-**Do not add a category in this milestone.** One QR tool is not an Image section. Out of scope already forbids general image tools; an `Image` / `QR` category would frame the catalog as a TinyWow kitchen sink.
+**When to use:** Always for this project.
 
-### How to add a category (only if a later milestone needs it)
+**Trade-offs:**
+- Pro: More semantic than a class; avoids specificity fights with utility classes
+- Pro: `dataset.theme` is a clean JS API (`element.dataset.theme = 'light'`)
+- Pro: CSS selectors are equally specific to class-based approach
+- Con: Slightly longer CSS selectors than `.dark` (negligible)
 
-1. Extend `ToolCategory` in `src/data/tools.ts`.
-2. Append the name to `CATEGORY_ORDER` (home + `/tools/` follow this order; unknown categories never appear).
-3. Add `categories.NewName` in **both** `ui.en` and `ui.zh` (`as const` will fail CI/typecheck if either side is missing).
-4. Stop. `getToolsByCategory()` already drops empty groups. ToolCard reads `copy.categories[tool.category]`. No page edits.
+**Why not class-based:** The Astro docs use `.dark` on `<html>`, but this project has no utility CSS framework. The `data-theme` attribute is self-documenting and cannot conflict with any class name.
 
-`Encode` stays Base64/URL. `Auth` stays JWT. `Color` / `Time` unchanged.
+**CSS structure in global.css:**
 
-### Related-slug graph (wire when the target row exists)
+```css
+/* ── Shared tokens (theme-independent) ── */
+:root {
+  --mono: "IBM Plex Mono", ...;
+  --sans: "IBM Plex Sans", ...;
+  --display: Syne, ...;
+  --content: 64rem;
+  --measure: 42rem;
+  --radius: 10px;
+  --ease: 180ms ease;
 
-`getRelatedTools` silently drops unknown slugs, so forward-references are safe. Back-links on the original ten should be added in the same slice as the new tool so `/tools/json-formatter/` can point at SQL/Markdown.
+  /* ── Spacing scale (new) ── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-12: 48px;
+}
 
-| New slug | relatedSlugs | Also add this slug onto |
-|----------|--------------|-------------------------|
-| `word-counter` | `regex-tester`, `case-converter`, `lorem-ipsum` | `regex-tester` |
-| `case-converter` | `url-encode`, `word-counter`, `lorem-ipsum` | `url-encode` |
-| `lorem-ipsum` | `word-counter`, `password-generator`, `case-converter` | — |
-| `password-generator` | `uuid-generator`, `hash-generator`, `lorem-ipsum` | `uuid-generator` |
-| `sql-formatter` | `json-formatter`, `markdown-preview` | `json-formatter` |
-| `text-diff` | `word-counter`, `markdown-preview`, `regex-tester` | `regex-tester` |
-| `markdown-preview` | `json-formatter`, `word-counter`, `text-diff` | `json-formatter` |
-| `qr-code` | `url-encode`, `hash-generator`, `uuid-generator` | `url-encode` |
+/* ── Dark theme (default + explicit) ── */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c1014;
+  --bg-elev: #12181f;
+  --panel: #151c24;
+  --text: #e7edf3;
+  --muted: #8b9aab;
+  --border: #243040;
+  --accent: #3ecfbf;
+  --accent-dim: #1a3d3a;
+  --danger: #f07178;
+  --led: #3ecfbf;
+}
 
-Featured set stays **exactly six** (JSON + JWT plus the current four). New tools ship `featured: false`. `tools.test.ts` currently asserts length 10 and featured length 6 — update the catalog length; do not grow featured.
-
-## Architectural Patterns
-
-### Pattern 1: Vertical slice (mandatory)
-
-**What:** One tool = one commit-sized set: lib + test + island + ToolIsland branch + catalog row + EN/ZH `ui.ts` + errors + both markdown files + test length bump.
-
-**When to use:** Every tool. `[slug].astro` throws if the catalog row exists without markdown. A missing `ToolIsland` branch renders a blank panel with no build error.
-
-**Trade-offs:** Cannot land “catalog first, UI later.” Prevents half-wired routes.
-
-**Example:**
-
-```ts
-// src/data/tools.ts — one new row
-{
-  slug: 'word-counter',
-  name: 'Word / Character Counter',
-  category: 'Text',
-  shortDescription: 'Count words, characters, and lines in your browser.',
-  relatedSlugs: ['regex-tester', 'case-converter', 'lorem-ipsum'],
-  featured: false,
+/* ── Light theme ── */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f8f9fb;
+  --bg-elev: #ffffff;
+  --panel: #ffffff;
+  --text: #1a1f26;
+  --muted: #5a6876;
+  --border: #d8dee6;
+  --accent: #0d9488;
+  --accent-dim: #ccfbf1;
+  --danger: #dc2626;
+  --led: #0d9488;
 }
 ```
 
-### Pattern 2: Explicit ToolIsland if-chain + `client:load`
+**Body background grid adaptation for light mode:**
 
-**What:** Static import + `{slug === '…' && <Island client:load locale={locale} />}`.
+```css
+body {
+  background-image:
+    linear-gradient(180deg, rgba(62, 207, 191, 0.04), transparent 28rem),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 47px,
+      rgba(36, 48, 64, 0.35) 47px, rgba(36, 48, 64, 0.35) 48px
+    );
+}
 
-**When to use:** All eight tools, including Markdown and QR.
+:root[data-theme="light"] body {
+  background-image:
+    linear-gradient(180deg, rgba(13, 148, 136, 0.06), transparent 28rem),
+    repeating-linear-gradient(
+      90deg, transparent, transparent 47px,
+      rgba(216, 222, 230, 0.5) 47px, rgba(216, 222, 230, 0.5) 48px
+    );
+}
+```
 
-**Trade-offs:** File grows linearly (accepted; already 10 branches). Dynamic `import()` / `<component client:load>` is **invalid** in Astro — `client:*` only on directly imported framework components.
+### Pattern 2: Blocking Head Script for Theme Init (FOUC Prevention)
 
-**Example:**
+**What:** An Astro component with `<script is:inline>` that runs synchronously in `<head>` before the browser paints. Reads `localStorage.theme`; falls back to `matchMedia('(prefers-color-scheme: dark)')`; sets `document.documentElement.dataset.theme`.
+
+**When to use:** Every page load. Must be in `<head>`, before any CSS-triggering elements.
+
+**Why `is:inline`:** Astro's bundled `<script>` tags are deferred by default and execute after DOM parse. Only `is:inline` scripts run synchronously, which is required for FOUC prevention.
+
+**Trade-offs:**
+- Pro: Zero FOUC -- theme is set before first paint
+- Pro: No Preact hydration needed (pure DOM API)
+- Con: Inline script is duplicated on every page (tiny ~200 bytes, acceptable)
+
+**ThemeInit.astro:**
 
 ```astro
 ---
-import WordCounter from './WordCounter';
-import QrCode from './QrCode';
-// …existing 10 + the other 6
+// No frontmatter needed — pure inline script
 ---
-{slug === 'word-counter' && <WordCounter client:load locale={locale} />}
-{slug === 'qr-code' && <QrCode client:load locale={locale} />}
+<script is:inline>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+</script>
 ```
 
-### Pattern 3: Lib result union + English errors
+**Integration in BaseLayout.astro:**
 
-**What:** Lib never throws for user input. UI localizes via `err()`.
+```astro
+---
+import ThemeInit from '../components/ThemeInit.astro';
+---
+<!doctype html>
+<html lang={LOCALE_META[locale].htmlLang}>
+  <head>
+    <ThemeInit />
+    <meta charset="utf-8" />
+    <!-- rest of head -->
+  </head>
+```
 
-**When to use:** Parsers/formatters (SQL, markdown, diff, case, QR decode). Generators (password, lorem) can return a string and still use the union for invalid options (length 0, empty charset).
+### Pattern 3: Static Theme Toggle (No Preact Island)
 
-**Trade-offs:** Every new English error needs an `errors.ts` ZH row or ZH users see English.
+**What:** An Astro component rendering a `<button>` with sun/moon SVG. An inline `<script>` attaches a click handler that toggles `document.documentElement.dataset.theme` and writes to `localStorage`. Icon visibility is CSS-driven via `data-theme` selectors.
 
-```ts
-export type SqlResult =
-  | { ok: true; formatted: string }
-  | { ok: false; error: string };
+**When to use:** In `Header.astro`, alongside nav links.
 
-export function formatSql(input: string): SqlResult {
-  const trimmed = input.trim();
-  if (!trimmed) return { ok: false, error: '' };
-  // …
+**Why static (not Preact):** The toggle has no reactive state. The button is always visible; only the icon changes, which CSS handles. A Preact island would add ~3KB of hydration JS for zero benefit.
+
+**ThemeToggle.astro:**
+
+```astro
+---
+import type { Locale } from '../i18n/locales';
+import { t } from '../i18n/ui';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const copy = t(locale);
+---
+
+<button id="themeToggle" type="button" aria-label={copy.themeToggle}>
+  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
+    <path class="theme-sun" fill="currentColor" d="M12 17.5a5.5 5.5 0 1 0 0-11 ..."/>
+    <path class="theme-moon" fill="currentColor" d="M16.5 6A10.5 10.5 0 0 1 ..."/>
+  </svg>
+</button>
+
+<style>
+  #themeToggle {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0.4rem;
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+  }
+  #themeToggle:hover { color: var(--text); }
+  .theme-sun { display: block; }
+  .theme-moon { display: none; }
+  :root[data-theme="dark"] .theme-sun { display: none; }
+  :root[data-theme="dark"] .theme-moon { display: block; }
+</style>
+
+<script is:inline>
+  document.getElementById('themeToggle')?.addEventListener('click', function () {
+    var el = document.documentElement;
+    var next = el.dataset.theme === 'dark' ? 'light' : 'dark';
+    el.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>
+```
+
+### Pattern 4: CSS-Only Mobile Hamburger (Checkbox Trick)
+
+**What:** A hidden checkbox + label styled as a hamburger icon. When `:checked`, sibling `.nav-links` gets `display: flex; flex-direction: column`. Pure CSS, no JS framework.
+
+**When to use:** At `max-width: 640px` breakpoint.
+
+**Why CSS-only over Preact island:**
+- Pro: Zero JS payload; works without hydration
+- Pro: `<input type="checkbox">` is natively keyboard-accessible (Space/Enter to toggle)
+- Pro: Astro SSG outputs static HTML; CSS trick works perfectly
+- Con: Cannot trap focus (acceptable for a simple nav overlay)
+- Con: State is not programmatically accessible (not needed here)
+
+**Markup in Header.astro:**
+
+```astro
+<header class="site">
+  <nav class="wrap nav">
+    <a class="logo" href={localizedPath(locale, '/')}>
+      <span class="logo-mark" aria-hidden="true"></span>
+      {SITE_NAME}
+    </a>
+    <input
+      type="checkbox"
+      id="navToggle"
+      class="nav-toggle"
+      aria-label={copy.menuToggle}
+    />
+    <label for="navToggle" class="nav-hamburger" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </label>
+    <div class="nav-links">
+      <!-- existing nav links + ThemeToggle + LangSwitch -->
+      <a href={...}>{copy.navTools}</a>
+      <a href={...}>{copy.navBlog}</a>
+      <a href={...}>{copy.navAbout}</a>
+      <ThemeToggle locale={locale} />
+      <LangSwitch locale={locale} />
+    </div>
+  </nav>
+</header>
+```
+
+**CSS for hamburger:**
+
+```css
+.nav-toggle { display: none; }
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0.5rem;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  transition: transform var(--ease), opacity var(--ease);
+}
+
+@media (max-width: 640px) {
+  .nav-hamburger { display: flex; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 0.75rem 1.25rem;
+    gap: 0.25rem;
+  }
+
+  .nav-toggle:checked ~ .nav-links { display: flex; }
+
+  /* Hamburger → X animation */
+  .nav-toggle:checked ~ .nav-hamburger span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .nav-toggle:checked ~ .nav-hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle:checked ~ .nav-hamburger span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 }
 ```
 
-Island:
+**Key constraint:** The checkbox `<input>` must be a sibling of `.nav-links` (not a child) for the CSS `~` combinator to work. This means it sits inside `<nav>` but outside `<div class="nav-links">`.
 
-```tsx
-if (isTooLarge(input)) return { error: tooLarge, output: '' };
-const r = formatSql(input);
-return { error: r.ok ? null : err(r.error || null), output: r.ok ? r.formatted : '' };
+### Pattern 5: CSS Spacing Scale via Custom Properties
+
+**What:** Define a t-shirt sizing scale as CSS custom properties in `:root`. Replace hardcoded `px`/`rem` values throughout `global.css` with these variables.
+
+**When to use:** All spacing values in the visual layer.
+
+**Scale:** `--sp-1: 4px`, `--sp-2: 8px`, `--sp-3: 12px`, `--sp-4: 16px`, `--sp-6: 24px`, `--sp-8: 32px`, `--sp-12: 48px`. Matches the 4px base grid specified in PROJECT.md.
+
+**Trade-offs:**
+- Pro: Consistent spacing across all components
+- Pro: Single place to adjust the entire site's rhythm
+- Con: Requires a pass over all existing spacing values (one-time cost)
+
+**Migration strategy:** Do not replace every hardcoded value at once. Add the variables first, then migrate selectors that are being touched by the other visual changes (header, card-grid, tool-panel, FAQ). Leave untouched selectors for a follow-up if desired.
+
+### Pattern 6: 3-Column Card Grid Breakpoint
+
+**What:** Add a `@media (min-width: 1080px)` rule to `.card-grid` for 3 columns.
+
+**Current state:** 1-col default, 2-col at 720px.
+
+**Change in global.css:**
+
+```css
+.card-grid {
+  display: grid;
+  gap: var(--sp-2);  /* 8px, migrated from 0.85rem */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .card-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1080px) {
+  .card-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
 ```
 
-### Pattern 4: ToolShell children for non-text chrome
+### Pattern 7: FAQ `<details>` Collapsible
 
-**What:** Keep `output: string` for Copy. Put file pickers, live HTML preview, QR `<img>`, Download buttons in `children` (already the input slot).
+**What:** Replace `<dl>/<dt>/<dd>` with `<details>/<summary>` semantic HTML. CSS styles the expand/collapse with a rotated indicator.
 
-**When to use:** Markdown (preview pane + raw HTML in `output` for Copy). QR (canvas/img + file input; `output` = decoded text or data URL). Diff can still stringify a unified diff into `<pre>`.
+**Why `<details>` over Preact toggle:**
+- Natively accessible (keyboard, screen reader)
+- Zero JS
+- Works with SSG output
 
-**Trade-offs:** Avoids a ToolShell rewrite. Markdown HTML should **not** be the only surface (tags in `<pre>` look broken) — add a preview node in children. Sanitize before `dangerouslySetInnerHTML`.
+**FaqList.astro rewrite:**
 
-**Do not** add `client:only` just because the island has a preview.
-
-### Pattern 5: Async / browser APIs follow HashGenerator, not UuidGenerator
-
-**What:** `UuidGenerator` inlines `crypto.randomUUID()` with no `src/lib` — do **not** copy that. Password and lorem belong in `src/lib` so Vitest covers them. QR decode and any `FileReader` / canvas work go in `useEffect` or click handlers, same as `hashText` in `HashGenerator.tsx`.
-
-**When to use:** QR generate/decode, markdown render if the parser is async, password via `crypto.getRandomValues`.
-
-## Island loading: QR and Markdown
-
-| Question | Answer |
-|----------|--------|
-| Default directive | **`client:load`** for all eight, same as the existing ten. Tools sit above the fold; `client:visible` would delay the textarea until scroll; `client:idle` is an unnecessary divergence. |
-| `client:only="preact"` | **Not the default.** Use only if a dependency throws at **import / SSR** because it touches `window`/`document`/`canvas` at module scope. Prefer: keep the library call inside an event/`useEffect`, or `await import('…')` on first use inside the island. |
-| Heavy deps (marked, sql-formatter, diff, jsQR / qrcode) | Import them **only** from that tool's `src/lib/{tool}.ts` or island. Never from `ToolIsland.astro`, `ToolShell`, or a shared barrel. Other tool pages then do not download them (island JS is per hydrated component; confidence MEDIUM pending a `astro build` bundle check). |
-| Markdown SSR | There is no user Markdown at SSG time. Island hydrates empty. Stay on `client:load`. Sanitize HTML in lib before the island paints. |
-| QR generate | Canvas/`<img src={dataUrl}>` after user input. Fine with `client:load` if generate runs on click/`useEffect`. |
-| QR decode | Selected `File` only (no camera). `FileReader` + decode in the change handler. Add `INPUT_MAX_BYTES` (image) beside `INPUT_MAX_CHARS` (text). |
-| Split generate vs decode bundles | Optional `import()` inside `QrCode.tsx` so generate-only users skip the decoder. Not required for v1 of the tool if the combined island is acceptable. |
-
-Official Astro behavior used here (Context7 `/withastro/docs`, MEDIUM): `client:load` SSRs then hydrates immediately; `client:only` skips SSR and **requires** a framework hint (`client:only="preact"`); directives only work on components imported directly in a `.astro` file.
-
-## Data Flow
-
-### Request flow (unchanged)
-
-```
-GET /tools/{slug}/   or   GET /zh/tools/{slug}/
-        ↓
-getStaticPaths() ← TOOLS   (both locale files)
-        ↓
-getTool(slug)            throw if missing
-getCollection('toolPages') match locale + slug   throw if missing
-        ↓
-BaseLayout (canonical, hreflang via localizedPath)
-        ↓
-ToolIsland(slug, locale) → one Preact island client:load
-        ↓
-User input → isTooLarge / isTooLargeBytes → lib → ToolShell output | error
+```astro
+<h2>{heading}</h2>
+<div class="faq">
+  {items.map((item) => (
+    <details class="faq-item">
+      <summary>{item.question}</summary>
+      <p>{item.answer}</p>
+    </details>
+  ))}
+</div>
 ```
 
-Sitemap: `@astrojs/sitemap` walks the SSG routes. Adding a `TOOLS` row automatically emits `/tools/{slug}/` and `/zh/tools/{slug}/`. No sitemap code change.
+**CSS:**
 
-### State
+```css
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  margin-bottom: var(--sp-2);
+}
 
-No global store. Locale is a prop (`Locale`), not context. Each island owns `useState` / `useMemo`. Ads stay compile-time (`ADS_ENABLED`).
+.faq-item summary {
+  padding: var(--sp-4) var(--sp-4);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
 
-### Key data flows
+.faq-item summary::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid var(--accent);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform var(--ease);
+  flex-shrink: 0;
+}
 
-1. **Catalog → routes → cards:** `TOOLS` drives paths, home featured, `/tools/` groups, related links. `shortDescription` on `Tool` is English fallback; **cards use `copy.tools[slug]`** so ZH catalogs are not English.
-2. **Markdown → SEO blocks only:** how-to / FAQ never enter the island. Island labels live in `ui.ts`.
-3. **Lib → UI errors:** English string in lib → `localizeError` → ZH map or pass-through.
-4. **QR file flow (new, still local):** `<input type="file">` → island → `File.arrayBuffer()` in lib → decode → text `output`. The file never goes to the network. Reject oversize before decode.
+.faq-item[open] summary::before {
+  transform: rotate(90deg);
+}
 
-## Suggested Build Order
-
-Atomic slices. Do not add eight catalog rows up front — build will throw on missing markdown, and ToolIsland will blank-render missing branches.
-
-### Wave 0 — test harness only (tiny)
-
-- Change `tools.test.ts` `"has exactly 10 tools"` to a unique-slug + `TOOLS.length` assertion that grows with the catalog (or bump per slice: 11, 12, …).
-- Keep featured === 6.
-- No architecture changes.
-
-### Wave 1 — text/generate, zero new UI chrome, zero/low deps
-
-Prove the 8-file checklist on the cheapest tools.
-
-1. **`word-counter`** — one textarea, stats string in ToolShell. Clone `JsonFormatter` shape.
-2. **`case-converter`** — mode radios like Base64 (upper/lower/title/camel/snake/kebab/slug).
-3. **`lorem-ipsum`** — options + Generate button; lib must exist (do not clone UuidGenerator’s missing-lib shortcut).
-4. **`password-generator`** — length/charset + Generate; `crypto.getRandomValues` in lib.
-
-**Avoids:** ToolShell changes, file inputs, HTML injection, new categories.
-
-### Wave 2 — formatters (libs OK, still text-shaped ToolShell)
-
-5. **`sql-formatter`** — Format category; related to JSON. First likely npm formatter.
-6. **`text-diff`** — two textareas (still `children`); unified-diff text in `output`. Second textarea is the only UI stretch.
-7. **`markdown-preview`** — Format; preview node in children + sanitized HTML string in `output` for Copy. First XSS surface. Stay `client:load`.
-
-**Avoids:** shipping Markdown before a sanitizer decision; putting `marked` in a shared module.
-
-### Wave 3 — QR last
-
-8. **`qr-code`** — generate + decode modes like Base64. File input, image preview, Download, byte-size guard, new error strings. Heaviest island. Optional inner `import()` for decoder.
-
-**Depends on:** Wave 1–2 having proven catalog/content/i18n wiring. Isolates the only image-in exception.
-
-### Intra-slice order (every tool)
-
-```
-lib + unit tests
-  → island TSX (ToolShell + useToolUi)
-    → ToolIsland import + branch
-      → ui.ts EN+ZH labels  (typecheck fails without both)
-        → errors.ts if new English errors
-          → TOOLS row + relatedSlugs on existing tools
-            → content/tools/{slug}.md + zh/{slug}.md
-              → bump tools.test.ts length
-                → npm test && astro build  (throws on missing content)
+.faq-item > p {
+  padding: 0 var(--sp-4) var(--sp-4);
+  margin: 0;
+  color: var(--muted);
+}
 ```
 
-Lib before island so the UI never inlines algorithms. Catalog **after** markdown is ready, or in the same change — never catalog-only.
+## Data Flow: Theme Lifecycle
 
-### What not to parallelize
+```
+Page Load
+    │
+    ▼
+ThemeInit.astro <script is:inline>  (synchronous, before paint)
+    │
+    ├─ localStorage.getItem('theme') ──> 'light' | 'dark' | null
+    │
+    ├─ if null: matchMedia('(prefers-color-scheme: dark)').matches
+    │
+    └─ document.documentElement.dataset.theme = result
+    │
+    ▼
+Browser paints with correct theme (no FOUC)
+    │
+    ▼
+User clicks ThemeToggle button
+    │
+    ├─ Toggle dataset.theme
+    ├─ localStorage.setItem('theme', newValue)
+    │
+    └─ CSS vars cascade instantly (no re-render needed)
+```
 
-- ToolIsland if-chain: sequential edits to one file; land one branch per slice to keep diffs reviewable.
-- `ui.ts` `as const` object: same file, both locales; do not split EN/ZH across PRs.
-- Do not run Wave 3 in parallel with Wave 2 on the same ToolShell experiments — Markdown preview pattern should settle first so QR image chrome copies it.
+## Build Order (Dependency-Aware)
+
+### Phase 1: Theme Foundation (No Visual Breakage)
+1. **global.css** -- Split `:root` into shared + dark + light token blocks using `data-theme` selectors. Dark values stay as default (`:root` without attribute), so existing behavior is preserved before ThemeInit runs.
+2. **ThemeInit.astro** -- Create the blocking head script.
+3. **BaseLayout.astro** -- Import and render ThemeInit in `<head>`.
+4. **ThemeToggle.astro** -- Create the toggle button component.
+5. **Header.astro** -- Import and place ThemeToggle in nav.
+6. **i18n/ui.ts** -- Add `themeToggle`, `themeLight`, `themeDark` keys.
+
+**Verification:** Build, open in browser, verify dark mode unchanged. Manually set `document.documentElement.dataset.theme = 'light'` in DevTools to verify light tokens apply.
+
+### Phase 2: Mobile Hamburger (Independent of Theme)
+7. **Header.astro** -- Add checkbox input + hamburger label markup.
+8. **global.css** -- Add hamburger CSS, nav collapse at 640px, X animation.
+9. **i18n/ui.ts** -- Add `menuToggle` key.
+
+**Verification:** Resize to 320px, verify hamburger appears, nav collapses, toggles open/closed. Tab through to verify keyboard access.
+
+### Phase 3: Grid + Spacing (Pure CSS, No Component Changes)
+10. **global.css** -- Add spacing scale variables. Add 1080px breakpoint for 3-col grid. Migrate touched selectors to use spacing vars.
+
+**Verification:** Resize through 720px and 1080px breakpoints; verify card grid columns change.
+
+### Phase 4: Interactive Chrome (Pure CSS + Template)
+11. **global.css** -- Button hover/active/focus-visible polish. Tool-panel border/shadow refinement.
+12. **FaqList.astro** -- Rewrite to `<details>/<summary>`.
+13. **global.css** -- FAQ collapsible styles.
+
+**Verification:** Click FAQ items to expand/collapse. Verify button states on hover/active.
+
+## Anti-Patterns to Avoid
+
+### Anti-Pattern 1: Theme Toggle as Preact Island
+
+**What people do:** Wrap the theme toggle in a Preact component with `useState` and `client:load`.
+
+**Why it's wrong:** The toggle has no reactive state. The icon is CSS-controlled. A Preact island adds ~3KB hydration JS and delays theme application until hydration completes (potential FOUC on slow connections).
+
+**Do this instead:** Use a static Astro component with `<script is:inline>` for the click handler. CSS handles icon visibility via `data-theme` selectors.
+
+### Anti-Pattern 2: `matchMedia` Listener for Theme Changes
+
+**What people do:** Add a `matchMedia('prefers-color-scheme: dark')` change listener that auto-switches theme when the OS preference changes.
+
+**Why it's wrong:** If the user has manually selected a theme via the toggle, an OS preference change would override their choice. This creates a confusing UX where the site "fights" the user.
+
+**Do this instead:** Only read `matchMedia` on initial load (when `localStorage.theme` is null). After the user manually toggles, their choice is persisted and `matchMedia` is ignored.
+
+### Anti-Pattern 3: CSS-Only Theme Without Blocking Script
+
+**What people do:** Use `@media (prefers-color-scheme: dark)` in CSS for the default theme, then toggle a class for manual override.
+
+**Why it's wrong:** There is no way to "override" a `prefers-color-scheme` media query with a class. You would need `!important` or duplicate all CSS rules. This is fragile and unmaintainable.
+
+**Do this instead:** Use CSS custom properties. The blocking script sets the attribute before paint. CSS variables swap values based on the attribute. This is the standard pattern recommended by the Astro docs.
+
+### Anti-Pattern 4: Hamburger via Preact State
+
+**What people do:** Add a `useState(false)` for menu open/close in a Preact island.
+
+**Why it's wrong:** Adds hydration delay; menu flickers if JS loads slowly. The checkbox CSS trick is natively accessible and zero-JS.
+
+**Do this instead:** CSS checkbox trick. `<input type="checkbox">` is keyboard-accessible by default. CSS `:checked ~ .nav-links` handles visibility.
+
+### Anti-Pattern 5: Separate CSS Files Per Theme
+
+**What people do:** Create `light.css` and `dark.css` and conditionally import based on theme.
+
+**Why it's wrong:** Duplicates all non-color styles. Maintenance nightmare. Astro does not support conditional CSS imports at build time based on runtime state.
+
+**Do this instead:** Single `global.css` with `data-theme` selectors for color tokens only. Shared tokens stay in `:root`.
 
 ## Scaling Considerations
 
-| Scale | Architecture adjustments |
-|-------|--------------------------|
-| 18 tools (this milestone) | If-chain + static catalog is the right size. SSG page count doubles per locale automatically. |
-| ~30 tools | Still one `[slug].astro`. Consider grouping ToolIsland into two astro partials only if the file is painful to edit — not for runtime. |
-| 100k+ visits | Bottleneck is island JS size on Markdown/QR pages, not SSG. Measure those two bundles; lazy-import decoder/parser if they dominate. CDN/static host already fits. |
-
-### Scaling priorities
-
-1. **First bottleneck:** Markdown + QR island bytes on their own pages. Fix with per-lib imports / inner `import()`, not a site rewrite.
-2. **Second bottleneck:** ToolIsland if-chain human error (forgotten branch). Mitigation: build smoke that each `TOOLS` slug appears in `ToolIsland.astro`, or a fallback “Unknown tool island” paragraph. Optional hardening, not a new framework.
-
-## Anti-Patterns
-
-### Anti-Pattern 1: Catalog without markdown / island
-
-**What people do:** Append eight `TOOLS` rows, then iterate UIs.
-
-**Why it's wrong:** `throw new Error('Missing content for ${slug}')` at `astro build`. Missing ToolIsland branch ships an empty panel.
-
-**Do this instead:** Vertical slice. Build after each tool.
-
-### Anti-Pattern 2: Dynamic island import
-
-**What people do:** `const Cmp = islands[slug]; <Cmp client:load />`.
-
-**Why it's wrong:** Astro forbids `client:*` on dynamic tags. Hydration never attaches.
-
-**Do this instead:** Keep the explicit if-chain.
-
-### Anti-Pattern 3: New category for QR or Markdown
-
-**What people do:** Add `Image` or `Markup`.
-
-**Why it's wrong:** Home category chips and `/tools/` sections multiply; one-tool categories look empty. Conflicts with “no general image tools.”
-
-**Do this instead:** QR → Generate; Markdown/SQL → Format; Diff/Case/Word → Text.
-
-### Anti-Pattern 4: `client:only` by default for QR/Markdown
-
-**What people do:** Skip SSR because “canvas/HTML.”
-
-**Why it's wrong:** Diverges from ten working tools; blank HTML until JS; requires `client:only="preact"` hint. SSR of an empty form is free and matches ToolShell chrome.
-
-**Do this instead:** `client:load` + browser APIs in events/`useEffect`. `client:only="preact"` only if import-time `window` crashes SSG.
-
-### Anti-Pattern 5: ToolShell rewrite / new page templates
-
-**What people do:** Per-tool layouts, or replace `<pre>` globally with `innerHTML`.
-
-**Why it's wrong:** Breaks Copy + error pattern on the original ten. XSS if Markdown HTML is dumped into a shared pre.
-
-**Do this instead:** Extra UI in island `children`. Sanitize in `src/lib/markdown.ts`. Leave `[slug].astro` shared.
-
-### Anti-Pattern 6: Mixing SEO into `TOOLS` / skipping `ui.ts`
-
-**What people do:** Use catalog `name` on ZH cards.
-
-**Why it's wrong:** ToolCard and RelatedTools index `copy.tools[slug]`. Missing keys are a type/runtime hole.
-
-**Do this instead:** Routing metadata in `tools.ts`; long copy in collections; chrome labels in `ui.ts`.
-
-### Anti-Pattern 7: API route or camera for QR
-
-**What people do:** Server decode, `getUserMedia` scan.
-
-**Why it's wrong:** Violates SITE_TAGLINE and milestone out-of-scope. Privacy model is browser-local.
-
-**Do this instead:** File input → lib decode.
-
-### Anti-Pattern 8: Copying UuidGenerator’s missing lib
-
-**What people do:** Inline `crypto.randomUUID()`-style logic in password/lorem/QR.
-
-**Why it's wrong:** No unit tests; islands become the algorithm. Existing UuidGenerator is a legacy exception, not a template.
-
-**Do this instead:** Clone `JsonFormatter` / `HashGenerator` / `Base64Tool`.
-
-## Integration Points
-
-### External services
-
-| Service | Integration pattern | Notes |
-|---------|---------------------|-------|
-| None for tool logic | — | No new API routes. `robots.txt.ts` stays the only `APIRoute`. |
-| npm libs (optional) | Import from that tool’s `src/lib` only | sql-formatter / diff / marked+sanitizer / qrcode+jsQR. Decision belongs in STACK.md; architecture only cares they stay island-local. |
-| Web Crypto | `crypto.getRandomValues` / existing hash pattern | Password. Prefer this over `Math.random`. |
-| FileReader / canvas | Island event handlers | QR only. |
-
-### Internal boundaries
-
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| Catalog ↔ pages | Direct import of `TOOLS` | SSG only |
-| Pages ↔ islands | `slug` + `locale` props | No shared runtime state |
-| Island ↔ lib | Function call | Lib must not import Preact or `ui.ts` |
-| Island ↔ i18n | `useToolUi(locale)` / `t(locale)` | Locale is a prop |
-| Lib ↔ errors.ts | English string key | ZH map must include new keys |
-| Content ↔ pages | `getCollection('toolPages')` | Not used by islands |
-| RelatedTools ↔ catalog | `getRelatedTools(slug)` | Drops unknown slugs |
-
-## Per-tool UI shape (so islands stay in family)
-
-| Slug | Clone | Inputs | Output |
-|------|-------|--------|--------|
-| `word-counter` | JsonFormatter | one textarea | stats text |
-| `case-converter` | Base64Tool | textarea + mode radios | transformed text |
-| `lorem-ipsum` | UuidGenerator **plus** lib | count/paragraph controls + button | generated text |
-| `password-generator` | UuidGenerator **plus** lib | length/charset + button | password |
-| `sql-formatter` | JsonFormatter | textarea | pretty SQL |
-| `text-diff` | RegexTester (multi-field) | two textareas | unified diff text |
-| `markdown-preview` | JsonFormatter + preview child | textarea | sanitized HTML preview + source in Copy |
-| `qr-code` | Base64Tool + HashGenerator async | text + file input, generate/decode mode | image + decoded text |
-
-## Confidence
-
-| Claim | Level | Why |
-|-------|-------|-----|
-| Plug-in path (catalog, island, lib, content, i18n) | HIGH | Read from current source 2026-09-11 |
-| No new pages / no new category | HIGH | `getStaticPaths` + `getToolsByCategory` already generic |
-| `client:load` for all eight | HIGH for text tools; MEDIUM that QR/markdown will not need `client:only` | Depends on chosen libs not touching `window` at import |
-| Per-page island JS isolation | MEDIUM | Astro islands model + Context7; WebFetch of docs.astro.build blocked here — verify with `astro build` on Markdown/QR pages |
-| ToolShell children suffice for preview/QR | HIGH | `children` already wrap inputs; output stays a string |
-
-## Gaps to address in later phase research (not architecture blockers)
-
-- Exact npm libraries (STACK.md): SQL formatter, diff, markdown+sanitize, QR generate/decode.
-- Markdown sanitizer policy (PITFALLS / security phase).
-- QR byte-size number (start from a conservative cap next to `INPUT_MAX_CHARS = 100_000`; tune when the decoder is chosen).
-- Whether to add a ToolIsland fallback / slug-coverage test (recommended, optional).
+| Scale | Concern | Approach |
+|-------|---------|----------|
+| Current (18 tools, static) | Theme flash | Blocking inline script + CSS vars (this architecture) |
+| 50+ tools | global.css size | Split into `base.css`, `theme.css`, `components.css`; import all in BaseLayout |
+| If SSR added later | Theme persistence | Same pattern works; `data-theme` is client-side only |
 
 ## Sources
 
-- Local codebase (HIGH): `src/data/tools.ts`, `src/components/tools/ToolIsland.astro`, `src/components/ToolShell.tsx`, `src/pages/tools/[slug].astro`, `src/pages/zh/tools/[slug].astro`, `src/content.config.ts`, `src/i18n/ui.ts`, `src/i18n/errors.ts`, `src/lib/json.ts`, `src/lib/limits.ts`, `src/components/tools/JsonFormatter.tsx`, `HashGenerator.tsx`, `Base64Tool.tsx`, `UuidGenerator.tsx`, `.planning/codebase/ARCHITECTURE.md`, `.planning/PROJECT.md`
-- Context7 `/withastro/docs` (MEDIUM): `client:load` vs `client:visible` vs `client:only`; directives only on directly imported framework components; SSG `getStaticPaths` + content collections
-- Astro directives / framework-components docs via Context7 (MEDIUM): `client:only` requires framework hint; `client:load` is high-priority above-the-fold hydration
+- Astro official tutorial: Theme toggle with `is:inline` script and `localStorage` -- https://github.com/withastro/docs/blob/main/src/content/docs/en/tutorial/6-islands/2.mdx
+- Astro view transitions: `astro:after-swap` event for theme persistence -- https://github.com/withastro/docs/blob/main/src/content/docs/en/guides/view-transitions.mdx
+- Existing codebase: `src/styles/global.css` (dark-only `:root`), `src/layouts/BaseLayout.astro` (import chain), `src/components/Header.astro` (nav structure)
+- CSS `data-*` attribute selectors: MDN Web Docs
+- `<details>/<summary>` accessibility: MDN Web Docs (natively accessible, no ARIA needed)
 
 ---
-*Architecture research for: Devtoolbox 8-tool additive milestone*
-*Researched: 2026-09-11*
+*Architecture research for: Devtoolbox v1.1 Frontend Polish*
+*Researched: 2026-09-15*
+*Confidence: HIGH -- all patterns verified against Astro 7 official docs and existing codebase*
