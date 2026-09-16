@@ -1,7 +1,8 @@
 ---
 phase: "7"
 slug: "theme-foundation"
-status: draft
+status: approved
+reviewed_at: "2026-09-16"
 shadcn_initialized: false
 preset: none
 created: "2026-09-16"
@@ -147,28 +148,23 @@ Do not change Tools / Blog / About labels or `href`s. Do not add `aria-pressed` 
 
 ## UI Considerations
 
-Applicable state considerations resolved: 8 covered, 2 backstop, 0 unresolved. Elements: ThemeToggle (`interactive-control`), header `.nav-links` (`nav`), body canvas/grid (`static-content`), diff hunk list (`list-collection`, color-only this phase).
+Probe elements: ThemeToggle (E1 interactive-control), header `.nav-links` (E2 nav), body canvas/grid (E3 static-content), `.diff-lines` (E4 list-collection). Kinds confirmed from UI-SPEC prose (autonomous). 0 unresolved.
 
-| Category | Element(s) | Status | Resolution / Reason |
-|----------|------------|--------|---------------------|
-| loading | ThemeToggle | ✅ covered | No loading chrome. ThemeInit is a blocking `<script is:inline>` first in `<head>`; the button is static HTML and works on first click without hydration. |
-| error | ThemeToggle | ✅ covered | Storage `SecurityError` is silent (see Copywriting error row). Click still sets `data-theme` on `<html>` for the session. Invalid stored values never reach `setAttribute`. |
-| long-text | ThemeToggle | ✅ covered | No visible label. `aria-label` is the fixed English string `Toggle color theme`. SVGs are `aria-hidden="true"`. |
-| loading | header `.nav-links` | ✅ covered | Nav is SSG; no fetch. Dismissed-as-covered: there is no in-flight nav state to draw. |
-| error | header `.nav-links` | ✅ covered | Nav is static links plus one button; no load-failure UI. |
-| overflow | header `.nav-links` | 🧪 backstop | Toggle is a 44×44 control after About inside the existing flex row (`gap: 1rem`). Do not wrap, collapse, or add a hamburger (Phase 8). Visual check: desktop header stays one row. |
-| long-text | header `.nav-links` | ✅ covered | SITE_NAME and Tools/Blog/About strings stay HEAD. Toggle adds no text that can overflow. |
-| overflow | body canvas/grid | ✅ covered | `repeating-linear-gradient` is infinite; it does not clip or scroll on its own. Content overflow stays existing (`.diff-lines` / `.md-preview` max-height 384px). |
-| long-text | body canvas/grid | ✅ covered | Grid is not text. Page copy overflow is unchanged. |
-| populated | `.diff-line--add` / `--del` | ✅ covered | Happy-path hunks use `--diff-add-fg` `--diff-add-bg` `--diff-del-fg` in both themes. |
-| empty | `.diff-lines` | ✅ covered | Empty/idle diff remains Phase 4 ToolShell behavior; this phase does not add an empty-theme illustration. |
-| loading | `.diff-lines` | ✅ covered | Diff is local and already rendered; no theme-loading skeleton over hunks. |
-| error | `.diff-lines` | ✅ covered | Diff errors stay ToolShell `role="alert"`; theme storage errors never route here. |
-| partial | `.diff-lines` | ✅ covered | Mixed add/del/eq rows keep per-line tokens; eq stays `--muted`. |
-| overflow | `.diff-lines` | ✅ covered | Existing `max-height: 384px; overflow: auto` — do not change. |
-| zero-one-many | `.diff-lines` | ✅ covered | Layout already handles 0/1/many rows; theme tokens do not change density. |
-| empty | ThemeToggle | ✅ covered | Not a data surface; N/A empty collection. First visit is OS default, not empty. |
-| populated | ThemeToggle | ✅ covered | Not a collection. Happy path: sun visible in dark, moon visible in light. |
+- ThemeToggle has no loading chrome; ThemeInit is a blocking `<script is:inline>` first in `<head>` and the button is static HTML that works on first click without hydration
+- ThemeToggle storage `SecurityError` is silent; click still sets `data-theme` on `<html>`; invalid stored values never reach `setAttribute`
+- ThemeToggle has no visible label; `aria-label` is the fixed English string `Toggle color theme`; SVGs are `aria-hidden="true"`
+- ThemeToggle is not a collection; first visit with empty storage follows OS `prefers-color-scheme` (not an empty-state illustration)
+- ThemeToggle happy path: sun icon visible in dark (including missing `data-theme`); moon icon visible when `data-theme="light"`
+- Header `.nav-links` is SSG with no fetch and no load-failure UI
+- Header `.nav-links` keeps HEAD Tools/Blog/About strings; toggle adds no text that can overflow
+- Header `.nav-links` is not a data collection; populated state is the existing three links plus the 44×44 toggle after About
+- Body canvas/grid is not a data surface; `--grid-line` repeating-linear-gradient (47px/48px) paints on every page with no empty/loading/error chrome
+- Body grid does not clip or scroll on its own; content overflow stays existing `.diff-lines` / `.md-preview` max-height 384px
+- `.diff-line--add` / `--del` hunks use `--diff-add-fg` `--diff-add-bg` `--diff-del-fg` in both themes; eq stays `--muted`
+- Empty/idle diff remains Phase 4 ToolShell behavior; this phase does not add an empty-theme illustration
+- Diff is local; no theme-loading skeleton over hunks; theme storage errors never route to ToolShell `role="alert"`
+- Existing `.diff-lines` `max-height: 384px; overflow: auto` is unchanged; 0/1/many row density is unchanged
+- { statement: "Desktop header stays one row with the 44×44 toggle after About; do not wrap, collapse, or add a hamburger (Phase 8)", verification: backstop }
 
 ---
 
@@ -370,12 +366,12 @@ Do not touch: `src/lib/**`, `src/data/tools.ts`, `src/components/tools/**`, `Too
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
-- [ ] Dimension 7 Inventory Provenance: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
+- [x] Dimension 7 Inventory Provenance: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-09-16
