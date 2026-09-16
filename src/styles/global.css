@@ -63,6 +63,24 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 .nav-links { display: flex; gap: 1rem; margin-left: auto; }
 .nav-links a { color: var(--text); text-decoration: none; }
 .nav-links a:hover { color: var(--accent); }
+#navToggle {
+  display: none;
+}
+@media (max-width: 640px) {
+  #navToggle {
+    display: inline-flex;
+  }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+  }
+  .nav.is-open .nav-links {
+    visibility: visible;
+  }
+}
 #themeToggle {
   display: inline-flex;
   align-items: center;

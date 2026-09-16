@@ -1,0 +1,72 @@
+---
+import { t, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const copy = t(Astro.props.locale);
+---
+<button
+  type="button"
+  id="navToggle"
+  aria-expanded="false"
+  aria-controls="navMenu"
+  aria-label={copy.nav.menu}
+  data-label-menu={copy.nav.menu}
+  data-label-close={copy.nav.close}
+>
+  <svg class="nav-toggle-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14"/>
+  </svg>
+</button>
+<script is:inline>
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var mq = window.matchMedia('(max-width: 640px)');
+    function boot() {
+      var menu = document.getElementById('navMenu');
+      var nav = menu && menu.closest('nav.nav');
+      var header = menu && menu.closest('header.site');
+      if (!toggle || !menu || !nav || !header) return;
+      function isOpen() { return nav.classList.contains('is-open'); }
+      function setInertForViewport() {
+        if (mq.matches && !isOpen()) menu.setAttribute('inert', '');
+        else menu.removeAttribute('inert');
+      }
+      function close() {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', toggle.getAttribute('data-label-menu') || '');
+        setInertForViewport();
+      }
+      function open() {
+        nav.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', toggle.getAttribute('data-label-close') || '');
+        menu.removeAttribute('inert');
+      }
+      toggle.addEventListener('click', function () { isOpen() ? close() : open(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || !isOpen()) return;
+        close();
+        toggle.focus();
+      });
+      document.addEventListener('pointerdown', function (e) {
+        if (!isOpen()) return;
+        if (header.contains(e.target)) return;
+        close();
+      });
+      mq.addEventListener('change', function () {
+        if (!mq.matches) close();
+        else setInertForViewport();
+      });
+      setInertForViewport();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+  })();
+</script>
