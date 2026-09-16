@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ThemeInit from '../components/ThemeInit.astro';
 import { SITE_NAME, SITE_ORIGIN } from '../data/site';
 import '../styles/global.css';
 
@@ -17,6 +18,7 @@ const fullTitle = title.includes(SITE_NAME) ? title : `${title} · ${SITE_NAME}`
 <!doctype html>
 <html lang="en">
   <head>
+    <ThemeInit />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
