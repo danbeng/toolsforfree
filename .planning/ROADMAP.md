@@ -41,7 +41,11 @@ Archive: `.planning/milestones/v1.0-ROADMAP.md`
   2. Visitor's chosen theme is restored on the next page load with no flash of the wrong theme
   3. First-time visitor with no stored preference sees a theme matching their OS `prefers-color-scheme`
   4. Light theme shows an adapted body grid-line background, and native widgets (scrollbar, inputs) follow the active `color-scheme`
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 07-01-PLAN.md — FOUC-safe light/dark tokens, ThemeInit, header ThemeToggle, persistence, grid, color-scheme
+
 **UI hint**: yes
 
 ### Phase 8: Mobile Hamburger Menu
@@ -86,7 +90,7 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 7. Theme Foundation | 0/TBD | Not started | - |
+| 7. Theme Foundation | 0/1 | Not started | - |
 | 8. Mobile Hamburger Menu | 0/TBD | Not started | - |
 | 9. Grid & Spacing | 0/TBD | Not started | - |
 | 10. Interactive Chrome | 0/TBD | Not started | - |
