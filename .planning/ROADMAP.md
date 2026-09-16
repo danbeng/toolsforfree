@@ -64,7 +64,12 @@ Plans:
   3. Visitor can close the open menu with Escape and focus returns to the hamburger button
   4. When the menu is collapsed, hidden nav links are not keyboard-focusable
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+
+- [ ] 08-01-PLAN.md — Accessible ≤640px hamburger, overlay, EN/ZH labels, Escape/inert/widen
+
 **UI hint**: yes
 
 ### Phase 9: Grid & Spacing
@@ -104,6 +109,6 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
-| 8. Mobile Hamburger Menu | 0/TBD | Not started | - |
+| 8. Mobile Hamburger Menu | 0/1 | Not started | - |
 | 9. Grid & Spacing | 0/TBD | Not started | - |
 | 10. Interactive Chrome | 0/TBD | Not started | - |
