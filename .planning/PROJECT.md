@@ -44,10 +44,11 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - ✓ Markdown preview (sanitized GFM, remote images stripped) — Phase 5
 - ✓ QR code generate + decode (PNG download + in-browser file decode, no camera) — Phase 6
 
+- ✓ Light/dark theme with CSS variable split and system preference detection — Phase 7
+- ✓ Theme toggle in header with localStorage persistence — Phase 7
+
 ### Active
 
-- [ ] Light/dark theme with CSS variable split and system preference detection
-- [ ] Theme toggle in header with localStorage persistence
 - [ ] Mobile hamburger menu at ≤640px with accessible keyboard support
 - [ ] Card grid 3-column layout at ≥1080px breakpoint
 - [ ] CSS variable spacing scale (4/8/12/16/24/32/48)
@@ -72,9 +73,9 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Product name: Devtoolbox. Tagline: "Browser-based developer tools. Nothing is uploaded."
 - Stack: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree (not middleware i18n).
 - Catalog (`TOOLS` in `src/data/tools.ts`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
-- Current global.css is dark-only (`color-scheme: dark` hardcoded in `:root`). No light mode tokens exist.
+- `global.css` now splits dark tokens on `:root` and light tokens on `:root[data-theme="light"]`; `ThemeInit.astro` is the first `<head>` child; header has a static `ThemeToggle`.
 - Fonts: IBM Plex Mono + IBM Plex Sans + Syne via Google Fonts CDN (already preconnected).
-- Body background has a distinctive grid-line pattern that needs light-mode adaptation.
+- Body background grid uses `--grid-line` at 47px/48px and follows the active theme.
 - Header is sticky with backdrop blur; nav links wrap on mobile without a hamburger menu.
 - `card-grid` is 1-col → 2-col at 720px; no 3-col breakpoint.
 - Tool-panel chrome uses LED indicator concept; buttons are minimal (border + accent).
@@ -99,9 +100,10 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 | QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
 | No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
 | Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
-| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Pending |
-| CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Pending |
-| Hamburger menu via pure CSS + checkbox (no JS framework dependency) | Lightweight, works with Astro static output | Pending |
+| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phase 7 shipped; 8–10 remaining |
+| CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Honored — Phase 7 (`data-theme`, ThemeInit, ThemeToggle) |
+| ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | Honored — Phase 7 |
+| Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | Pending Phase 8 |
 
 ## Evolution
 
@@ -121,4 +123,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-15 after v1.1 Frontend Polish milestone start*
+*Last updated: 2026-09-16 after Phase 7*

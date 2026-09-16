@@ -1,43 +1,33 @@
 {
   "contract": "1.0.0",
   "flavor": "core",
-  "milestone": null,
+  "milestone": "v1.1 — Frontend Polish",
   "phases": [
     {
-      "number": "1",
-      "name": "Additive tool contract",
+      "number": "7",
+      "name": "Theme Foundation",
       "status": "complete"
     },
     {
-      "number": "2",
-      "name": "Light text and generate tools",
-      "status": "complete"
+      "number": "8",
+      "name": "Mobile Hamburger Menu",
+      "status": "pending"
     },
     {
-      "number": "3",
-      "name": "SQL formatter",
-      "status": "complete"
+      "number": "9",
+      "name": "Grid & Spacing",
+      "status": "pending"
     },
     {
-      "number": "4",
-      "name": "Text Diff",
-      "status": "complete"
-    },
-    {
-      "number": "5",
-      "name": "Markdown preview",
-      "status": "complete"
-    },
-    {
-      "number": "6",
-      "name": "QR generate and decode",
-      "status": "complete"
+      "number": "10",
+      "name": "Interactive Chrome",
+      "status": "pending"
     }
   ],
   "next": {
-    "command": "/gsd:progress",
-    "label": "Show progress",
-    "reason": "Unsure of state — showing progress"
+    "command": "/gsd:progress --next",
+    "label": "Advance to the next step (plan phase 8)",
+    "reason": "Phase 8 of 4 — needs a plan"
   },
-  "updated_at": "2026-09-14T11:12:50.889Z"
+  "updated_at": "2026-09-16T05:42:21.931Z"
 }

@@ -1,8 +1,8 @@
 ---
 phase: 07-theme-foundation
 verified: 2026-09-16T04:00:47Z
-status: human_needed
-score: 20/26 must-haves verified
+status: passed
+score: 26/26 must-haves verified
 covered_files:
   - .planning/REQUIREMENTS.md
   - .planning/phases/07-theme-foundation/07-01-PLAN.md
@@ -74,7 +74,7 @@ human_verification:
 
 **Phase Goal:** Visitors can use light or dark theme on every page without a flash, and the choice persists across visits and locales
 **Verified:** 2026-09-16T04:00:47Z
-**Status:** human_needed
+**Status:** passed
 **Re-verification:** No — initial verification
 **Baseline:** git HEAD chrome (`ThemeInit.astro`, `ThemeToggle.astro`, `global.css` 230 lines, `BaseLayout.astro`, `Header.astro`). Dirty overlay pages were not treated as the implementation. Worktree diff vs HEAD on those five files: empty.
 
