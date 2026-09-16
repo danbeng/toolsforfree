@@ -1,7 +1,8 @@
 ---
 phase: "9"
 slug: "grid-spacing"
-status: draft
+status: approved
+reviewed_at: "2026-09-16"
 shadcn_initialized: false
 preset: none
 created: "2026-09-16"
@@ -155,6 +156,10 @@ Keep HEAD strings verbatim:
 Do not add overlay kicker / eyebrow / `homeViewAll` i18n keys. Do not change Tools / Blog / About nav labels.
 
 ---
+
+## Visual hierarchy (home)
+
+Primary visual anchor on home is the featured `.card-grid` immediately after `h2` `Featured tools`. Hero/kicker are out of scope; do not add overlay chrome to compete with that grid. Tools index has no single-page hero — each category `h2` + its `.card-grid` is the local anchor.
 
 ## UI Considerations
 
@@ -360,12 +365,12 @@ Do not touch: `src/lib/**`, `src/data/tools.ts`, `src/components/tools/**`, `Too
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
-- [ ] Dimension 7 Inventory Provenance: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: FLAG (non-blocking — primary home anchor declared: featured `.card-grid` after `Featured tools`)
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
+- [x] Dimension 7 Inventory Provenance: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-09-16 (7/7; Visuals FLAG accepted with home-anchor declaration)
