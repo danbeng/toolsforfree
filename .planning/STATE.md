@@ -4,17 +4,18 @@ milestone: v1.1
 milestone_name: Frontend Polish
 current_phase: 7
 current_phase_name: Theme Foundation
-status: executing
-stopped_at: Phase 7 UI-SPEC approved
-last_updated: "2026-09-16T03:20:11.821Z"
+current_plan: 1
+status: verifying
+stopped_at: Completed 07-01-PLAN.md
+last_updated: "2026-09-16T03:35:59.693Z"
 last_activity: 2026-09-16
 last_activity_desc: v1.1 roadmap written (Phases 7-10)
-state_head: d3357807ffd8a8201e11746aa1b503861ecbc9e9
+state_head: f4ce2a903fbe364d45ff39ffba7e5750bcf4d91b
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 1
-  completed_plans: 0
+  completed_plans: 1
 ---
 
 # Project State
@@ -28,10 +29,11 @@ See: .planning/PROJECT.md (updated 2026-09-15)
 
 ## Current Position
 
-Phase: 7 (Theme Foundation) — READY TO EXECUTE
-Plan: —
-Status: Ready to execute
-Last activity: 2026-09-16 — v1.1 roadmap written (Phases 7-10)
+Phase: 7 (Theme Foundation) — EXECUTING
+Current Plan: 1
+Total Plans in Phase: 1
+Status: Phase complete — ready for verification
+Last activity: 2026-09-16 — executing 07-01 theme foundation
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -59,6 +61,11 @@ Progress: [░░░░░░░░░░] 0%
 | 10 | TBD | - | - |
 
 *Updated after each plan completion*
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 07 P01 | 7min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -72,6 +79,11 @@ Recent decisions affecting current work:
 - CSS variables + `data-theme` on `<html>`; blocking inline script for FOUC
 - Hamburger is `<button>` + ARIA (not checkbox hack); EN+ZH parity
 - No new npm packages; CSS + tiny inline scripts only
+- [Phase 7]: Dark HEAD hex stays on :root; light lives only under :root[data-theme=light]
+- [Phase 7]: ThemeInit never writes storage; ThemeToggle setItem only on click
+- [Phase 7]: Allowlist light|dark before setAttribute; try/catch around storage
+- [Phase 7]: ThemeToggle is static Astro with English aria-label Toggle color theme
+- [Phase 7]: Worked from HEAD chrome (~169-line global.css), not the dirty overlay
 
 ### Pending Todos
 
@@ -92,9 +104,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-16T02:33:15.102Z
-Stopped at: Phase 7 UI-SPEC approved
-Resume file: .planning/phases/07-theme-foundation/07-UI-SPEC.md
+Last session: 2026-09-16T03:35:59.637Z
+Stopped at: Completed 07-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 

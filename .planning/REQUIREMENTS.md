@@ -7,13 +7,13 @@
 
 ### Theme
 
-- [ ] **THM-01**: CSS custom properties split into shared + dark (`:root`) + light (`:root[data-theme="light"]`) tokens
-- [ ] **THM-02**: Theme toggle button in header with sun/moon icon, toggles `data-theme` on `<html>`
-- [ ] **THM-03**: Theme preference persisted to `localStorage` and restored on page load
-- [ ] **THM-04**: Blocking `<script is:inline>` in `<head>` reads `localStorage` before first paint (no FOUC)
-- [ ] **THM-05**: System preference detection via `prefers-color-scheme` when no `localStorage` entry exists
-- [ ] **THM-06**: Body grid-line background adapted for light mode via CSS variable (`--grid-line`)
-- [ ] **THM-07**: `color-scheme` property set per theme for native widget theming (scrollbar, inputs)
+- [x] **THM-01**: CSS custom properties split into shared + dark (`:root`) + light (`:root[data-theme="light"]`) tokens
+- [x] **THM-02**: Theme toggle button in header with sun/moon icon, toggles `data-theme` on `<html>`
+- [x] **THM-03**: Theme preference persisted to `localStorage` and restored on page load
+- [x] **THM-04**: Blocking `<script is:inline>` in `<head>` reads `localStorage` before first paint (no FOUC)
+- [x] **THM-05**: System preference detection via `prefers-color-scheme` when no `localStorage` entry exists
+- [x] **THM-06**: Body grid-line background adapted for light mode via CSS variable (`--grid-line`)
+- [x] **THM-07**: `color-scheme` property set per theme for native widget theming (scrollbar, inputs)
 
 ### Navigation
 
@@ -56,13 +56,13 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| THM-01 | Phase 7 | Pending |
-| THM-02 | Phase 7 | Pending |
-| THM-03 | Phase 7 | Pending |
-| THM-04 | Phase 7 | Pending |
-| THM-05 | Phase 7 | Pending |
-| THM-06 | Phase 7 | Pending |
-| THM-07 | Phase 7 | Pending |
+| THM-01 | Phase 7 | Complete |
+| THM-02 | Phase 7 | Complete |
+| THM-03 | Phase 7 | Complete |
+| THM-04 | Phase 7 | Complete |
+| THM-05 | Phase 7 | Complete |
+| THM-06 | Phase 7 | Complete |
+| THM-07 | Phase 7 | Complete |
 | NAV-01 | Phase 8 | Pending |
 | NAV-02 | Phase 8 | Pending |
 | NAV-03 | Phase 8 | Pending |
@@ -80,6 +80,7 @@
 | CHR-07 | Phase 10 | Pending |
 
 **Coverage:**
+
 - v1.1 requirements: 22 total
 - Mapped to phases: 22
 - Unmapped: 0 ✓
