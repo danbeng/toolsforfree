@@ -3,9 +3,9 @@ phase: "7"
 slug: "theme-foundation"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 # audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: false) (#2117)
-status: draft
+status: validated
 nyquist_compliant: false
-wave_0_complete: false
+wave_0_complete: true
 created: "2026-09-16"
 ---
 
@@ -42,14 +42,14 @@ Do **not** add `*.test.tsx` or switch Vitest to jsdom. Theme behavior is documen
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 07-01-01 | 01 | 1 | THM-01 | — | N/A | smoke (file) | `rg -n "data-theme=\"light\"" src/styles/global.css` | ❌ W0 | ⬜ pending |
-| 07-01-02 | 01 | 1 | THM-02 | — | N/A | smoke (file) | `rg ThemeToggle src/components/Header.astro` | ❌ W0 | ⬜ pending |
-| 07-01-03 | 01 | 1 | THM-03 | T-7-01 | Allowlist `light`\|`dark` before `setAttribute`; try/catch around storage | manual | hard refresh after toggle | ❌ W0 | ⬜ pending |
-| 07-01-04 | 01 | 1 | THM-04 | T-7-01 | Init script is `is:inline` IIFE, not bundled `type="module"` | smoke | `npm run build` then `rg "localStorage.getItem\\('theme'\\)" dist` | ❌ W0 | ⬜ pending |
-| 07-01-05 | 01 | 1 | THM-05 | — | N/A | manual | DevTools emulate `prefers-color-scheme`, empty storage, hard refresh | ❌ W0 | ⬜ pending |
-| 07-01-06 | 01 | 1 | THM-06 | — | N/A | smoke (file) | `rg --grid-line src/styles/global.css` | ❌ W0 | ⬜ pending |
-| 07-01-07 | 01 | 1 | THM-07 | — | N/A | smoke (file) | `rg "color-scheme" src/styles/global.css` | ❌ W0 | ⬜ pending |
-| 07-01-08 | 01 | 1 | regression | — | N/A | unit | `npm test` | ✅ | ⬜ pending |
+| 07-01-01 | 01 | 1 | THM-01 | — | N/A | smoke (file) | `rg -n "data-theme=\"light\"" src/styles/global.css` | ✅ | ✅ green |
+| 07-01-02 | 01 | 1 | THM-02 | — | N/A | smoke (file) | `rg ThemeToggle src/components/Header.astro` | ✅ | ✅ green |
+| 07-01-03 | 01 | 1 | THM-03 | T-07-01 | Allowlist `light`\|`dark` before `setAttribute`; try/catch around storage | manual | hard refresh after toggle | ✅ | ✅ green |
+| 07-01-04 | 01 | 1 | THM-04 | T-07-01 | Init script is `is:inline` IIFE, not bundled `type="module"` | smoke | `npm run build` then `rg "localStorage.getItem\\('theme'\\)" dist` | ✅ | ✅ green |
+| 07-01-05 | 01 | 1 | THM-05 | — | N/A | manual | DevTools emulate `prefers-color-scheme`, empty storage, hard refresh | ✅ | ✅ green |
+| 07-01-06 | 01 | 1 | THM-06 | — | N/A | smoke (file) | `rg --grid-line src/styles/global.css` | ✅ | ✅ green |
+| 07-01-07 | 01 | 1 | THM-07 | — | N/A | smoke (file) | `rg "color-scheme" src/styles/global.css` | ✅ | ✅ green |
+| 07-01-08 | 01 | 1 | regression | — | N/A | unit | `npm test` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -61,9 +61,9 @@ Existing `src/lib/*.test.ts` must stay green (`npm test`) as a regression gate �
 
 Existing infrastructure covers all phase requirements. Gaps are verification steps, not missing test files in `src/`:
 
-- [ ] No automated FOUC test — **manual-only is justified** (needs real paint + localStorage). Do not add Playwright this phase (new package forbidden).
-- [ ] Plan tasks must include `rg` / `git show HEAD` / `npm run build` verification steps (these are the automated commands above).
-- [ ] Do **not** create `src/lib/theme.test.ts`.
+- [x] No automated FOUC test — **manual-only is justified** (needs real paint + localStorage). Do not add Playwright this phase (new package forbidden).
+- [x] Plan tasks must include `rg` / `git show HEAD` / `npm run build` verification steps (these are the automated commands above).
+- [x] Do **not** create `src/lib/theme.test.ts`.
 - Framework install: none — Vitest already present.
 
 ---
@@ -85,11 +85,20 @@ Existing infrastructure covers all phase requirements. Gaps are verification ste
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s (`npm test`)
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s (`npm test`)
+- [ ] `nyquist_compliant: true` set in frontmatter — false: FOUC/OS/click remain justified manual-only (no Playwright / no `src/lib/theme.test.ts`)
 
-**Approval:** pending
+**Approval:** validated 2026-09-16 (PARTIAL)
+
+## Validation Audit 2026-09-16
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 fillable (Playwright/`theme.test.ts` forbidden) |
+| Resolved | 8 task rows marked green from execute + human UAT 9/9 |
+| Escalated | 0 |
+| Manual-only | FOUC, OS first visit, persistence, light grid, diff hunks |
