@@ -568,22 +568,22 @@ Keep those three `href`s and label strings verbatim from HEAD.
 
 **If this table is empty:** All claims in this research were verified or cited — no user confirmation needed.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Light palette**
-   - What we know: HEAD dark tokens are exact. No light tokens exist.
-   - What's unclear: final hex (A1).
-   - Recommendation: ship the table in Pattern 1; UI-SPEC / human_verify can re-tint.
+1. **Light palette** RESOLVED
+   - What we know: HEAD dark tokens are exact. No light tokens exist at HEAD.
+   - Locked: D-01 ships the research light-hex table (`#f4f6f8` canvas, teal accent adapted); UI-SPEC may re-tint.
+   - Approved 07-UI-SPEC.md Color / Token implementation: light `--bg` `#f4f6f8`, `--panel` `#ffffff`, `--text` `#1a1d21`, `--muted` `#5c6570`, `--border` `#d5dbe3`, `--accent` `#0f766e`, `--danger` `#b91c1c` (research `#dc2626` re-tint for contrast), light `--diff-*` as in that table. Plan 07-01 already cites those values.
 
-2. **Grid on HEAD**
+2. **Grid on HEAD** RESOLVED
    - What we know: HEAD body is solid `--bg`. Overlay has a grid the brief describes.
-   - What's unclear: how strong the new grid should be.
-   - Recommendation: add `--grid-line` + 47px/48px repeating gradient (matches overlay geometry) without copying overlay colors.
+   - Locked: D-04 adds `--grid-line` plus 47px/48px repeating-linear-gradient on HEAD; do not copy the dirty overlay.
+   - Approved 07-UI-SPEC.md Body grid and Color `--grid-line`: dark `rgba(42, 47, 54, 0.45)`, light `rgba(15, 23, 32, 0.10)` (research `0.08` re-tint). Plan 07-01 already cites that geometry.
 
-3. **ZH chrome**
+3. **ZH chrome** RESOLVED
    - What we know: HEAD is a single EN tree; localStorage will still share later.
-   - What's unclear: whether to add unused `ui.ts` keys now.
-   - Recommendation: skip `ui.ts` changes this phase.
+   - Locked: D-03 English `aria-label="Toggle color theme"` only — skip `ui.ts` until ZH chrome exists. CONTEXT.md Deferred Ideas: ZH `ui.ts` keys / locale Header when ZH chrome exists.
+   - Approved 07-UI-SPEC.md Copywriting Contract: do not add `ui.ts` keys this phase. Plan 07-01 does not touch `src/i18n`.
 
 ## Environment Availability
 
