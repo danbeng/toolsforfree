@@ -91,9 +91,6 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
   #navToggle {
     display: inline-flex;
   }
-  #themeToggle {
-    margin-left: auto;
-  }
   .nav-links {
     position: absolute;
     top: 100%;
@@ -140,6 +137,11 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 #themeToggle .theme-moon { display: none; }
 :root[data-theme="light"] #themeToggle .theme-sun { display: none; }
 :root[data-theme="light"] #themeToggle .theme-moon { display: block; }
+@media (max-width: 640px) {
+  #themeToggle {
+    margin-left: auto;
+  }
+}
 .tool-panel { background: var(--panel); border: 1px solid var(--border); padding: 1rem; border-radius: 8px; }
 .tool-panel textarea, .tool-panel input, .tool-panel select {
   width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
