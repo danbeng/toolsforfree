@@ -2,20 +2,20 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Frontend Polish
-current_phase: 8
-current_phase_name: Mobile Hamburger Menu
+current_phase: 9
+current_phase_name: Grid & Spacing
 current_plan: Not started
 status: planning
-stopped_at: Phase 7 complete, ready to plan Phase 8
-last_updated: "2026-09-16T05:42:21.802Z"
+stopped_at: Phase 8 complete, ready to plan Phase 9
+last_updated: "2026-09-16T09:51:54.848Z"
 last_activity: 2026-09-16
-last_activity_desc: Phase 7 complete, transitioned to Phase 8
-state_head: ea82618b013d4a6d994eb50287a06d716a7e0c14
+last_activity_desc: Phase 8 complete, transitioned to Phase 9
+state_head: b41c84e7a1b6463d0ca09aa1c2f47ddd590aea36
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
+  total_plans: 2
+  completed_plans: 2
 ---
 
 # Project State
@@ -25,23 +25,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-16)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 8 — Mobile Hamburger Menu
+**Current focus:** Phase 9 — Grid & Spacing
 
 ## Current Position
 
-Phase: 8 — Mobile Hamburger Menu
+Phase: 9 — Grid & Spacing
 Current Plan: Not started
 Total Plans in Phase: TBD
 Status: Ready to plan
-Last activity: 2026-09-16 — Phase 7 complete, transitioned to Phase 8
+Last activity: 2026-09-16 — Phase 8 complete, transitioned to Phase 9
 
-Progress: [██░░░░░░░░] 25%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 10 (v1.0)
+- Total plans completed: 11 (v1.0)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -56,7 +56,7 @@ Progress: [██░░░░░░░░] 25%
 | 5 | 1 | - | - |
 | 6 | 1 | - | - |
 | 7 | 1 | - | - |
-| 8 | TBD | - | - |
+| 8 | 1 | - | - |
 | 9 | TBD | - | - |
 | 10 | TBD | - | - |
 
@@ -91,8 +91,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Dirty overlay chrome is stash@{0} `gsd-phase7-overlay-chrome-temp`; unrelated i18n is stash@{1} — do not pop onto theme
-- Phase 7 FOUC concern closed: ThemeInit is blocking `is:inline` first in `<head>`
+- Dirty overlay chrome is stash@{0} `gsd-phase7-overlay-chrome-temp`; unrelated i18n is stash@{1} — do not pop onto theme or hamburger
+- Phase 8 leftover-inert / ThemeToggle cascade: CR-01 fixed (`margin-left: auto` after `#themeToggle { margin: 0 }`)
 
 ## Deferred Items
 
@@ -104,10 +104,10 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-16T05:42:21.802Z
-Stopped at: Phase 7 complete, ready to plan Phase 8
+Last session: 2026-09-16T09:51:54.848Z
+Stopped at: Phase 8 complete, ready to plan Phase 9
 Resume file: None
 
 ## Operator Next Steps
 
-- `/gsd-discuss-phase 8`
+- `/gsd-discuss-phase 9`

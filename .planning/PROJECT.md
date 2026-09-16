@@ -47,9 +47,10 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - ✓ Light/dark theme with CSS variable split and system preference detection — Phase 7
 - ✓ Theme toggle in header with localStorage persistence — Phase 7
 
+- ✓ Mobile hamburger menu at ≤640px with accessible keyboard support — Phase 8
+
 ### Active
 
-- [ ] Mobile hamburger menu at ≤640px with accessible keyboard support
 - [ ] Card grid 3-column layout at ≥1080px breakpoint
 - [ ] CSS variable spacing scale (4/8/12/16/24/32/48)
 - [ ] Button hover/active/focus-visible polish
@@ -76,7 +77,7 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - `global.css` now splits dark tokens on `:root` and light tokens on `:root[data-theme="light"]`; `ThemeInit.astro` is the first `<head>` child; header has a static `ThemeToggle`.
 - Fonts: IBM Plex Mono + IBM Plex Sans + Syne via Google Fonts CDN (already preconnected).
 - Body background grid uses `--grid-line` at 47px/48px and follows the active theme.
-- Header is sticky with backdrop blur; nav links wrap on mobile without a hamburger menu.
+- Header is a flex row: logo, hamburger (`NavMenu.astro`, ≤640px overlay), Tools/Blog/About, ThemeToggle. Desktop stays one row; hamburger is `display: none` above 640px.
 - `card-grid` is 1-col → 2-col at 720px; no 3-col breakpoint.
 - Tool-panel chrome uses LED indicator concept; buttons are minimal (border + accent).
 - FAQ uses `<dl>` with no collapse mechanism.
@@ -100,10 +101,10 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 | QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
 | No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
 | Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
-| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phase 7 shipped; 8–10 remaining |
+| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phases 7–8 shipped; 9–10 remaining |
 | CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Honored — Phase 7 (`data-theme`, ThemeInit, ThemeToggle) |
 | ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | Honored — Phase 7 |
-| Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | Pending Phase 8 |
+| Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | Honored — Phase 8 (`NavMenu.astro`, inert, matchMedia force-close) |
 
 ## Evolution
 
@@ -123,4 +124,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-16 after Phase 7*
+*Last updated: 2026-09-16 after Phase 8*

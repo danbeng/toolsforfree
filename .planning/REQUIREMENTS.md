@@ -17,11 +17,11 @@
 
 ### Navigation
 
-- [ ] **NAV-01**: Hamburger menu button visible at ≤640px, collapses nav links
-- [ ] **NAV-02**: Hamburger uses `<button>` with `aria-expanded` and `aria-controls` attributes
-- [ ] **NAV-03**: Escape key closes hamburger menu and returns focus to button
-- [ ] **NAV-04**: Hidden nav links are not focusable when menu is collapsed (via `inert` or `visibility: hidden`)
-- [ ] **NAV-05**: Menu toggle label localized in EN and ZH (`ui.ts` keys)
+- [x] **NAV-01**: Hamburger menu button visible at ≤640px, collapses nav links
+- [x] **NAV-02**: Hamburger uses `<button>` with `aria-expanded` and `aria-controls` attributes
+- [x] **NAV-03**: Escape key closes hamburger menu and returns focus to button
+- [x] **NAV-04**: Hidden nav links are not focusable when menu is collapsed (via `inert` or `visibility: hidden`)
+- [x] **NAV-05**: Menu toggle label localized in EN and ZH (`ui.ts` keys)
 
 ### Layout
 
@@ -63,11 +63,11 @@
 | THM-05 | Phase 7 | Complete |
 | THM-06 | Phase 7 | Complete |
 | THM-07 | Phase 7 | Complete |
-| NAV-01 | Phase 8 | Pending |
-| NAV-02 | Phase 8 | Pending |
-| NAV-03 | Phase 8 | Pending |
-| NAV-04 | Phase 8 | Pending |
-| NAV-05 | Phase 8 | Pending |
+| NAV-01 | Phase 8 | Complete |
+| NAV-02 | Phase 8 | Complete |
+| NAV-03 | Phase 8 | Complete |
+| NAV-04 | Phase 8 | Complete |
+| NAV-05 | Phase 8 | Complete |
 | LAY-01 | Phase 9 | Pending |
 | LAY-02 | Phase 9 | Pending |
 | LAY-03 | Phase 9 | Pending |

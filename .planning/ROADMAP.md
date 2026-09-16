@@ -26,7 +26,7 @@ v1.0 shipped 18 browser-local tools. v1.1 is a visual-only polish pass: light/da
 Archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 - [x] **Phase 7: Theme Foundation** - Light/dark CSS tokens, header toggle, persistence, no FOUC (completed 2026-09-16)
-- [ ] **Phase 8: Mobile Hamburger Menu** - Accessible ≤640px nav collapse on EN and ZH
+- [x] **Phase 8: Mobile Hamburger Menu** - Accessible ≤640px nav collapse on EN and ZH (completed 2026-09-16)
 - [ ] **Phase 9: Grid & Spacing** - 3-column catalog at ≥1080px and spacing scale tokens
 - [ ] **Phase 10: Interactive Chrome** - Button states, tool-panel polish, collapsible FAQ
 
@@ -64,11 +64,11 @@ Plans:
   3. Visitor can close the open menu with Escape and focus returns to the hamburger button
   4. When the menu is collapsed, hidden nav links are not keyboard-focusable
 
-**Plans**: 1 plan
+**Plans**: 1/1 plans executed
 
 Plans:
 
-- [ ] 08-01-PLAN.md — Accessible ≤640px hamburger, overlay, EN/ZH labels, Escape/inert/widen
+- [x] 08-01-PLAN.md — Accessible ≤640px hamburger, overlay, EN/ZH labels, Escape/inert/widen
 
 **UI hint**: yes
 
@@ -109,6 +109,6 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
-| 8. Mobile Hamburger Menu | 0/1 | Not started | - |
+| 8. Mobile Hamburger Menu | 1/1 | Complete    | 2026-09-16 |
 | 9. Grid & Spacing | 0/TBD | Not started | - |
 | 10. Interactive Chrome | 0/TBD | Not started | - |
