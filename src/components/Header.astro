@@ -1,15 +1,24 @@
 ---
 import { SITE_NAME } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
+import NavMenu from './NavMenu.astro';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'en';
 ---
 <header class="site">
   <nav class="wrap nav">
     <a class="logo" href="/">{SITE_NAME}</a>
-    <div class="nav-links">
+    <NavMenu locale={locale} />
+    <div class="nav-links" id="navMenu">
       <a href="/tools/">Tools</a>
       <a href="/blog/">Blog</a>
       <a href="/about/">About</a>
-      <ThemeToggle />
     </div>
+    <ThemeToggle />
   </nav>
 </header>

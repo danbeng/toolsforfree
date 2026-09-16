@@ -87,6 +87,10 @@ export const ui = {
         image: 'Image',
       },
     },
+    nav: {
+      menu: 'Open menu',
+      close: 'Close menu',
+    },
   },
   zh: {
     tools: {
@@ -175,6 +179,10 @@ export const ui = {
         downloadPng: '下载 PNG',
         image: '图片',
       },
+    },
+    nav: {
+      menu: '打开菜单',
+      close: '关闭菜单',
     },
   },
 } as const;
