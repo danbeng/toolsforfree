@@ -1,7 +1,8 @@
 ---
 phase: "8"
 slug: "mobile-hamburger-menu"
-status: draft
+status: approved
+reviewed_at: "2026-09-16"
 shadcn_initialized: false
 preset: none
 created: "2026-09-16"
