@@ -16,7 +16,9 @@ const idFor = (category: string) =>
   {groups.map((g) => (
     <section id={idFor(g.category)}>
       <h2>{g.category}</h2>
-      {g.tools.map((tool) => <ToolCard tool={tool} />)}
+      <div class="card-grid">
+        {g.tools.map((tool) => <ToolCard tool={tool} />)}
+      </div>
     </section>
   ))}
 </BaseLayout>

@@ -15,6 +15,18 @@
   --diff-add-fg: #3dd68c;
   --diff-add-bg: #13291f;
   --diff-del-fg: #f07178;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 80px;
+  --sp-10: 96px;
+  --sp-11: 120px;
+  --sp-12: 144px;
 }
 
 :root[data-theme="light"] {
@@ -157,6 +169,17 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 .tool-grid { display: grid; gap: 1rem; }
 @media (min-width: 720px) {
   .tool-grid.split { grid-template-columns: 1fr 1fr; }
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-4);
+}
+@media (min-width: 720px) {
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1080px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .diff-lines {
   max-height: 384px;

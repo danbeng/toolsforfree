@@ -16,6 +16,8 @@ const groups = getToolsByCategory();
     ))}
   </p>
   <h2>Featured tools</h2>
-  {featured.map((tool) => <ToolCard tool={tool} />)}
+  <div class="card-grid">
+    {featured.map((tool) => <ToolCard tool={tool} />)}
+  </div>
   <p><a href="/tools/">View all tools</a></p>
 </BaseLayout>
