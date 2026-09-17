@@ -83,11 +83,11 @@ Plans:
   2. Visitor sees consistent gaps, padding, and margins on touched layout (the 4/8/12/16/24/32/48px rhythm) instead of one-off pixel values
   3. Cards and sections do not overlap or collapse after spacing tokens replace hardcoded values in those selectors
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans executed
 
 Plans:
 
-- [ ] 09-01-PLAN.md — HEAD catalog .card-grid, --sp-* tokens, layout-only card chrome
+- [x] 09-01-PLAN.md — HEAD catalog .card-grid, --sp-* tokens, layout-only card chrome
 
 **UI hint**: yes
 
@@ -115,5 +115,5 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 |-------|----------------|--------|-----------|
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
 | 8. Mobile Hamburger Menu | 1/1 | Complete    | 2026-09-16 |
-| 9. Grid & Spacing | 0/TBD | Not started | - |
+| 9. Grid & Spacing | 1/1 | In Progress|  |
 | 10. Interactive Chrome | 0/TBD | Not started | - |

@@ -3,19 +3,19 @@ gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Frontend Polish
 current_phase: 09
-current_phase_name: grid-spacing
-current_plan: Not started
-status: executing
-stopped_at: Phase 9 UI-SPEC approved
-last_updated: "2026-09-17T17:35:20.599Z"
-last_activity: 2026-09-16
-last_activity_desc: Phase 8 complete, transitioned to Phase 9
-state_head: 8e75b1c392412d96bd5afe3ba349959f53e2054e
+current_phase_name: Grid & Spacing
+current_plan: 1
+status: verifying
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-09-17T19:01:14.195Z"
+last_activity: 2026-09-18
+last_activity_desc: Phase 09 execution started
+state_head: 7332634bf00538b16057a4ca195d61d8da8bfc95
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -25,15 +25,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-16)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 9 — Grid & Spacing
+**Current focus:** Phase 09 — Grid & Spacing
 
 ## Current Position
 
-Phase: 09 (grid-spacing) — READY TO EXECUTE
-Current Plan: Not started
+Phase: 09 (Grid & Spacing) — EXECUTING
+Current Plan: 1
 Total Plans in Phase: 1
-Status: Ready to execute
-Last activity: 2026-09-16 — Phase 8 complete, transitioned to Phase 9
+Status: Phase complete — ready for verification
+Last activity: 2026-09-18 — Phase 09 execution started
 
 Progress: [█████░░░░░] 50%
 
@@ -66,6 +66,7 @@ Progress: [█████░░░░░] 50%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 07 P01 | 7min | 3 tasks | 5 files |
+| Phase 09 P01 | 9 min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 7]: Allowlist light|dark before setAttribute; try/catch around storage
 - [Phase 7]: ThemeToggle is static Astro with English aria-label Toggle color theme
 - [Phase 7]: Worked from HEAD chrome (~169-line global.css), not the dirty overlay
+- [Phase 09]: Catalog wrappers on HEAD English home and /tools/ only; ToolCard markup unchanged
+- [Phase 09]: Did not pop stash@{0} or stash@{1}; did not commit LangSwitch or src/pages/zh/
+- [Phase 09]: Dirty overlay broke astro build; isolated overlay to git-dir backup for T-09-01 build, then restored
 
 ### Pending Todos
 
@@ -104,9 +108,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-16T12:43:17.115Z
-Stopped at: Phase 9 UI-SPEC approved
-Resume file: .planning/phases/09-grid-spacing/09-UI-SPEC.md
+Last session: 2026-09-17T19:01:14.135Z
+Stopped at: Completed 09-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 

@@ -25,9 +25,9 @@
 
 ### Layout
 
-- [ ] **LAY-01**: Card grid 3-column layout at ≥1080px breakpoint (existing 720px 2-col unchanged)
-- [ ] **LAY-02**: CSS spacing scale variables defined (`--sp-1` through `--sp-12`: 4/8/12/16/24/32/48/64/80/96/120/144px)
-- [ ] **LAY-03**: Existing hardcoded spacing values in touched selectors migrated to spacing scale tokens
+- [x] **LAY-01**: Card grid 3-column layout at ≥1080px breakpoint (existing 720px 2-col unchanged)
+- [x] **LAY-02**: CSS spacing scale variables defined (`--sp-1` through `--sp-12`: 4/8/12/16/24/32/48/64/80/96/120/144px)
+- [x] **LAY-03**: Existing hardcoded spacing values in touched selectors migrated to spacing scale tokens
 
 ### Chrome
 
@@ -68,9 +68,9 @@
 | NAV-03 | Phase 8 | Complete |
 | NAV-04 | Phase 8 | Complete |
 | NAV-05 | Phase 8 | Complete |
-| LAY-01 | Phase 9 | Pending |
-| LAY-02 | Phase 9 | Pending |
-| LAY-03 | Phase 9 | Pending |
+| LAY-01 | Phase 9 | Complete |
+| LAY-02 | Phase 9 | Complete |
+| LAY-03 | Phase 9 | Complete |
 | CHR-01 | Phase 10 | Pending |
 | CHR-02 | Phase 10 | Pending |
 | CHR-03 | Phase 10 | Pending |
