@@ -83,7 +83,12 @@ Plans:
   2. Visitor sees consistent gaps, padding, and margins on touched layout (the 4/8/12/16/24/32/48px rhythm) instead of one-off pixel values
   3. Cards and sections do not overlap or collapse after spacing tokens replace hardcoded values in those selectors
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+
+- [ ] 09-01-PLAN.md — HEAD catalog .card-grid, --sp-* tokens, layout-only card chrome
+
 **UI hint**: yes
 
 ### Phase 10: Interactive Chrome
