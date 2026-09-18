@@ -6,11 +6,11 @@ interface Props {
 const { items } = Astro.props;
 ---
 <h2>FAQ</h2>
-<dl>
+<div class="faq">
   {items.map((item) => (
-    <>
-      <dt>{item.question}</dt>
-      <dd>{item.answer}</dd>
-    </>
+    <details>
+      <summary>{item.question}</summary>
+      <p>{item.answer}</p>
+    </details>
   ))}
-</dl>
+</div>
