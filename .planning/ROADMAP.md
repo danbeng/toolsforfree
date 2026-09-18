@@ -7,7 +7,7 @@ v1.0 shipped 18 browser-local tools. v1.1 is a visual-only polish pass: light/da
 ## Milestones
 
 - ✅ **v1.0 More Tools** — Phases 1-6 (shipped 2026-09-14)
-- 🚧 **v1.1 Frontend Polish** — Phases 7-10 (in progress)
+- ✅ **v1.1 Frontend Polish** — Phases 7-10 (shipped 2026-09-18)
 
 ## Phases
 
@@ -28,7 +28,7 @@ Archive: `.planning/milestones/v1.0-ROADMAP.md`
 - [x] **Phase 7: Theme Foundation** - Light/dark CSS tokens, header toggle, persistence, no FOUC (completed 2026-09-16)
 - [x] **Phase 8: Mobile Hamburger Menu** - Accessible ≤640px nav collapse on EN and ZH (completed 2026-09-16)
 - [x] **Phase 9: Grid & Spacing** - 3-column catalog at ≥1080px and spacing scale tokens (completed 2026-09-18)
-- [ ] **Phase 10: Interactive Chrome** - Button states, tool-panel polish, collapsible FAQ
+- [x] **Phase 10: Interactive Chrome** - Button states, tool-panel polish, collapsible FAQ (completed 2026-09-18)
 
 ## Phase Details
 
@@ -103,7 +103,7 @@ Plans:
   3. Visitor can expand and collapse FAQ items natively, with a visible open/close indicator
   4. Chrome text and controls meet WCAG AA contrast (4.5:1) in both themes
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -121,4 +121,4 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
 | 8. Mobile Hamburger Menu | 1/1 | Complete    | 2026-09-16 |
 | 9. Grid & Spacing | 1/1 | Complete    | 2026-09-18 |
-| 10. Interactive Chrome | 1/1 | In Progress|  |
+| 10. Interactive Chrome | 1/1 | Complete    | 2026-09-18 |

@@ -50,12 +50,11 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - ✓ Mobile hamburger menu at ≤640px with accessible keyboard support — Phase 8
 - ✓ Card grid 3-column layout at ≥1080px breakpoint — Phase 9
 - ✓ CSS variable spacing scale (`--sp-1`…`--sp-12`) — Phase 9
+- ✓ Button hover/active/focus-visible polish — Phase 10
+- ✓ Tool-panel chrome refinement (consistent borders, shadows, spacing) — Phase 10
+- ✓ FAQ `<details>` collapsible instead of always-visible `<dl>` — Phase 10
 
 ### Active
-
-- [ ] Button hover/active/focus-visible polish
-- [ ] Tool-panel chrome refinement (consistent borders, shadows, spacing)
-- [ ] FAQ `<details>` collapsible instead of always-visible `<dl>`
 
 ### Out of Scope
 
@@ -79,8 +78,8 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Body background grid uses `--grid-line` at 47px/48px and follows the active theme.
 - Header is a flex row: logo, hamburger (`NavMenu.astro`, ≤640px overlay), Tools/Blog/About, ThemeToggle. Desktop stays one row; hamburger is `display: none` above 640px.
 - Catalog `.card-grid:not(.tool-grid)` is 1-col → 2-col at 720px → 3-col at 1080px; in-tool `.tool-grid` stays 720-only. Cards are `a.tool-card`.
-- Tool-panel chrome uses LED indicator concept; buttons are minimal (border + accent).
-- FAQ uses `<dl>` with no collapse mechanism.
+- `.tool-panel` has 1px `--border`, `box-shadow: 0 1px 2px var(--border)`, padding `--sp-4`; buttons invert on hover (`:not(:disabled)`).
+- FAQ is native `<details>` / `<summary>` with UA `::marker` (HEAD English `h2` FAQ).
 - Dirty main has uncommitted i18n/pages/visual CSS overlay — work from HEAD, not dirty.
 
 ## Constraints
@@ -101,7 +100,8 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 | QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
 | No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
 | Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
-| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phases 7–9 shipped; 10 remaining |
+| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phases 7–10 shipped |
+| FAQ is native details/summary; panel/button chrome is CSS only | Locked Phase 10 CONTEXT; HEAD ToolShell unclassed Copy | Honored — Phase 10 |
 | Catalog grid uses `.card-grid:not(.tool-grid)` and `a.tool-card` | HEAD WordCounter/TextDiff reuse those class names on metric tiles (CR-01) | Honored — Phase 9 `ecac093` |
 | CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Honored — Phase 7 (`data-theme`, ThemeInit, ThemeToggle) |
 | ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | Honored — Phase 7 |
@@ -125,4 +125,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-18 after Phase 9*
+*Last updated: 2026-09-18 after Phase 10*
