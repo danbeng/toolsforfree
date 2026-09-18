@@ -1,8 +1,8 @@
 ---
 phase: 10-interactive-chrome
-verified: 2026-09-18T04:16:00Z
-status: human_needed
-score: 12/13 must-haves verified
+verified: 2026-09-18T13:00:00Z
+status: passed
+score: 13/13 must-haves verified
 covered_files:
   - .planning/REQUIREMENTS.md
   - .planning/phases/10-interactive-chrome/10-01-PLAN.md
@@ -34,8 +34,8 @@ human_verification:
 # Phase 10: Interactive Chrome Verification Report
 
 **Phase Goal:** Buttons, tool panels, and FAQs feel polished and readable in both themes
-**Verified:** 2026-09-18T04:16:00Z
-**Status:** human_needed
+**Verified:** 2026-09-18T13:00:00Z
+**Status:** passed
 **Re-verification:** No — initial verification
 
 Worked from committed HEAD chrome (`src/styles/global.css`, `src/components/FaqList.astro`). `git diff HEAD --` on those two paths is empty. Phase commits `1894858` and `d6059ca` touch only those files. Dirty overlay (`LangSwitch.astro`, `src/pages/zh/`, dirty `src/components/ToolShell.tsx`) is not the implementation. `git show HEAD:src/components/ToolShell.tsx` is the Copy/shell contract this phase CSS targets.
@@ -53,7 +53,7 @@ Must-haves are the four ROADMAP success criteria plus PLAN frontmatter truths th
 | 1 | Visitor sees button hover, pressed (`:active`), and keyboard `:focus-visible` states using the site accent | ✓ VERIFIED | `.tool-panel button:hover:not(:disabled)` invert (`background: var(--accent); color: var(--bg)`); `:active:not(:disabled)` `color-mix(in srgb, var(--accent) 72%, #000000)`; 120ms color transition; no `transform:`; no file-start `button:hover`. `#navToggle` / `#themeToggle` stay 44px transparent. Global `a:focus-visible, button:focus-visible` 2px `--accent` unchanged; no `.tool-panel button:focus`. Appearance remains Human Verification. |
 | 2 | Visitor sees tool panels with consistent borders and shadows that remain readable in both light and dark themes | ✓ VERIFIED | `.tool-panel` is `border: 1px solid var(--border)`, `box-shadow: 0 1px 2px var(--border)`, `padding: var(--sp-4)`, `border-radius: 8px`. `--border` / `--panel` switch under `:root` vs `:root[data-theme="light"]`. Readability at 4.5:1 is SC4. |
 | 3 | Visitor can expand and collapse FAQ items natively, with a visible open/close indicator | ✓ VERIFIED | `FaqList.astro` is items-only Props, English `h2` FAQ, `div.faq`, one `<details>` / `<summary>` / `<p>` per item. No `open`, no `name=`, no `<dl>`. `.faq summary::marker { color: var(--text) }`; no `webkit-details-marker`, no `list-style` on `.faq summary`. Triangle paint is Human Verification. |
-| 4 | Chrome text and controls meet WCAG AA contrast (4.5:1) in both themes | ⚠️ insufficient_spec | PLAN `verification: backstop`. No held-out contrast test (prohibited). Presence of `--accent` / `--bg` / `--text` tokens is not explicit evidence. RESEARCH A3: local luminance math is not a substitute. |
+| 4 | Chrome text and controls meet WCAG AA contrast (4.5:1) in both themes | ✓ VERIFIED | Human UAT 2026-09-18 (10-UAT.md test 4): idle/hover/active/FAQ eyeball 4.5:1 both themes; disabled Copy stays 0.45; light hover Copy readable. |
 | 5 | Empty output: Copy is disabled at opacity 0.45 with not-allowed cursor; hover and press do not invert | ✓ VERIFIED | HEAD `ToolShell` `disabled={!props.output}`. `.tool-panel button:disabled { opacity: 0.45; cursor: not-allowed }`. Hover/active are `:not(:disabled)`. Dist `json-formatter` SSG Copy is `<button type="button" disabled>Copy</button>` inside `.tool-panel`. |
 | 6 | FAQ items=[] paints English h2 FAQ plus an empty `.faq` wrapper only; no extra empty copy | ✓ VERIFIED | `FaqList.astro` always emits `<h2>FAQ</h2><div class="faq">` then maps items. No "No questions" string. Live schema `faq.min(3)` so production pages are populated. |
 | 7 | No fetch or spinner for Copy or FAQ | ✓ VERIFIED | `FaqList.astro` is static Astro. HEAD `onCopy` is `clipboard.writeText`. No `fetch(` / spinner in those files. |
@@ -64,7 +64,7 @@ Must-haves are the four ROADMAP success criteria plus PLAN frontmatter truths th
 | 12 | Files are authored from HEAD chrome; do not apply stash entries; do not commit the ZH page tree or the locale switcher; do not edit the Preact tool-panel shell | ✓ VERIFIED | Phase commits only `FaqList.astro` + `global.css`. `git ls-files` has no `src/pages/zh` or `LangSwitch.astro`. Stashes still `gsd-phase7-overlay-chrome-temp` and `pre-02-01-merge unrelated i18n`. `git log 1894858^..HEAD -- src/components/ToolShell.tsx` empty. |
 | 13 | Zero new npm packages; no Playwright; no jsdom switch; no CSS unit tests; no src/lib edits; no Tailwind | ✓ VERIFIED | `git diff HEAD -- package.json package-lock.json src/data/tools.ts` empty. `vitest.config.ts` `environment: 'node'`. No Playwright in `package.json`. `jsdom` already on HEAD. No `src/lib/chrome.ts`. Phase diff `1894858^..d6059ca` does not touch `src/lib`. |
 
-**Score:** 12/13 truths verified (0 present, behavior-unverified; 1 backstop abstained)
+**Score:** 13/13 truths verified (human UAT 2026-09-18: All good — continue)
 
 ### Required Artifacts
 
@@ -134,7 +134,7 @@ PLAN `requirements:` CHR-01 … CHR-07. REQUIREMENTS.md maps the same seven IDs 
 | CHR-04 | 10-01-PLAN.md | Tool-panel border/shadow refined for both themes | ✓ SATISFIED | 1px `--border` + `0 1px 2px var(--border)` + `--sp-4` padding + 8px radius. |
 | CHR-05 | 10-01-PLAN.md | FAQ rewritten from `<dl>` to `<details>/<summary>` | ✓ SATISFIED | `FaqList.astro` native disclosures; dist HTML has `<details>`. |
 | CHR-06 | 10-01-PLAN.md | FAQ `<details>` styled with open/close indicator | ✓ SATISFIED (code) | `summary::marker`; triangle not removed. Visibility is Human Verification. |
-| CHR-07 | 10-01-PLAN.md | All chrome elements sufficient contrast in both themes (WCAG AA 4.5:1) | ? NEEDS HUMAN | Backstop. No automated contrast proof. |
+| CHR-07 | 10-01-PLAN.md | All chrome elements sufficient contrast in both themes (WCAG AA 4.5:1) | ✓ SATISFIED | Human UAT both themes (10-UAT.md test 4). |
 
 ### Decision Coverage
 
