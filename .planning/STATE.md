@@ -2,18 +2,18 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Frontend Polish
-current_phase: 09
-current_phase_name: Grid & Spacing
-current_plan: 1
-status: verifying
-stopped_at: Completed 09-01-PLAN.md
-last_updated: "2026-09-17T19:01:14.195Z"
+current_phase: 10
+current_phase_name: Interactive Chrome
+current_plan: Not started
+status: planning
+stopped_at: Phase 09 complete, ready to plan Phase 10
+last_updated: "2026-09-18T01:43:31.401Z"
 last_activity: 2026-09-18
-last_activity_desc: Phase 09 execution started
-state_head: 7332634bf00538b16057a4ca195d61d8da8bfc95
+last_activity_desc: Phase 09 complete, transitioned to Phase 10
+state_head: 88419c277c1f5ebd088a003ce1d7fe89b0c5b500
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
   completed_plans: 3
 ---
@@ -22,26 +22,26 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-16)
+See: .planning/PROJECT.md (updated 2026-09-18)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 09 — Grid & Spacing
+**Current focus:** Phase 10 — Interactive Chrome
 
 ## Current Position
 
-Phase: 09 (Grid & Spacing) — EXECUTING
-Current Plan: 1
+Phase: 10 — Interactive Chrome
+Current Plan: Not started
 Total Plans in Phase: 1
-Status: Phase complete — ready for verification
-Last activity: 2026-09-18 — Phase 09 execution started
+Status: Ready to plan
+Last activity: 2026-09-18 — Phase 09 complete, transitioned to Phase 10
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 11 (v1.0)
+- Total plans completed: 12 (v1.0)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -57,7 +57,7 @@ Progress: [█████░░░░░] 50%
 | 6 | 1 | - | - |
 | 7 | 1 | - | - |
 | 8 | 1 | - | - |
-| 9 | TBD | - | - |
+| 09 | 1 | - | - |
 | 10 | TBD | - | - |
 
 *Updated after each plan completion*
@@ -88,6 +88,7 @@ Recent decisions affecting current work:
 - [Phase 09]: Catalog wrappers on HEAD English home and /tools/ only; ToolCard markup unchanged
 - [Phase 09]: Did not pop stash@{0} or stash@{1}; did not commit LangSwitch or src/pages/zh/
 - [Phase 09]: Dirty overlay broke astro build; isolated overlay to git-dir backup for T-09-01 build, then restored
+- [Phase 09]: Catalog CSS scoped `.card-grid:not(.tool-grid)` and `a.tool-card` (CR-01) so WordCounter/TextDiff islands stay 1-col / no catalog chrome
 
 ### Pending Todos
 
@@ -108,10 +109,10 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-17T19:01:14.135Z
-Stopped at: Completed 09-01-PLAN.md
+Last session: 2026-09-18T12:00:00Z
+Stopped at: Phase 9 complete, ready to plan Phase 10
 Resume file: None
 
 ## Operator Next Steps
 
-- `/gsd-discuss-phase 9`
+- `/gsd-discuss-phase 10`

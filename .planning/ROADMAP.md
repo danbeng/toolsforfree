@@ -27,7 +27,7 @@ Archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 - [x] **Phase 7: Theme Foundation** - Light/dark CSS tokens, header toggle, persistence, no FOUC (completed 2026-09-16)
 - [x] **Phase 8: Mobile Hamburger Menu** - Accessible ≤640px nav collapse on EN and ZH (completed 2026-09-16)
-- [ ] **Phase 9: Grid & Spacing** - 3-column catalog at ≥1080px and spacing scale tokens
+- [x] **Phase 9: Grid & Spacing** - 3-column catalog at ≥1080px and spacing scale tokens (completed 2026-09-18)
 - [ ] **Phase 10: Interactive Chrome** - Button states, tool-panel polish, collapsible FAQ
 
 ## Phase Details
@@ -83,7 +83,7 @@ Plans:
   2. Visitor sees consistent gaps, padding, and margins on touched layout (the 4/8/12/16/24/32/48px rhythm) instead of one-off pixel values
   3. Cards and sections do not overlap or collapse after spacing tokens replace hardcoded values in those selectors
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -115,5 +115,5 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 |-------|----------------|--------|-----------|
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
 | 8. Mobile Hamburger Menu | 1/1 | Complete    | 2026-09-16 |
-| 9. Grid & Spacing | 1/1 | In Progress|  |
+| 9. Grid & Spacing | 1/1 | Complete    | 2026-09-18 |
 | 10. Interactive Chrome | 0/TBD | Not started | - |
