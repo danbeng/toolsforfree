@@ -103,10 +103,11 @@ Plans:
   3. Visitor can expand and collapse FAQ items natively, with a visible open/close indicator
   4. Chrome text and controls meet WCAG AA contrast (4.5:1) in both themes
 
-**Plans:** 1 plans
+**Plans:** 1/1 plans executed
 
 Plans:
-- [ ] 10-01-PLAN.md — HEAD FAQ details/summary, tool-panel shadow/--sp-4, button hover/active
+
+- [x] 10-01-PLAN.md — HEAD FAQ details/summary, tool-panel shadow/--sp-4, button hover/active
 
 **UI hint**: yes
 
@@ -120,4 +121,4 @@ Phases execute in numeric order: 7 → 8 → 9 → 10
 | 7. Theme Foundation | 1/1 | Complete    | 2026-09-16 |
 | 8. Mobile Hamburger Menu | 1/1 | Complete    | 2026-09-16 |
 | 9. Grid & Spacing | 1/1 | Complete    | 2026-09-18 |
-| 10. Interactive Chrome | 0/1 | Not started | - |
+| 10. Interactive Chrome | 1/1 | In Progress|  |

@@ -31,13 +31,13 @@
 
 ### Chrome
 
-- [ ] **CHR-01**: Button `:hover` state with visible background/color transition
-- [ ] **CHR-02**: Button `:active` state with pressed appearance (slight scale or darken)
-- [ ] **CHR-03**: Button `:focus-visible` ring consistent with site accent color
-- [ ] **CHR-04**: Tool-panel border/shadow refined for both light and dark themes
-- [ ] **CHR-05**: FAQ rewritten from `<dl>` to `<details>/<summary>` with native collapse behavior
-- [ ] **CHR-06**: FAQ `<details>` styled with open/close indicator (CSS `::marker` or custom)
-- [ ] **CHR-07**: All chrome elements have sufficient contrast in both themes (WCAG AA 4.5:1)
+- [x] **CHR-01**: Button `:hover` state with visible background/color transition
+- [x] **CHR-02**: Button `:active` state with pressed appearance (slight scale or darken)
+- [x] **CHR-03**: Button `:focus-visible` ring consistent with site accent color
+- [x] **CHR-04**: Tool-panel border/shadow refined for both light and dark themes
+- [x] **CHR-05**: FAQ rewritten from `<dl>` to `<details>/<summary>` with native collapse behavior
+- [x] **CHR-06**: FAQ `<details>` styled with open/close indicator (CSS `::marker` or custom)
+- [x] **CHR-07**: All chrome elements have sufficient contrast in both themes (WCAG AA 4.5:1)
 
 ## Out of Scope
 
@@ -71,13 +71,13 @@
 | LAY-01 | Phase 9 | Complete |
 | LAY-02 | Phase 9 | Complete |
 | LAY-03 | Phase 9 | Complete |
-| CHR-01 | Phase 10 | Pending |
-| CHR-02 | Phase 10 | Pending |
-| CHR-03 | Phase 10 | Pending |
-| CHR-04 | Phase 10 | Pending |
-| CHR-05 | Phase 10 | Pending |
-| CHR-06 | Phase 10 | Pending |
-| CHR-07 | Phase 10 | Pending |
+| CHR-01 | Phase 10 | Complete |
+| CHR-02 | Phase 10 | Complete |
+| CHR-03 | Phase 10 | Complete |
+| CHR-04 | Phase 10 | Complete |
+| CHR-05 | Phase 10 | Complete |
+| CHR-06 | Phase 10 | Complete |
+| CHR-07 | Phase 10 | Complete |
 
 **Coverage:**
 
