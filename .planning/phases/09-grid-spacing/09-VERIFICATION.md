@@ -1,8 +1,8 @@
 ---
 phase: 09-grid-spacing
-verified: 2026-09-17T19:43:01Z
-status: human_needed
-score: 18/20 must-haves verified
+verified: 2026-09-18T12:00:00Z
+status: passed
+score: 20/20 must-haves verified
 covered_files:
   - .planning/REQUIREMENTS.md
   - .planning/phases/09-grid-spacing/09-01-PLAN.md
@@ -45,8 +45,8 @@ human_verification:
 # Phase 9: Grid & Spacing Verification Report
 
 **Phase Goal:** Catalog cards use a three-column layout on wide screens and spacing follows one token scale
-**Verified:** 2026-09-17T19:43:01Z
-**Status:** human_needed
+**Verified:** 2026-09-18T12:00:00Z
+**Status:** passed
 **Re-verification:** No — initial verification
 
 Worked from committed HEAD chrome (`src/pages/index.astro`, `src/pages/tools/index.astro`, `src/components/ToolCard.astro`, `src/styles/global.css`). `git diff HEAD --` on those four paths is empty. Dirty overlay (`LangSwitch.astro`, `src/pages/zh/`) is untracked and is not the implementation. Post-review CR-01 (`ecac093`) scopes catalog rules to `.card-grid:not(.tool-grid)` and `a.tool-card`.
@@ -61,9 +61,9 @@ Must-haves are the three ROADMAP success criteria plus PLAN frontmatter truths t
 
 | # | Truth | Status | Evidence |
 | --- | ------- | ---------- | -------------- |
-| 1 | Visitor viewing home/catalog at ≥1080px sees a 3-column card grid; the existing 2-column layout at ≥720px and <1080px is unchanged | insufficient_spec | Source: `.card-grid:not(.tool-grid)` is 1-col `minmax(0, 1fr)`, 2-col at `min-width: 720px`, 3-col at `min-width: 1080px`. No `auto-fit` / `auto-fill` / flex-wrap. Tagged `verification: backstop`. Presence of media queries is not a held-out test or observed paint. |
+| 1 | Visitor viewing home/catalog at ≥1080px sees a 3-column card grid; the existing 2-column layout at ≥720px and <1080px is unchanged | ✓ VERIFIED | Source CSS plus human UAT (09-UAT.md tests 1–3): 1-col at 719px, 2-col at 720/1079, 3-col at 1080 inside `--content 52rem`; `.tool-grid.split` stays 2-col. |
 | 2 | Visitor sees consistent gaps, padding, and margins on touched layout (the 4/8/12/16/24/32/48px rhythm) instead of one-off pixel values | ✓ VERIFIED | `:root` `--sp-1`…`--sp-12` = 4/8/12/16/24/32/48/64/80/96/120/144px before `:root[data-theme="light"]` (no `--sp-*` under light). Touched selectors consume tokens: `.card-grid` gap `--sp-4`, `a.tool-card` padding `--sp-4`, `.wrap` `padding: 0 var(--sp-4)`, `.nav` `gap: var(--sp-5)`. Untouched literals remain (`#navToggle`/`#themeToggle` 44px, overlay 16px/8px, `.tool-grid` `gap: 1rem`, footer rem, `--content: 52rem`). |
-| 3 | Cards and sections do not overlap or collapse after spacing tokens replace hardcoded values in those selectors | ? UNCERTAIN | Mitigations present (`minmax(0, 1fr)`, item `min-width: 0`, `overflow-wrap: anywhere`, `h2:has(+ .card-grid)` / `main section` spacing). Overlap/collapse is paint. Harvested into Human Verification; no viewport observed. |
+| 3 | Cards and sections do not overlap or collapse after spacing tokens replace hardcoded values in those selectors | ✓ VERIFIED | Human UAT at 719 / 720 / 1079 / 1080: no card overlap, no collapse, no horizontal page scroll from the grid (09-UAT.md tests 1–4). |
 | 4 | Existing in-tool `.tool-grid` stays 1-col default / 2-col at min-width 720px and does not gain a 1080px track | ✓ VERIFIED | `.tool-grid { gap: 1rem }` and `@media (min-width: 720px) { .tool-grid.split { grid-template-columns: 1fr 1fr } }` only. The 1080px rule is `.card-grid:not(.tool-grid)`. WordCounter/TextDiff metric tiles use `class="tool-grid card-grid"` + `div.tool-card` and therefore miss both catalog rules (CR-01). MarkdownPreview/QrCode use `tool-grid split` only. |
 | 5 | `:root` defines `--sp-1` through `--sp-12` as 4/8/12/16/24/32/48/64/80/96/120/144px next to color tokens and not under the light theme selector | ✓ VERIFIED | `src/styles/global.css` lines 18–29 inside `:root`; light block lines 32–45 overrides colors only. |
 | 6 | `.card-grid` gap is `var(--sp-4)`; `.tool-card` padding is `var(--sp-4)`; `.wrap` horizontal padding is `var(--sp-4)`; `.nav` gap is `var(--sp-5)` | ✓ VERIFIED | Matching declarations in `global.css` (catalog grid scoped as `.card-grid:not(.tool-grid)`; padding on `a.tool-card`). |
@@ -82,7 +82,7 @@ Must-haves are the three ROADMAP success criteria plus PLAN frontmatter truths t
 | 19 | Files are authored from HEAD chrome; do not apply stash entries; do not commit the ZH page tree or the locale switcher | ✓ VERIFIED | In-scope paths match HEAD (empty diff). `git ls-files` has no `src/pages/zh` or `LangSwitch.astro`. Stashes still `gsd-phase7-overlay-chrome-temp` and `pre-02-01-merge unrelated i18n`. Home copy is Featured tools / View all tools, not overlay hero/kicker. |
 | 20 | Zero new npm packages; no Playwright; no jsdom switch; no `layout.test.ts`; no `src/lib/layout.ts`; no Tailwind | ✓ VERIFIED | `git diff HEAD -- package.json package-lock.json` empty. No Playwright dep. `vitest.config.ts` `environment: 'node'`. `src/lib/layout.ts` and `src/layout.test.ts` absent. |
 
-**Score:** 18/20 truths verified (0 present, behavior-unverified; 1 backstop abstention; 1 visual uncertain)
+**Score:** 20/20 truths verified (human UAT 2026-09-18: All good — continue)
 
 ### Required Artifacts
 
@@ -146,9 +146,9 @@ PLAN `requirements:` LAY-01, LAY-02, LAY-03. REQUIREMENTS.md maps the same three
 
 | Requirement | Source Plan | Description | Status | Evidence |
 | ----------- | ---------- | ----------- | ------ | -------- |
-| LAY-01 | 09-01-PLAN.md | Card grid 3-column at ≥1080px; existing 720px 2-col unchanged | ? NEEDS HUMAN | CSS Grid 1/2/3 on `.card-grid:not(.tool-grid)`; `.tool-grid` stays 720-only. Column paint is the backstop UAT. |
+| LAY-01 | 09-01-PLAN.md | Card grid 3-column at ≥1080px; existing 720px 2-col unchanged | ✓ SATISFIED | CSS Grid 1/2/3 on `.card-grid:not(.tool-grid)`; human UAT 719/720/1079/1080 passed (09-UAT.md). |
 | LAY-02 | 09-01-PLAN.md | `--sp-1` through `--sp-12` 4/8/12/16/24/32/48/64/80/96/120/144px | ✓ SATISFIED | Twelve properties on `:root` only |
-| LAY-03 | 09-01-PLAN.md | Hardcoded spacing on touched selectors migrated to tokens | ✓ SATISFIED (tokens) / ? NEEDS HUMAN (no overlap) | wrap/nav/grid/card consume `--sp-*`. Overlap after swap is visual. |
+| LAY-03 | 09-01-PLAN.md | Hardcoded spacing on touched selectors migrated to tokens | ✓ SATISFIED | wrap/nav/grid/card consume `--sp-*`; human UAT: no overlap/collapse. |
 
 ### Decision Coverage
 
