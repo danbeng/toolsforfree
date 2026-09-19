@@ -1,22 +1,33 @@
-# Devtoolbox — Frontend Polish
+# Devtoolbox
 
 ## What This Is
 
-Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. The v1.0 milestone shipped 18 tools (10 existing + 8 new). This milestone optimizes the frontend visual layer: light/dark theme toggle, responsive mobile navigation, wider card grids, consistent spacing scale, and polished interactive chrome.
+Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish: light/dark theme, accessible mobile nav, a three-column catalog grid with a spacing scale, and button/panel/FAQ chrome.
 
 ## Core Value
 
 A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
 
-## Current Milestone: v1.1 Frontend Polish
+## Current State
 
-**Goal:** Optimize frontend visual presentation across the entire site — theme toggle, mobile nav, wider grids, spacing scale, button/panel/FAQ polish.
+**Shipped:** v1.0 More Tools (2026-09-14) + v1.1 Frontend Polish (2026-09-19)
 
-**Target features:**
-- Light mode + theme toggle (CSS variables split light/dark, system preference detection, manual toggle, localStorage persistence)
-- Mobile hamburger menu (header nav collapse at ≤640px, accessible ☰ button)
-- Card grid 3-column at wide screens + CSS variable spacing scale (4/8/12/16/24/32/48)
-- Button hover/active states, tool-panel refinement, FAQ `<details>` collapsible
+- 18 catalog tools, featured set of 6, EN unprefixed + `/zh/` tree
+- Theme: `data-theme` on `<html>`, `ThemeInit.astro` first in `<head>`, static `ThemeToggle`, localStorage only on click
+- Nav: `NavMenu.astro` hamburger at ≤640px (`<button>` + ARIA, Escape, inert, EN/ZH labels)
+- Catalog: `.card-grid:not(.tool-grid)` 1-col → 2-col at 720px → 3-col at 1080px; `a.tool-card`; `--sp-1`…`--sp-12` on `:root`
+- Chrome: `.tool-panel` shadow + `--sp-4` padding; `.tool-panel button` invert hover / color-mix active; FAQ native `details`/`summary`
+- Stack unchanged: Astro 7 SSG + Preact islands + custom CSS. No Tailwind, no new npm packages this milestone.
+
+**Known debt (not this close):** dirty overlay (`LangSwitch.astro`, `src/pages/zh/`, LED `ToolShell.tsx`) and unrelated dirty `src/lib/crontab.ts` stay uncommitted. Do not pop `stash@{0}` or `stash@{1}`. Dirty-main `astro build` still needs overlay isolation.
+
+## Next Milestone Goals
+
+Start with `/gsd-new-milestone`. Candidates already deferred to v2:
+
+- Three-state theme toggle (auto / light / dark)
+- Smooth theme transition animation
+- Card grid 4-col at 1440px (only if catalog grows past 24)
 
 ## Requirements
 
@@ -35,77 +46,71 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - ✓ EN + ZH tool pages, header/footer, lang switch, sitemap — existing
 - ✓ Tool catalog (`src/data/tools.ts`) as routing source of truth — existing
 - ✓ Browser-local processors in `src/lib` + Preact islands + ToolShell — existing
-- ✓ Word / character counter — Phase 2
-- ✓ Case / Slug converter — Phase 2
-- ✓ Lorem ipsum generator — Phase 2
-- ✓ Password generator — Phase 2
-- ✓ SQL formatter — Phase 3
-- ✓ Text Diff — Phase 4
-- ✓ Markdown preview (sanitized GFM, remote images stripped) — Phase 5
-- ✓ QR code generate + decode (PNG download + in-browser file decode, no camera) — Phase 6
-
-- ✓ Light/dark theme with CSS variable split and system preference detection — Phase 7
-- ✓ Theme toggle in header with localStorage persistence — Phase 7
-
-- ✓ Mobile hamburger menu at ≤640px with accessible keyboard support — Phase 8
-- ✓ Card grid 3-column layout at ≥1080px breakpoint — Phase 9
-- ✓ CSS variable spacing scale (`--sp-1`…`--sp-12`) — Phase 9
-- ✓ Button hover/active/focus-visible polish — Phase 10
-- ✓ Tool-panel chrome refinement (consistent borders, shadows, spacing) — Phase 10
-- ✓ FAQ `<details>` collapsible instead of always-visible `<dl>` — Phase 10
+- ✓ Word / character counter — v1.0 Phase 2
+- ✓ Case / Slug converter — v1.0 Phase 2
+- ✓ Lorem ipsum generator — v1.0 Phase 2
+- ✓ Password generator — v1.0 Phase 2
+- ✓ SQL formatter — v1.0 Phase 3
+- ✓ Text Diff — v1.0 Phase 4
+- ✓ Markdown preview (sanitized GFM, remote images stripped) — v1.0 Phase 5
+- ✓ QR code generate + decode (PNG download + in-browser file decode, no camera) — v1.0 Phase 6
+- ✓ Light/dark theme with CSS variable split and system preference detection — v1.1
+- ✓ Theme toggle in header with localStorage persistence — v1.1
+- ✓ Mobile hamburger menu at ≤640px with accessible keyboard support — v1.1
+- ✓ Card grid 3-column layout at ≥1080px breakpoint — v1.1
+- ✓ CSS variable spacing scale (`--sp-1`…`--sp-12`) — v1.1
+- ✓ Button hover/active/focus-visible polish — v1.1
+- ✓ Tool-panel chrome refinement (consistent borders, shadows, spacing) — v1.1
+- ✓ FAQ `<details>` collapsible instead of always-visible `<dl>` — v1.1
 
 ### Active
+
+_(empty — define in `/gsd-new-milestone`)_
 
 ### Out of Scope
 
 - Rewriting existing tool logic — visual layer only, no `src/lib` changes
-- Adding new tools — this milestone is pure visual polish
-- Component framework migration — stay Astro + Preact, no React/Vue/Svelte
-- Tailwind or CSS-in-JS — stay with custom CSS variables and global.css
-- Accessibility audit overhaul — fix obvious issues (mobile nav, contrast), not a full WCAG pass
-- Animation library — CSS transitions only, no Framer Motion / GSAP
+- Adding new tools during a polish milestone
+- Component framework migration — stay Astro + Preact
+- Tailwind or CSS-in-JS — stay with custom CSS variables and `global.css`
+- Accessibility audit overhaul — fix obvious issues, not a full WCAG pass
+- Animation library — CSS transitions only
 - Server-side rendering or SPA hydration beyond existing Preact islands
 - Additional languages — stay EN + ZH
+- Three-state theme toggle — deferred v2
+- Smooth theme transition animation — deferred v2
+- Card grid 4-col at 1440px — deferred v2
 
 ## Context
 
-- Brownfield on `G:\海外练手项目`. Codebase already mapped (`.planning/codebase/`).
+- Brownfield on `G:\海外练手项目`. Codebase mapped in `.planning/codebase/`.
 - Product name: Devtoolbox. Tagline: "Browser-based developer tools. Nothing is uploaded."
-- Stack: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree (not middleware i18n).
-- Catalog (`TOOLS` in `src/data/tools.ts`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
-- `global.css` now splits dark tokens on `:root` and light tokens on `:root[data-theme="light"]`; `ThemeInit.astro` is the first `<head>` child; header has a static `ThemeToggle`.
-- Fonts: IBM Plex Mono + IBM Plex Sans + Syne via Google Fonts CDN (already preconnected).
-- Body background grid uses `--grid-line` at 47px/48px and follows the active theme.
-- Header is a flex row: logo, hamburger (`NavMenu.astro`, ≤640px overlay), Tools/Blog/About, ThemeToggle. Desktop stays one row; hamburger is `display: none` above 640px.
-- Catalog `.card-grid:not(.tool-grid)` is 1-col → 2-col at 720px → 3-col at 1080px; in-tool `.tool-grid` stays 720-only. Cards are `a.tool-card`.
-- `.tool-panel` has 1px `--border`, `box-shadow: 0 1px 2px var(--border)`, padding `--sp-4`; buttons invert on hover (`:not(:disabled)`).
-- FAQ is native `<details>` / `<summary>` with UA `::marker` (HEAD English `h2` FAQ).
-- Dirty main has uncommitted i18n/pages/visual CSS overlay — work from HEAD, not dirty.
+- Stack: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree.
+- Catalog (`TOOLS`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
+- v1.1 closeout: `override_closeout` — phases 7/8/9 verification digest stale after later `global.css` edits; human UAT passed; Phase 10 verification passed; audit 22/22.
+- Dirty main overlay remains uncommitted — work from HEAD, not dirty.
 
 ## Constraints
 
-- **Visual only**: No changes to `src/lib/*` tool logic or `src/data/tools.ts` catalog entries — visual layer is isolated to CSS and component templates
-- **Stack**: Stay on Astro + Preact + custom CSS variables — no Tailwind, no CSS-in-JS, no new framework
-- **Baseline**: Work from HEAD commit, not the dirty CSS overlay on main
-- **Privacy**: All tool computation stays in the browser; theme toggle is localStorage-only, no server state
-- **Bilingual parity**: Theme toggle and mobile nav must work in both EN and ZH trees
-- **Do not rewrite tools**: Existing tool UI components get CSS-level polish only, not structural rewrites
+- **Privacy**: All tool computation stays in the browser; theme is localStorage-only
+- **Stack**: Astro + Preact + custom CSS variables — no Tailwind, no new framework
+- **Baseline**: Do not mix overlay stashes or uncommitted ZH/LangSwitch/LED ToolShell into visual commits
+- **Do not rewrite tools**: Catalog logic and `src/lib` processors stay as shipped
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | All eight shipped through Phase 6 (catalog 18, featured 6) |
-| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product, not a follow-up | Honored through Phase 6 (catalog 18, featured 6) |
-| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | Honored — file decode, no camera |
-| No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive and within current architecture | Honored |
-| Brownfield additive milestone, not a greenfield site | Code and map already exist | Honored |
-| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | Phases 7–10 shipped |
-| FAQ is native details/summary; panel/button chrome is CSS only | Locked Phase 10 CONTEXT; HEAD ToolShell unclassed Copy | Honored — Phase 10 |
-| Catalog grid uses `.card-grid:not(.tool-grid)` and `a.tool-card` | HEAD WordCounter/TextDiff reuse those class names on metric tiles (CR-01) | Honored — Phase 9 `ecac093` |
-| CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | Honored — Phase 7 (`data-theme`, ThemeInit, ThemeToggle) |
-| ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | Honored — Phase 7 |
-| Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | Honored — Phase 8 (`NavMenu.astro`, inert, matchMedia force-close) |
+| Eight locked tools (Markdown preview, Diff, SQL format, Case/Slug, Password, Word count, Lorem, QR generate+decode) | Competitor-gap mix: developer daily + light consumer; all doable client-side | ✓ All eight shipped through Phase 6 (catalog 18, featured 6) |
+| Ship at existing-tool parity (not "tools first, copy later") | Catalog SEO and bilingual UX are part of the product | ✓ Honored through Phase 6 |
+| QR includes decode from image, not just generate | User chose generate+decode; still browser-local | ✓ File decode, no camera |
+| No general image tools, no backend, no i18n expansion, no rewrite of the ten | Keeps milestone additive | ✓ Honored |
+| Visual polish milestone scope (theme, mobile nav, grid, spacing, chrome) | User selected all four areas; baseline is HEAD not dirty overlay | ✓ Phases 7–10 shipped |
+| FAQ is native details/summary; panel/button chrome is CSS only | Locked Phase 10 CONTEXT; HEAD ToolShell unclassed Copy | ✓ Phase 10 |
+| Catalog grid uses `.card-grid:not(.tool-grid)` and `a.tool-card` | HEAD WordCounter/TextDiff reuse those class names on metric tiles (CR-01) | ✓ Phase 9 `ecac093` |
+| CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | ✓ Phase 7 |
+| ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | ✓ Phase 7 |
+| Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | ✓ Phase 8 |
 
 ## Evolution
 
@@ -124,5 +129,12 @@ This document evolves at phase transitions and milestone boundaries.
 3. Audit Out of Scope — reasons still valid?
 4. Update Context with current state
 
+<details>
+<summary>v1.1 milestone brief (archived 2026-09-19)</summary>
+
+v1.1 was a visual-only polish pass on the 18-tool catalog: light/dark theme with no FOUC, accessible ≤640px hamburger, catalog 3-col at ≥1080px plus `--sp-*` scale, then button/panel/FAQ chrome. No `src/lib` or catalog logic changes. No Tailwind. No new npm packages.
+
+</details>
+
 ---
-*Last updated: 2026-09-18 after Phase 10*
+*Last updated: 2026-09-19 after v1.1 milestone*

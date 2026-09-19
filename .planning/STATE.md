@@ -1,40 +1,36 @@
 ---
 gsd_state_version: "1.0"
 milestone: v1.1
-milestone_name: Frontend Polish
-current_phase: 10
-current_plan: Not started
-status: completed
+status: Awaiting next milestone
 stopped_at: Phase 10 complete — all phases complete
-last_updated: "2026-09-18T06:48:59.539Z"
-last_activity: 2026-09-18
-last_activity_desc: Phase 10 complete
-state_head: 16b242c9f9e18bda2ce7c33d1d5cefacc183de35
+last_updated: "2026-09-19T02:00:30.254Z"
+last_activity: 2026-09-19
+last_activity_desc: Milestone v1.1 completed and archived
+state_head: d9d80793c2bab2efe7316f555cebf769b80566a2
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 4
   completed_plans: 4
+milestone_name: Frontend Polish
+current_phase: 10
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-18)
+See: .planning/PROJECT.md (updated 2026-09-19)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Milestone complete — v1.1 Frontend Polish
+**Current focus:** Planning next milestone
 
 ## Current Position
 
-Phase: 10
-Current Plan: Not started
-Total Plans in Phase: 1
-Status: All phases complete
-Last activity: 2026-09-18 — Phase 10 complete
-
-Progress: [██████████] 100%
+Phase: Milestone v1.1 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-09-19 — Milestone v1.1 completed and archived
 
 ## Performance Metrics
 
@@ -72,26 +68,7 @@ Progress: [██████████] 100%
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
-- Visual polish only: no `src/lib` changes, no new tools, no Tailwind
-- Work from HEAD, not the dirty CSS overlay on main
-- CSS variables + `data-theme` on `<html>`; blocking inline script for FOUC
-- Hamburger is `<button>` + ARIA (not checkbox hack); EN+ZH parity
-- No new npm packages; CSS + tiny inline scripts only
-- [Phase 7]: Dark HEAD hex stays on :root; light lives only under :root[data-theme=light]
-- [Phase 7]: ThemeInit never writes storage; ThemeToggle setItem only on click
-- [Phase 7]: Allowlist light|dark before setAttribute; try/catch around storage
-- [Phase 7]: ThemeToggle is static Astro with English aria-label Toggle color theme
-- [Phase 7]: Worked from HEAD chrome (~169-line global.css), not the dirty overlay
-- [Phase 09]: Catalog wrappers on HEAD English home and /tools/ only; ToolCard markup unchanged
-- [Phase 09]: Did not pop stash@{0} or stash@{1}; did not commit LangSwitch or src/pages/zh/
-- [Phase 09]: Dirty overlay broke astro build; isolated overlay to git-dir backup for T-09-01 build, then restored
-- [Phase 09]: Catalog CSS scoped `.card-grid:not(.tool-grid)` and `a.tool-card` (CR-01) so WordCounter/TextDiff islands stay 1-col / no catalog chrome
-- [Phase 10]: Worked from HEAD FaqList; did not pop stash@{0} or stash@{1}; did not commit LangSwitch, src/pages/zh/, or ToolShell
-- [Phase 10]: Copied 10-UI-SPEC Token implementation and FAQ chrome verbatim; no transform scale
-- [Phase 10]: Dirty overlay broke astro build; isolated overlay to .git/gsd-overlay-backup-10-01 for T-10-01, then restored
+Full log in PROJECT.md Key Decisions. v1.1 shipped visual-only on HEAD chrome.
 
 ### Pending Todos
 
@@ -99,8 +76,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Dirty overlay chrome is stash@{0} `gsd-phase7-overlay-chrome-temp`; unrelated i18n is stash@{1} — do not pop onto theme or hamburger
-- Phase 8 leftover-inert / ThemeToggle cascade: CR-01 fixed (`margin-left: auto` after `#themeToggle { margin: 0 }`)
+- Dirty overlay chrome is stash@{0} `gsd-phase7-overlay-chrome-temp`; unrelated i18n is stash@{1} — do not pop onto a new milestone
+- v1.1 closed as override_closeout: phases 7/8/9 verification digest stale after later `global.css` edits (human UAT already passed)
 
 ## Deferred Items
 
@@ -118,4 +95,4 @@ Resume file: None
 
 ## Operator Next Steps
 
-- `/gsd-complete-milestone` (after audit)
+- Start the next milestone with /gsd-new-milestone
