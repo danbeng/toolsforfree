@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish: light/dark theme, accessible mobile nav, a three-column catalog grid with a spacing scale, and button/panel/FAQ chrome.
+Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish. v1.2 lands the uncommitted ZH tree and LangSwitch so bilingual pages actually build on `main`, plus a GitHub Actions workflow file.
 
 ## Core Value
 
@@ -19,15 +19,16 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Chrome: `.tool-panel` shadow + `--sp-4` padding; `.tool-panel button` invert hover / color-mix active; FAQ native `details`/`summary`
 - Stack unchanged: Astro 7 SSG + Preact islands + custom CSS. No Tailwind, no new npm packages this milestone.
 
-**Known debt (not this close):** dirty overlay (`LangSwitch.astro`, `src/pages/zh/`, LED `ToolShell.tsx`) and unrelated dirty `src/lib/crontab.ts` stay uncommitted. Do not pop `stash@{0}` or `stash@{1}`. Dirty-main `astro build` still needs overlay isolation.
+**Known debt:** LED `ToolShell.tsx` and unrelated dirty `src/lib/crontab.ts` stay uncommitted. Do not pop `stash@{0}` or `stash@{1}`. Until v1.2 lands, dirty-main `astro build` still needs overlay isolation.
 
-## Next Milestone Goals
+## Current Milestone: v1.2 Bilingual Land
 
-Start with `/gsd-new-milestone`. Candidates already deferred to v2:
+**Goal:** A visitor (and CI) can run `npm test` and `astro build` on `main` with the ZH tree and LangSwitch committed — no overlay isolation — and a GitHub Actions workflow file exists for the same two commands.
 
-- Three-state theme toggle (auto / light / dark)
-- Smooth theme transition animation
-- Card grid 4-col at 1440px (only if catalog grows past 24)
+**Target features:**
+- Land `LangSwitch.astro`, `src/pages/zh/`, and the EN/i18n page wiring required for a green `npm test` + `astro build` on `main`
+- Add `.github/workflows/ci.yml` running `npm test` then `astro build` (workflow file only; no `gh repo create`, no remote)
+- Keep LED `ToolShell.tsx` and `src/lib/crontab.ts` uncommitted; do not pop `stash@{0}` or `stash@{1}`
 
 ## Requirements
 
@@ -65,21 +66,23 @@ Start with `/gsd-new-milestone`. Candidates already deferred to v2:
 
 ### Active
 
-_(empty — define in `/gsd-new-milestone`)_
+- [ ] Land `LangSwitch.astro` + `src/pages/zh/` + required EN/i18n wiring so `npm test` and `astro build` pass on `main` without overlay isolation
+- [ ] Add GitHub Actions workflow file: `npm test` + `astro build` (no remote, no `gh repo create`)
 
 ### Out of Scope
 
-- Rewriting existing tool logic — visual layer only, no `src/lib` changes
-- Adding new tools during a polish milestone
-- Component framework migration — stay Astro + Preact
-- Tailwind or CSS-in-JS — stay with custom CSS variables and `global.css`
-- Accessibility audit overhaul — fix obvious issues, not a full WCAG pass
-- Animation library — CSS transitions only
-- Server-side rendering or SPA hydration beyond existing Preact islands
-- Additional languages — stay EN + ZH
+- LED `ToolShell.tsx` — leave dirty; never commit this chrome
+- `src/lib/crontab.ts` — unrelated dirty file, not this milestone
+- Popping `stash@{0}` or `stash@{1}`
+- Creating a GitHub remote or `gh repo create` — workflow file only
+- Changing `SITE_ORIGIN` / `https://example.com` — no real domain yet
+- New catalog tools — this milestone is land-and-CI, not More Tools
 - Three-state theme toggle — deferred v2
 - Smooth theme transition animation — deferred v2
 - Card grid 4-col at 1440px — deferred v2
+- Component framework migration — stay Astro + Preact
+- Tailwind or CSS-in-JS
+- Additional languages beyond EN + ZH
 
 ## Context
 
@@ -88,14 +91,16 @@ _(empty — define in `/gsd-new-milestone`)_
 - Stack: Astro 7 SSG, Preact islands, TypeScript, Vitest, content collections, duplicated `src/pages/zh/` tree.
 - Catalog (`TOOLS`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
 - v1.1 closeout: `override_closeout` — phases 7/8/9 verification digest stale after later `global.css` edits; human UAT passed; Phase 10 verification passed; audit 22/22.
-- Dirty main overlay remains uncommitted — work from HEAD, not dirty.
+- v1.2 lands the ZH overlay that v1.1 refused to mix into visual commits. LED ToolShell and `crontab.ts` stay out.
 
 ## Constraints
 
 - **Privacy**: All tool computation stays in the browser; theme is localStorage-only
 - **Stack**: Astro + Preact + custom CSS variables — no Tailwind, no new framework
-- **Baseline**: Do not mix overlay stashes or uncommitted ZH/LangSwitch/LED ToolShell into visual commits
-- **Do not rewrite tools**: Catalog logic and `src/lib` processors stay as shipped
+- **Path-limited add**: Never `git add -A`; do not stage LED ToolShell, `crontab.ts`, or stash contents
+- **Do not pop stashes**: `stash@{0}` `gsd-phase7-overlay-chrome-temp`; `stash@{1}` `pre-02-01-merge unrelated i18n`
+- **CI is a file**: `.github/workflows/` only — this milestone does not create a remote
+- **Do not rewrite tools**: Catalog logic and `src/lib` processors stay as shipped (except do not commit dirty `crontab.ts`)
 
 ## Key Decisions
 
@@ -137,4 +142,4 @@ v1.1 was a visual-only polish pass on the 18-tool catalog: light/dark theme with
 </details>
 
 ---
-*Last updated: 2026-09-19 after v1.1 milestone*
+*Last updated: 2026-09-19 after starting v1.2 Bilingual Land*
