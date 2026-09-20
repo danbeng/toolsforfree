@@ -2,23 +2,28 @@
 import { SITE_NAME } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
 import NavMenu from './NavMenu.astro';
-import type { Locale } from '../i18n/ui';
+import LangSwitch from './LangSwitch.astro';
+import type { Locale } from '../i18n/locales';
+import { localizedPath } from '../i18n/path';
+import { t } from '../i18n/ui';
 
 interface Props {
-  locale?: Locale;
+  locale: Locale;
 }
 
-const locale = Astro.props.locale ?? 'en';
+const { locale } = Astro.props;
+const copy = t(locale);
 ---
 <header class="site">
   <nav class="wrap nav">
-    <a class="logo" href="/">{SITE_NAME}</a>
+    <a class="logo" href={localizedPath(locale, '/')}>{SITE_NAME}</a>
     <NavMenu locale={locale} />
     <div class="nav-links" id="navMenu">
-      <a href="/tools/">Tools</a>
-      <a href="/blog/">Blog</a>
-      <a href="/about/">About</a>
+      <a href={localizedPath(locale, '/tools/')}>{copy.navTools}</a>
+      <a href={localizedPath(locale, '/blog/')}>{copy.navBlog}</a>
+      <a href={localizedPath(locale, '/about/')}>{copy.navAbout}</a>
     </div>
+    <LangSwitch locale={locale} />
     <ThemeToggle />
   </nav>
 </header>

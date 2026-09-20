@@ -4,10 +4,11 @@ import ToolCard from '../components/ToolCard.astro';
 import { SITE_NAME, SITE_TAGLINE } from '../data/site';
 import { getFeaturedTools, getToolsByCategory } from '../data/tools';
 
+const locale = 'en' as const;
 const featured = getFeaturedTools();
 const groups = getToolsByCategory();
 ---
-<BaseLayout title={SITE_NAME} description={SITE_TAGLINE} path="/">
+<BaseLayout title={SITE_NAME} description={SITE_TAGLINE} path="/" locale={locale}>
   <h1>{SITE_NAME}</h1>
   <p>{SITE_TAGLINE}</p>
   <p>

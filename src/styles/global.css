@@ -151,6 +151,29 @@ footer.site { border-top: 1px solid var(--border); margin-top: 3rem; padding: 1.
 :root[data-theme="light"] #themeToggle .theme-moon { display: block; }
 @media (max-width: 640px) {
   #themeToggle {
+    margin-left: 0;
+  }
+}
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.lang-switch a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.lang-switch a:hover {
+  color: var(--accent);
+}
+.lang-switch a[aria-current="page"] {
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .lang-switch {
     margin-left: auto;
   }
 }
