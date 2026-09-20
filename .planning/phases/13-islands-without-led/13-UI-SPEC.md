@@ -1,7 +1,8 @@
 ---
 phase: "13"
 slug: "islands-without-led"
-status: draft
+status: approved
+reviewed_at: "2026-09-20"
 shadcn_initialized: false
 preset: none
 created: "2026-09-20"
