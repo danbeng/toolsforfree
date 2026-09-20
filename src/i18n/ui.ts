@@ -451,7 +451,7 @@ export const ui = {
   },
 } as const;
 
-export type UiDict = (typeof ui)['en'];
+export type UiDict = (typeof ui)[Locale];
 
 export function t(locale: Locale): UiDict {
   return ui[locale];
