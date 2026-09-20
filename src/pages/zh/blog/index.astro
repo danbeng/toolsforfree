@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/ui';
+
+const locale = 'zh' as const;
+const copy = t(locale);
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+<BaseLayout
+  title={copy.blogTitle}
+  description={copy.blogDescription}
+  path="/blog/"
+  locale={locale}
+>
+  <div class="page-intro">
+    <h1>{copy.blogTitle}</h1>
+  </div>
+  {posts.length === 0 ? (
+    <p class="empty">{copy.blogEmpty}</p>
+  ) : (
+    <ul>
+      {posts.map((post) => (
+        <li>
+          <a href={`/zh/blog/${post.id}/`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  )}
+</BaseLayout>

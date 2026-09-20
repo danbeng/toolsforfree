@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ToolCard from '../../../components/ToolCard.astro';
+import { getToolsByCategory } from '../../../data/tools';
+import { t } from '../../../i18n/ui';
+
+const locale = 'zh' as const;
+const copy = t(locale);
+const groups = getToolsByCategory();
+const idFor = (category: string) =>
+  `category-${category.toLowerCase()}`;
+---
+<BaseLayout
+  title={copy.toolsIndexTitle}
+  description={copy.toolsIndexDescription}
+  path="/tools/"
+  locale={locale}
+>
+  <div class="page-intro">
+    <h1>{copy.toolsIndexTitle}</h1>
+    <p>{copy.toolsIndexIntro}</p>
+  </div>
+  {groups.map((g) => (
+    <section class="category-block" id={idFor(g.category)}>
+      <h2>{copy.categories[g.category]}</h2>
+      <div class="card-grid">
+        {g.tools.map((tool) => <ToolCard tool={tool} locale={locale} />)}
+      </div>
+    </section>
+  ))}
+</BaseLayout>

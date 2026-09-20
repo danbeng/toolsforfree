@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import AdSlot from '../../components/AdSlot.astro';
-import FaqList from '../../components/FaqList.astro';
-import RelatedTools from '../../components/RelatedTools.astro';
-import ToolIsland from '../../components/tools/ToolIsland.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AdSlot from '../../../components/AdSlot.astro';
+import FaqList from '../../../components/FaqList.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import ToolIsland from '../../../components/tools/ToolIsland.astro';
 import { getCollection } from 'astro:content';
-import { TOOLS, getTool } from '../../data/tools';
-import { t } from '../../i18n/ui';
+import { TOOLS, getTool } from '../../../data/tools';
+import { t } from '../../../i18n/ui';
 
 export function getStaticPaths() {
   return TOOLS.map((tool) => ({
@@ -14,7 +14,7 @@ export function getStaticPaths() {
   }));
 }
 
-const locale = 'en' as const;
+const locale = 'zh' as const;
 const copy = t(locale);
 const slug = Astro.params.slug!;
 const tool = getTool(slug);
@@ -22,7 +22,7 @@ if (!tool) throw new Error(`Unknown tool ${slug}`);
 
 const pages = await getCollection('toolPages');
 const page = pages.find((p) => p.data.locale === locale && (p.id === slug || p.id.endsWith(`/${slug}`)));
-if (!page) throw new Error(`Missing content for ${slug}`);
+if (!page) throw new Error(`Missing zh content for ${slug}`);
 ---
 <BaseLayout title={page.data.title} description={page.data.description} path={`/tools/${slug}/`} locale={locale}>
   <div class="page-intro">

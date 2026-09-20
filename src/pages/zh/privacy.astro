@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../../data/site';
+import { fill, t } from '../../i18n/ui';
+
+const locale = 'zh' as const;
+const copy = t(locale);
+---
+<BaseLayout
+  title={copy.privacyTitle}
+  description={fill(copy.privacyDescription, { name: SITE_NAME })}
+  path="/privacy/"
+  locale={locale}
+>
+  <div class="page-intro">
+    <h1>{copy.privacyTitle}</h1>
+  </div>
+  <div class="prose">
+    {copy.privacy.map((p) => <p>{p}</p>)}
+  </div>
+</BaseLayout>

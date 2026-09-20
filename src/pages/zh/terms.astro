@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../../data/site';
+import { fill, t } from '../../i18n/ui';
+
+const locale = 'zh' as const;
+const copy = t(locale);
+---
+<BaseLayout
+  title={copy.termsTitle}
+  description={fill(copy.termsDescription, { name: SITE_NAME })}
+  path="/terms/"
+  locale={locale}
+>
+  <div class="page-intro">
+    <h1>{copy.termsTitle}</h1>
+  </div>
+  <div class="prose">
+    <p>{fill(copy.termsBody, { name: SITE_NAME })}</p>
+  </div>
+</BaseLayout>

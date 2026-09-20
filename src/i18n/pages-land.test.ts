@@ -66,3 +66,33 @@ describe('pages land — lang-switch CSS', () => {
     expect(mobileTheme).not.toBeNull();
   });
 });
+
+const zhRoot = new URL('../pages/zh/', import.meta.url);
+const zhFiles = [
+  'index.astro',
+  'tools/index.astro',
+  'tools/[slug].astro',
+  'about.astro',
+  'blog/index.astro',
+  'privacy.astro',
+  'terms.astro',
+];
+
+describe('pages land — ZH tree', () => {
+  it('has the seven ZH routes', () => {
+    for (const file of zhFiles) {
+      expect(existsSync(new URL(file, zhRoot)), `missing zh/${file}`).toBe(true);
+    }
+  });
+});
+
+describe('pages land — FaqList items only', () => {
+  it('EN and ZH slug pages include FaqList without extra props', () => {
+    const enSlug = readFileSync(new URL('../pages/tools/[slug].astro', import.meta.url), 'utf8');
+    const zhSlug = readFileSync(new URL('../pages/zh/tools/[slug].astro', import.meta.url), 'utf8');
+    expect(enSlug.includes('FaqList')).toBe(true);
+    expect(zhSlug.includes('FaqList')).toBe(true);
+    expect(enSlug.includes('heading=')).toBe(false);
+    expect(zhSlug.includes('heading=')).toBe(false);
+  });
+});
