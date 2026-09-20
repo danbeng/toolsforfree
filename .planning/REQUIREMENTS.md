@@ -62,28 +62,28 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| KERN-01 | — | Pending |
-| KERN-02 | — | Pending |
-| KERN-03 | — | Pending |
-| KERN-04 | — | Pending |
-| PAGE-01 | — | Pending |
-| PAGE-02 | — | Pending |
-| PAGE-03 | — | Pending |
-| PAGE-04 | — | Pending |
-| PAGE-05 | — | Pending |
-| ISLE-01 | — | Pending |
-| ISLE-02 | — | Pending |
-| ISLE-03 | — | Pending |
-| ISLE-04 | — | Pending |
-| CI-01 | — | Pending |
-| CI-02 | — | Pending |
+| KERN-01 | Phase 11 | Pending |
+| KERN-02 | Phase 11 | Pending |
+| KERN-03 | Phase 11 | Pending |
+| KERN-04 | Phase 11 | Pending |
+| PAGE-01 | Phase 12 | Pending |
+| PAGE-02 | Phase 12 | Pending |
+| PAGE-03 | Phase 12 | Pending |
+| PAGE-04 | Phase 12 | Pending |
+| PAGE-05 | Phase 12 | Pending |
+| ISLE-01 | Phase 13 | Pending |
+| ISLE-02 | Phase 13 | Pending |
+| ISLE-03 | Phase 13 | Pending |
+| ISLE-04 | Phase 13 | Pending |
+| CI-01 | Phase 14 | Pending |
+| CI-02 | Phase 14 | Pending |
 
 **Coverage:**
 
 - v1.2 requirements: 15 total
-- Mapped to phases: 0
-- Unmapped: 15 (filled by roadmap)
+- Mapped to phases: 15
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-09-20*
-*Last updated: 2026-09-20 after initial definition*
+*Last updated: 2026-09-20 after roadmap creation*

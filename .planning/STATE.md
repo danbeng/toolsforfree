@@ -3,10 +3,10 @@ gsd_state_version: "1.0"
 milestone: v1.2
 milestone_name: Bilingual Land
 status: planning
-last_updated: "2026-09-19T15:22:27.528Z"
-last_activity: 2026-09-19
+last_updated: "2026-09-20T00:00:00.000Z"
+last_activity: 2026-09-20
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,23 +17,25 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-19)
+See: .planning/PROJECT.md (updated 2026-09-20)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Planning next milestone
+**Current focus:** Phase 11 — i18n Kernel
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 11 of 14 (i18n Kernel)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-09-19 — Milestone v1.2 started
+Status: Ready to plan
+Last activity: 2026-09-20 — v1.2 roadmap created (Phases 11-14)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 13 (v1.0)
+- Total plans completed: 13 (v1.0 + v1.1)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -41,18 +43,13 @@ Last activity: 2026-09-19 — Milestone v1.2 started
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1 | 1 | - | - |
-| 2 | 4 | - | - |
-| 3 | 1 | - | - |
-| 4 | 1 | - | - |
-| 5 | 1 | - | - |
-| 6 | 1 | - | - |
+| 1–6 | 9 | - | - |
 | 7 | 1 | - | - |
 | 8 | 1 | - | - |
-| 09 | 1 | - | - |
+| 9 | 1 | - | - |
 | 10 | 1 | - | - |
+| 11–14 | TBD | - | - |
 
-*Updated after each plan completion*
 **Per-Plan Metrics:**
 
 | Plan | Duration | Tasks | Files |
@@ -65,7 +62,7 @@ Last activity: 2026-09-19 — Milestone v1.2 started
 
 ### Decisions
 
-Full log in PROJECT.md Key Decisions. v1.1 shipped visual-only on HEAD chrome.
+Full log in PROJECT.md Key Decisions. v1.2 lands ZH + LangSwitch + CI file; LED ToolShell and crontab.ts stay uncommitted.
 
 ### Pending Todos
 
@@ -73,8 +70,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- Dirty overlay chrome is stash@{0} `gsd-phase7-overlay-chrome-temp`; unrelated i18n is stash@{1} — do not pop onto a new milestone
-- v1.1 closed as override_closeout: phases 7/8/9 verification digest stale after later `global.css` edits (human UAT already passed)
+- Do not commit LED ToolShell / tool-panel__chrome or src/lib/crontab.ts
+- Do not pop stash@{0} or stash@{1}; path-limited git add only
+- No SITE_ORIGIN change, no gh repo create, no new tools; stay Astro + Preact, no Tailwind
+- Until Phase 14, dirty-main astro build may still need overlay isolation
 
 ## Deferred Items
 
@@ -86,10 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-18T03:45:53.018Z
-Stopped at: Phase 10 complete — all phases complete
+Last session: 2026-09-20
+Stopped at: v1.2 roadmap written — Phase 11 ready to plan
 Resume file: None
-
-## Operator Next Steps
-
-- Start the next milestone with /gsd-new-milestone
