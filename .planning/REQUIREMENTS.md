@@ -16,11 +16,11 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Pages
 
-- [ ] **PAGE-01**: Header mounts `LangSwitch.astro` (do not pop `stash@{0}` Header)
-- [ ] **PAGE-02**: Header Tools/Blog/About links use `localizedPath` matching the page locale
-- [ ] **PAGE-03**: Commit `src/pages/zh/` (home, tools, `[slug]`, about, blog, privacy, terms)
-- [ ] **PAGE-04**: EN pages pass `locale` to `BaseLayout`; Footer / RelatedTools / 404 / content `locale` frontmatter / sitemap i18n align with locale
-- [ ] **PAGE-05**: `BaseLayout` sets `<html lang>` from locale and passes locale to Header / Footer
+- [x] **PAGE-01**: Header mounts `LangSwitch.astro` (do not pop `stash@{0}` Header)
+- [x] **PAGE-02**: Header Tools/Blog/About links use `localizedPath` matching the page locale
+- [x] **PAGE-03**: Commit `src/pages/zh/` (home, tools, `[slug]`, about, blog, privacy, terms)
+- [x] **PAGE-04**: EN pages pass `locale` to `BaseLayout`; Footer / RelatedTools / 404 / content `locale` frontmatter / sitemap i18n align with locale
+- [x] **PAGE-05**: `BaseLayout` sets `<html lang>` from locale and passes locale to Header / Footer
 
 ### Islands
 
@@ -66,11 +66,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | KERN-02 | Phase 11 | Complete |
 | KERN-03 | Phase 11 | Complete |
 | KERN-04 | Phase 11 | Complete |
-| PAGE-01 | Phase 12 | Pending |
-| PAGE-02 | Phase 12 | Pending |
-| PAGE-03 | Phase 12 | Pending |
-| PAGE-04 | Phase 12 | Pending |
-| PAGE-05 | Phase 12 | Pending |
+| PAGE-01 | Phase 12 | Complete |
+| PAGE-02 | Phase 12 | Complete |
+| PAGE-03 | Phase 12 | Complete |
+| PAGE-04 | Phase 12 | Complete |
+| PAGE-05 | Phase 12 | Complete |
 | ISLE-01 | Phase 13 | Pending |
 | ISLE-02 | Phase 13 | Pending |
 | ISLE-03 | Phase 13 | Pending |

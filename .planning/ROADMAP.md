@@ -87,10 +87,11 @@ Plans:
   4. EN pages pass `locale` to `BaseLayout`; Footer, RelatedTools, 404, content `locale` frontmatter, and sitemap i18n align with locale
   5. `BaseLayout` sets `<html lang>` from locale and passes locale to Header and Footer
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans executed
 
 Plans:
-- [ ] 12-01-PLAN.md — Header LangSwitch, BaseLayout locale, ZH tree, EN locale pass, sitemap i18n
+
+- [x] 12-01-PLAN.md — Header LangSwitch, BaseLayout locale, ZH tree, EN locale pass, sitemap i18n
 
 **UI hint**: yes
 
@@ -132,6 +133,6 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
-| 12. Pages + LangSwitch | 0/1 | Not started | - |
+| 12. Pages + LangSwitch | 1/1 | In Progress|  |
 | 13. Islands without LED | 0/TBD | Not started | - |
 | 14. CI Green on Main | 0/TBD | Not started | - |

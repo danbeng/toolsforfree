@@ -4,18 +4,18 @@ milestone: v1.2
 milestone_name: Bilingual Land
 current_phase: 12
 current_phase_name: Pages + LangSwitch
-current_plan: Not started
-status: executing
-stopped_at: Phase 11 complete, ready to plan Phase 12
-last_updated: "2026-09-20T11:36:47.826Z"
+current_plan: 1
+status: verifying
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-09-20T11:54:10.672Z"
 last_activity: 2026-09-20
-last_activity_desc: Phase 11 complete, transitioned to Phase 12
-state_head: a911a71fadf47c75db8348665de4fbb81ddce57f
+last_activity_desc: Phase 12 execution started
+state_head: 4145f62b4d37e9edd58db2a1af715ea3d3c7736c
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-20)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 11 — i18n Kernel
+**Current focus:** Phase 12 — Pages + LangSwitch
 
 ## Current Position
 
-Phase: 12 (Pages + LangSwitch) — READY TO EXECUTE
-Current Plan: Not started
+Phase: 12 (Pages + LangSwitch) — EXECUTING
+Current Plan: 1
 Total Plans in Phase: 1
 Plan: 1 of 1
-Status: Ready to execute
-Last activity: 2026-09-20 — Phase 11 complete, transitioned to Phase 12
+Status: Phase complete — ready for verification
+Last activity: 2026-09-20 — Phase 12 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -66,6 +66,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 09 P01 | 9 min | 3 tasks | 3 files |
 | Phase 10 P01 | 9 min | 3 tasks | 2 files |
 | Phase 11 P01 | 17min | 3 tasks | 7 files |
+| Phase 12-pages-langswitch P01 | 8 min | 3 tasks | 35 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,10 @@ Full log in PROJECT.md Key Decisions. v1.2 lands ZH + LangSwitch + CI file; LED 
 - [Phase 11]: Locale lives in locales.ts; ui.ts re-exports it so Header still compiles
 - [Phase 11]: Path helpers never throw; illegal locale is en; results never start with //
 - [Phase 11]: useToolUi is a pure named function; err('') and err(null) return null
+- [Phase 12]: Canonical uses switchLocalePath(path, locale) so ZH unprefixed path does not collide with EN
+- [Phase 12]: FaqList heading stripped on both EN and ZH slug pages; FaqList.astro untouched
+- [Phase 12]: ToolCard locale is optional default en so EN catalog cards keep working
+- [Phase 12]: hreflang trio is en, zh-Hans, x-default pointing at EN
 
 ### Pending Todos
 
@@ -98,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-20T04:24:28.091Z
-Stopped at: Phase 11 complete, ready to plan Phase 12
+Last session: 2026-09-20T11:54:10.615Z
+Stopped at: Completed 12-01-PLAN.md
 Resume file: None
