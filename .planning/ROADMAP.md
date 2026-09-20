@@ -49,7 +49,7 @@ Archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 Archive: `.planning/milestones/v1.1-ROADMAP.md`
 
-- [ ] **Phase 11: i18n Kernel** - Locales, path helpers, useToolUi, and EN+ZH chrome keys
+- [x] **Phase 11: i18n Kernel** - Locales, path helpers, useToolUi, and EN+ZH chrome keys (completed 2026-09-20)
 - [ ] **Phase 12: Pages + LangSwitch** - ZH tree, header switcher, localized nav, layout locale, sitemap i18n
 - [ ] **Phase 13: Islands without LED** - Locale Copy/Copied on all 18 tools; no LED chrome
 - [ ] **Phase 14: CI Green on Main** - ci.yml plus npm test and astro build without overlay isolation
@@ -68,7 +68,7 @@ Archive: `.planning/milestones/v1.1-ROADMAP.md`
   3. Tool islands can obtain `copy` / `tooLarge` / `err()` from `useToolUi` for a given locale
   4. EN and ZH chrome keys exist for home, nav Tools/Blog/About, footer, 404, langSwitch, howTo, faq, localNote, and copy/copied; `Locale` is sourced from `locales.ts`
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -87,7 +87,11 @@ Plans:
   4. EN pages pass `locale` to `BaseLayout`; Footer, RelatedTools, 404, content `locale` frontmatter, and sitemap i18n align with locale
   5. `BaseLayout` sets `<html lang>` from locale and passes locale to Header and Footer
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 12-01-PLAN.md — Header LangSwitch, BaseLayout locale, ZH tree, EN locale pass, sitemap i18n
+
 **UI hint**: yes
 
 ### Phase 13: Islands without LED
@@ -127,7 +131,7 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 11. i18n Kernel | 1/1 | In Progress|  |
-| 12. Pages + LangSwitch | 0/TBD | Not started | - |
+| 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
+| 12. Pages + LangSwitch | 0/1 | Not started | - |
 | 13. Islands without LED | 0/TBD | Not started | - |
 | 14. CI Green on Main | 0/TBD | Not started | - |
