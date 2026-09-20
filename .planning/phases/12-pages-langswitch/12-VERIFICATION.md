@@ -1,8 +1,8 @@
 ---
 phase: 12-pages-langswitch
 verified: 2026-09-20T12:42:31Z
-status: human_needed
-score: 11/12 must-haves verified
+status: passed
+score: 12/12 must-haves verified
 covered_files:
   - .planning/REQUIREMENTS.md
   - .planning/phases/12-pages-langswitch/12-01-PLAN.md
@@ -58,7 +58,7 @@ human_verification:
 
 **Phase Goal:** Visitors can browse the full ZH tree and switch EN/ZH from the header without leaving the current page equivalent
 **Verified:** 2026-09-20T12:42:31Z
-**Status:** human_needed
+**Status:** passed
 **Re-verification:** No — initial verification
 
 ## Goal Achievement
@@ -80,9 +80,9 @@ Roadmap success criteria (1–5) plus non-duplicate PLAN truths (6–12). PLAN i
 | 9   | `global.css` contains UI-SPEC `.lang-switch` rules (flex, gap `var(--sp-2)`, 16px/400 idle, 600 current, accent hover text only); at max-width 640px `.lang-switch { margin-left: auto }` and `#themeToggle { margin-left: 0 }` | ✓ VERIFIED | Lines 152–179 of `src/styles/global.css` match the token block. No width/height on links, no border/background/radius/underline. |
 | 10  | Blog with zero posts renders `copy.blogEmpty` only; locales are always exactly two links in `LOCALES` order en then zh | ✓ VERIFIED | `src/content/blog/` is empty except `.gitkeep`. EN and ZH blog indexes use `posts.length === 0 ? copy.blogEmpty`. `LOCALES` is `['en', 'zh']`; LangSwitch maps that array. |
 | 11  | LangSwitch hrefs are pathname plus `LOCALES` only (no query-string passthrough) and never start with two slashes | ✓ VERIFIED | `href={switchLocalePath(pathname, loc)}` only — no `search` / `URLSearchParams`. `path.test.ts` `never returns a string that starts with two slashes` passed on `switchLocalePath('//evil.com', 'en')`. |
-| 12  | In both themes, idle and aria-current LangSwitch `--text` on `--bg` and hover `--accent` on `--bg` eyeball at 4.5:1; current locale is weight 600 not an accent fill | ⚠️ insufficient_spec | `verification: backstop`. CSS sets `--text` / `--accent` / `font-weight: 600`. No held-out contrast measurement. Presence is not evidence. |
+| 12  | In both themes, idle and aria-current LangSwitch `--text` on `--bg` and hover `--accent` on `--bg` eyeball at 4.5:1; current locale is weight 600 not an accent fill | ✓ VERIFIED | Human UAT 2026-09-20: All good — continue. Contrast backstop and 640px cluster accepted. |
 
-**Score:** 11/12 truths verified (0 present, behavior-unverified)
+**Score:** 12/12 truths verified
 
 Hard-fence prohibitions (not in score; git-checked):
 
@@ -214,23 +214,19 @@ No `TBD` / `FIXME` / `XXX` in phase-touched source. No stub returns. Working-tre
 
 ### Human Verification Required
 
+None remaining. Both items passed 2026-09-20 (All good — continue).
+
 ### 1. LangSwitch contrast (UI-SPEC backstop)
 
-**Test:** On home in both themes, idle and aria-current LangSwitch `--text` on `--bg` and hover `--accent` on `--bg` eyeball at 4.5:1; current locale is weight 600 not an accent fill.
-**Expected:** Idle and current links read as `--text` on `--bg` at >=4.5:1 in light and dark; hover is `--accent` on `--bg` at >=4.5:1; current locale is weight 600 with no accent fill, underline, or pill.
-**Why human:** `verification: backstop`. CSS token presence cannot prove rendered contrast.
+**Result:** pass
 
 ### 2. Header order and 640px cluster
 
-**Test:** Desktop header order and 640px cluster: logo, Tools/Blog/About, English/中文, ThemeToggle; at 640px LangSwitch plus ThemeToggle cluster on the right with hamburger closed.
-**Expected:** Desktop order is logo, Tools/Blog/About, English/中文, ThemeToggle. At 640px LangSwitch + ThemeToggle sit on the right and LangSwitch stays visible with the hamburger closed.
-**Why human:** CSS rules exist; actual clustering and visibility at 640px need an eyeball.
-
-Harvested from PLAN `<human-check>` on the tracer task (coverage D5). Deduped against the backstop truth — contrast is item 1; layout cluster is item 2.
+**Result:** pass
 
 ### Gaps Summary
 
-No blocking gaps. Phase goal chrome and ZH tree are present, substantive, and wired. Status is `human_needed` solely for the UI-SPEC contrast backstop and the 640px header-cluster eyeball. Overlay-free `astro build` remains Phase 14. WR-01 / WR-02 are review warnings, not must-have failures.
+No blocking gaps. Phase goal chrome and ZH tree are present, substantive, and wired. Overlay-free `astro build` remains Phase 14. WR-01 / WR-02 are review warnings, not must-have failures.
 
 ---
 
