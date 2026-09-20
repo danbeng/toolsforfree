@@ -1,15 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { CONTACT_EMAIL, SITE_NAME } from '../data/site';
+import { fill, t } from '../i18n/ui';
+
+const locale = 'en' as const;
+const copy = t(locale);
 ---
 <BaseLayout
-  title="About"
-  description={`${SITE_NAME} is a set of free browser tools for developers. No accounts.`}
+  title={copy.aboutTitle}
+  description={fill(copy.aboutDescription, { name: SITE_NAME })}
   path="/about/"
+  locale={locale}
 >
-  <h1>About</h1>
-  <p>
-    {SITE_NAME} is a set of free browser tools for developers. There are no
-    accounts. Questions? Contact {CONTACT_EMAIL}.
-  </p>
+  <div class="page-intro">
+    <h1>{copy.aboutTitle}</h1>
+  </div>
+  <div class="prose">
+    <p>{fill(copy.aboutBody, { name: SITE_NAME, email: CONTACT_EMAIL })}</p>
+  </div>
 </BaseLayout>

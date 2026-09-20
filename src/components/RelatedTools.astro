@@ -1,18 +1,25 @@
 ---
 import { getRelatedTools } from '../data/tools';
+import type { Locale } from '../i18n/locales';
+import { localizedPath } from '../i18n/path';
+import { t } from '../i18n/ui';
 
 interface Props {
   slug: string;
+  locale: Locale;
 }
 
-const { slug } = Astro.props;
+const { slug, locale } = Astro.props;
 const related = getRelatedTools(slug);
+const copy = t(locale);
 ---
-<h2>Related tools</h2>
-<ul>
-  {related.map((t) => (
+<h2>{copy.related}</h2>
+<ul class="related">
+  {related.map((tool) => (
     <li>
-      <a href={`/tools/${t.slug}/`}>{t.name}</a>
+      <a href={localizedPath(locale, `/tools/${tool.slug}/`)}>
+        {copy.tools[tool.slug as keyof typeof copy.tools].name}
+      </a>
     </li>
   ))}
 </ul>

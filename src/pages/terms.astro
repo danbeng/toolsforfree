@@ -1,15 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_NAME } from '../data/site';
+import { fill, t } from '../i18n/ui';
+
+const locale = 'en' as const;
+const copy = t(locale);
 ---
 <BaseLayout
-  title="Terms"
-  description={`${SITE_NAME} is free and provided as-is, with no warranty that results are correct.`}
+  title={copy.termsTitle}
+  description={fill(copy.termsDescription, { name: SITE_NAME })}
   path="/terms/"
+  locale={locale}
 >
-  <h1>Terms</h1>
-  <p>
-    {SITE_NAME} is free and provided as-is. There is no warranty that results
-    are correct. You are responsible for how you use outputs.
-  </p>
+  <div class="page-intro">
+    <h1>{copy.termsTitle}</h1>
+  </div>
+  <div class="prose">
+    <p>{fill(copy.termsBody, { name: SITE_NAME })}</p>
+  </div>
 </BaseLayout>

@@ -1,4 +1,5 @@
 ---
+locale: en
 title: URL Encode / Decode
 description: Percent-encode or decode URL components in your browser. Nothing is uploaded.
 intro: Convert text to percent-encoded URL components or decode them locally. Choose encode or decode explicitly; nothing leaves this page.

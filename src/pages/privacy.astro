@@ -1,16 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_NAME } from '../data/site';
+import { fill, t } from '../i18n/ui';
+
+const locale = 'en' as const;
+const copy = t(locale);
 ---
 <BaseLayout
-  title="Privacy"
-  description={`${SITE_NAME} privacy: tools run locally in the browser. No accounts. No uploads.`}
+  title={copy.privacyTitle}
+  description={fill(copy.privacyDescription, { name: SITE_NAME })}
   path="/privacy/"
+  locale={locale}
 >
-  <h1>Privacy</h1>
-  <p>Tools run locally in the browser.</p>
-  <p>No accounts.</p>
-  <p>No file or text uploads to our server.</p>
-  <p>v1 loads no analytics and no ad network.</p>
-  <p>If ads or analytics are added, this page will be updated.</p>
+  <div class="page-intro">
+    <h1>{copy.privacyTitle}</h1>
+  </div>
+  <div class="prose">
+    {copy.privacy.map((p) => <p>{p}</p>)}
+  </div>
 </BaseLayout>

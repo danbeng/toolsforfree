@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Regex Tester
 description: Test a regular expression against a sample string in your browser. Nothing is uploaded.
 intro: Try a pattern against a test string locally. Matches, groups, and invalid patterns stay on this page.

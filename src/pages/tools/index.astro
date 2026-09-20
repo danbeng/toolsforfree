@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ToolCard from '../../components/ToolCard.astro';
 import { getToolsByCategory } from '../../data/tools';
 
+const locale = 'en' as const;
 const groups = getToolsByCategory();
 const idFor = (category: string) =>
   `category-${category.toLowerCase()}`;
@@ -11,6 +12,7 @@ const idFor = (category: string) =>
   title="All tools"
   description="Browser-based developer tools. Nothing is uploaded."
   path="/tools/"
+  locale={locale}
 >
   <h1>All tools</h1>
   {groups.map((g) => (

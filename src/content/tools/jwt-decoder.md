@@ -1,4 +1,5 @@
 ---
+locale: en
 title: JWT Decoder
 description: Decode a JWT header and payload in your browser. Not signature verification.
 intro: Paste a JWT to inspect its header and payload locally. This page does not verify signatures or call JWKS.

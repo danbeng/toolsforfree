@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Hex / RGB / HSL Converter
 description: Convert colors between hex, RGB, and HSL in your browser. Nothing is uploaded.
 intro: Convert a color among hex, RGB, and HSL. Conversion runs locally; nothing is uploaded.

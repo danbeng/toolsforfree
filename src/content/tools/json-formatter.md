@@ -1,4 +1,5 @@
 ---
+locale: en
 title: JSON Formatter / Validator
 description: Format and validate JSON in your browser. Nothing is uploaded.
 intro: Paste JSON to format and validate it locally. Invalid documents show an error; nothing leaves this page.

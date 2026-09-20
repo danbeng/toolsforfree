@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Unix Timestamp Converter
 description: Convert Unix time to UTC ISO 8601 and back in your browser. Nothing is uploaded.
 intro: Convert a Unix timestamp to UTC ISO 8601, or an ISO string back to Unix seconds and milliseconds. Conversion runs locally; nothing is uploaded.

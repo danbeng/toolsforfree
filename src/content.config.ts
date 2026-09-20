@@ -13,6 +13,7 @@ const blog = defineCollection({
 const toolPages = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/tools' }),
   schema: z.object({
+    locale: z.enum(['en', 'zh']),
     title: z.string(),
     description: z.string(),
     intro: z.string(),

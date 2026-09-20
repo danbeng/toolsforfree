@@ -1,19 +1,25 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { t } from '../../i18n/ui';
 
+const locale = 'en' as const;
+const copy = t(locale);
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 <BaseLayout
-  title="Blog"
-  description="Guides and notes. Coming soon."
+  title={copy.blogTitle}
+  description={copy.blogDescription}
   path="/blog/"
+  locale={locale}
 >
-  <h1>Blog</h1>
+  <div class="page-intro">
+    <h1>{copy.blogTitle}</h1>
+  </div>
   {posts.length === 0 ? (
-    <p>Coming soon.</p>
+    <p class="empty">{copy.blogEmpty}</p>
   ) : (
     <ul>
       {posts.map((post) => (

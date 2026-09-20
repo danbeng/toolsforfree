@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Base64 Encode / Decode
 description: Encode or decode Base64 in your browser. Nothing is uploaded.
 intro: Convert text to Base64 or Base64 back to text locally. Choose encode or decode explicitly; nothing leaves this page.

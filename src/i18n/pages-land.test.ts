@@ -96,3 +96,64 @@ describe('pages land — FaqList items only', () => {
     expect(zhSlug.includes('heading=')).toBe(false);
   });
 });
+
+const enPages = [
+  '../pages/index.astro',
+  '../pages/tools/index.astro',
+  '../pages/tools/[slug].astro',
+  '../pages/about.astro',
+  '../pages/blog/index.astro',
+  '../pages/privacy.astro',
+  '../pages/terms.astro',
+  '../pages/404.astro',
+];
+
+describe('pages land — EN locale pass', () => {
+  it('every listed EN page source includes locale= on BaseLayout', () => {
+    for (const file of enPages) {
+      const source = readFileSync(new URL(file, import.meta.url), 'utf8');
+      expect(source.includes('locale='), `${file} missing locale=`).toBe(true);
+    }
+  });
+});
+
+describe('pages land — sitemap i18n', () => {
+  it('astro.config has defaultLocale, zh-Hans, and no i18n.routing', () => {
+    const astro = readFileSync(new URL('../../astro.config.mjs', import.meta.url), 'utf8');
+    expect(astro.includes('defaultLocale')).toBe(true);
+    expect(astro.includes('zh-Hans')).toBe(true);
+    expect(astro.includes('i18n.routing')).toBe(false);
+  });
+});
+
+describe('pages land — Footer and RelatedTools', () => {
+  it('include localizedPath', () => {
+    const footer = readFileSync(new URL('../components/Footer.astro', import.meta.url), 'utf8');
+    const related = readFileSync(new URL('../components/RelatedTools.astro', import.meta.url), 'utf8');
+    expect(footer.includes('localizedPath')).toBe(true);
+    expect(related.includes('localizedPath')).toBe(true);
+  });
+});
+
+const originalTen = [
+  'base64.md',
+  'color-converter.md',
+  'crontab-explainer.md',
+  'hash-generator.md',
+  'json-formatter.md',
+  'jwt-decoder.md',
+  'regex-tester.md',
+  'unix-timestamp.md',
+  'url-encode.md',
+  'uuid-generator.md',
+];
+
+describe('pages land — original-ten locale en', () => {
+  it('EN markdown files include locale: en', () => {
+    const toolsDir = new URL('../content/tools/', import.meta.url);
+    for (const file of originalTen) {
+      const source = readFileSync(new URL(file, toolsDir), 'utf8');
+      expect(source.includes('locale: en'), `${file} missing locale: en`).toBe(true);
+    }
+  });
+});

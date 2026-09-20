@@ -1,4 +1,5 @@
 ---
+locale: en
 title: UUID Generator
 description: Generate a UUID v4 in your browser with crypto.randomUUID(). Nothing is uploaded.
 intro: Generate a UUID v4 locally. A new value is created when the page loads; click Generate for another. Nothing is uploaded.

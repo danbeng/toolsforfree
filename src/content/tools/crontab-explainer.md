@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Crontab Explainer
 description: Explain a five-field cron expression in English in your browser. Nothing is uploaded.
 intro: Paste a five-field cron expression and read each field in English. Explanation runs locally; nothing is uploaded. Macros such as @daily are not supported.

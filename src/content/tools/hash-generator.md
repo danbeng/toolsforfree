@@ -1,4 +1,5 @@
 ---
+locale: en
 title: Hash Generator
 description: Generate SHA-256 and SHA-1 hashes in your browser with Web Crypto. Nothing is uploaded.
 intro: Hash text locally with SHA-256 or SHA-1. Digests run in your browser via Web Crypto; nothing is uploaded. MD5 is not offered.
