@@ -27,7 +27,7 @@ export default function WordCounter({ locale }: { locale: Locale }) {
   const metrics = result.metrics;
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <label>
         {labels.text}
         <textarea

@@ -1,4 +1,5 @@
 ---
+import type { Locale } from '../../i18n/locales';
 import JsonFormatter from './JsonFormatter';
 import JwtDecoder from './JwtDecoder';
 import Base64Tool from './Base64Tool';
@@ -18,19 +19,19 @@ import TextDiff from './TextDiff';
 import MarkdownPreview from './MarkdownPreview';
 import QrCode from './QrCode';
 
-interface Props { slug: string; locale?: 'en' | 'zh' }
-const { slug, locale = 'en' } = Astro.props;
+interface Props { slug: string; locale: Locale }
+const { slug, locale } = Astro.props;
 ---
-{slug === 'json-formatter' && <JsonFormatter client:load />}
-{slug === 'jwt-decoder' && <JwtDecoder client:load />}
-{slug === 'base64' && <Base64Tool client:load />}
-{slug === 'url-encode' && <UrlEncode client:load />}
-{slug === 'hash-generator' && <HashGenerator client:load />}
-{slug === 'uuid-generator' && <UuidGenerator client:load />}
-{slug === 'regex-tester' && <RegexTester client:load />}
-{slug === 'unix-timestamp' && <UnixTimestamp client:load />}
-{slug === 'crontab-explainer' && <CrontabExplainer client:load />}
-{slug === 'color-converter' && <ColorConverter client:load />}
+{slug === 'json-formatter' && <JsonFormatter client:load locale={locale} />}
+{slug === 'jwt-decoder' && <JwtDecoder client:load locale={locale} />}
+{slug === 'base64' && <Base64Tool client:load locale={locale} />}
+{slug === 'url-encode' && <UrlEncode client:load locale={locale} />}
+{slug === 'hash-generator' && <HashGenerator client:load locale={locale} />}
+{slug === 'uuid-generator' && <UuidGenerator client:load locale={locale} />}
+{slug === 'regex-tester' && <RegexTester client:load locale={locale} />}
+{slug === 'unix-timestamp' && <UnixTimestamp client:load locale={locale} />}
+{slug === 'crontab-explainer' && <CrontabExplainer client:load locale={locale} />}
+{slug === 'color-converter' && <ColorConverter client:load locale={locale} />}
 {slug === 'word-counter' && <WordCounter client:load locale={locale} />}
 {slug === 'case-converter' && <CaseConverter client:load locale={locale} />}
 {slug === 'lorem-ipsum' && <LoremIpsum client:load locale={locale} />}
