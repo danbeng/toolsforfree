@@ -66,7 +66,10 @@ Archive: `.planning/milestones/v1.1-ROADMAP.md`
   2. `localizedPath`, `switchLocalePath`, and `localeFromPathname` produce EN unprefixed URLs, ZH `/zh/` URLs, and trailing slashes
   3. Tool islands can obtain `copy` / `tooLarge` / `err()` from `useToolUi` for a given locale
   4. EN and ZH chrome keys exist for home, nav Tools/Blog/About, footer, 404, langSwitch, howTo, faq, localNote, and copy/copied; `Locale` is sourced from `locales.ts`
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 11-01-PLAN.md — Locales, path helpers, ui.ts chrome, and useToolUi kernel
 
 ### Phase 12: Pages + LangSwitch
 
@@ -115,7 +118,7 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 11. i18n Kernel | 0/TBD | Not started | - |
+| 11. i18n Kernel | 0/1 | Not started | - |
 | 12. Pages + LangSwitch | 0/TBD | Not started | - |
 | 13. Islands without LED | 0/TBD | Not started | - |
 | 14. CI Green on Main | 0/TBD | Not started | - |
