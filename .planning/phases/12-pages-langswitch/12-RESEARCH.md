@@ -631,11 +631,9 @@ Source: `src/components/tools/ToolIsland.test.ts` (readFileSync + string include
 | A3 | Isolated `astro build` (HEAD ToolShell + HEAD original-ten) can prove chrome HTML without Phase 13 | Validation | If isolation is too costly, rg + Vitest is the phase gate; Phase 14 owns green overlay-free build |
 | A4 | Static hosts will serve EN `404.html` for `/zh/*` misses | Pitfall 6 | Locked 404 implementation still correct for `astro preview` pathname if ever SSR |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-### RESOLVED
-
-None.
+None — ToolCard locale wiring, FaqList heading strip on both EN and ZH `[slug].astro`, and canonical via `switchLocalePath` are planner-locked from CONTEXT + this research. No remaining user decisions.
 
 ## Environment Availability
 
