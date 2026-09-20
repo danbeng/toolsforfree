@@ -62,14 +62,17 @@ Archive: `.planning/milestones/v1.1-ROADMAP.md`
 **Depends on**: Phase 10 (v1.1 complete)
 **Requirements**: KERN-01, KERN-02, KERN-03, KERN-04
 **Success Criteria** (what must be TRUE):
+
   1. `locales.ts` exports `LOCALES`, `Locale`, and `LOCALE_META` with hreflang, htmlLang, and nativeLabel for EN and ZH
   2. `localizedPath`, `switchLocalePath`, and `localeFromPathname` produce EN unprefixed URLs, ZH `/zh/` URLs, and trailing slashes
   3. Tool islands can obtain `copy` / `tooLarge` / `err()` from `useToolUi` for a given locale
   4. EN and ZH chrome keys exist for home, nav Tools/Blog/About, footer, 404, langSwitch, howTo, faq, localNote, and copy/copied; `Locale` is sourced from `locales.ts`
-**Plans:** 1 plan
+
+**Plans:** 1/1 plans executed
 
 Plans:
-- [ ] 11-01-PLAN.md — Locales, path helpers, ui.ts chrome, and useToolUi kernel
+
+- [x] 11-01-PLAN.md — Locales, path helpers, ui.ts chrome, and useToolUi kernel
 
 ### Phase 12: Pages + LangSwitch
 
@@ -77,11 +80,13 @@ Plans:
 **Depends on**: Phase 11
 **Requirements**: PAGE-01, PAGE-02, PAGE-03, PAGE-04, PAGE-05
 **Success Criteria** (what must be TRUE):
+
   1. Header mounts `LangSwitch.astro` (without popping `stash@{0}` Header); visitor can jump to the EN or ZH equivalent of the current URL
   2. Header Tools/Blog/About links use `localizedPath` and stay on the page locale
   3. Visitor can open committed ZH routes: home, tools index, each tool `[slug]`, about, blog, privacy, and terms
   4. EN pages pass `locale` to `BaseLayout`; Footer, RelatedTools, 404, content `locale` frontmatter, and sitemap i18n align with locale
   5. `BaseLayout` sets `<html lang>` from locale and passes locale to Header and Footer
+
 **Plans**: TBD
 **UI hint**: yes
 
@@ -91,10 +96,12 @@ Plans:
 **Depends on**: Phase 11
 **Requirements**: ISLE-01, ISLE-02, ISLE-03, ISLE-04
 **Success Criteria** (what must be TRUE):
+
   1. `ToolShell` accepts `locale` and localizes Copy/Copied via `ui.ts`; committed chrome has no LED / `tool-panel__chrome`
   2. `ToolIsland` passes `locale` to all 18 islands (not only the later eight)
   3. The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
   4. Completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
+
 **Plans**: TBD
 **UI hint**: yes
 
@@ -104,9 +111,11 @@ Plans:
 **Depends on**: Phase 12, Phase 13
 **Requirements**: CI-01, CI-02
 **Success Criteria** (what must be TRUE):
+
   1. `.github/workflows/ci.yml` exists and runs Node 20, `npm ci`, `npm test`, then `astro build` (workflow file only; no remote, no `gh repo create`)
   2. On `main` without overlay isolation, `npm test` and `astro build` pass
   3. LED `ToolShell`, `tool-panel__chrome`, and `src/lib/crontab.ts` remain uncommitted; `SITE_ORIGIN` is unchanged; no new tools
+
 **Plans**: TBD
 
 ## Progress
@@ -118,7 +127,7 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 11. i18n Kernel | 0/1 | Not started | - |
+| 11. i18n Kernel | 1/1 | In Progress|  |
 | 12. Pages + LangSwitch | 0/TBD | Not started | - |
 | 13. Islands without LED | 0/TBD | Not started | - |
 | 14. CI Green on Main | 0/TBD | Not started | - |

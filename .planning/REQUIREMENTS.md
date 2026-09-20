@@ -9,10 +9,10 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Kernel
 
-- [ ] **KERN-01**: `src/i18n/locales.ts` exports `LOCALES`, `Locale`, and `LOCALE_META` (hreflang / htmlLang / nativeLabel)
-- [ ] **KERN-02**: `src/i18n/path.ts` provides `localizedPath`, `switchLocalePath`, and `localeFromPathname` (EN unprefixed, ZH `/zh/`, trailing slash)
-- [ ] **KERN-03**: `src/i18n/useToolUi.ts` provides `copy` / `tooLarge` / `err()` for tool islands
-- [ ] **KERN-04**: `ui.ts` has EN+ZH chrome keys (home, nav Tools/Blog/About, footer, 404, langSwitch, howTo, faq, localNote, copy/copied); `Locale` is sourced from `locales.ts`
+- [x] **KERN-01**: `src/i18n/locales.ts` exports `LOCALES`, `Locale`, and `LOCALE_META` (hreflang / htmlLang / nativeLabel)
+- [x] **KERN-02**: `src/i18n/path.ts` provides `localizedPath`, `switchLocalePath`, and `localeFromPathname` (EN unprefixed, ZH `/zh/`, trailing slash)
+- [x] **KERN-03**: `src/i18n/useToolUi.ts` provides `copy` / `tooLarge` / `err()` for tool islands
+- [x] **KERN-04**: `ui.ts` has EN+ZH chrome keys (home, nav Tools/Blog/About, footer, 404, langSwitch, howTo, faq, localNote, copy/copied); `Locale` is sourced from `locales.ts`
 
 ### Pages
 
@@ -62,10 +62,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| KERN-01 | Phase 11 | Pending |
-| KERN-02 | Phase 11 | Pending |
-| KERN-03 | Phase 11 | Pending |
-| KERN-04 | Phase 11 | Pending |
+| KERN-01 | Phase 11 | Complete |
+| KERN-02 | Phase 11 | Complete |
+| KERN-03 | Phase 11 | Complete |
+| KERN-04 | Phase 11 | Complete |
 | PAGE-01 | Phase 12 | Pending |
 | PAGE-02 | Phase 12 | Pending |
 | PAGE-03 | Phase 12 | Pending |
