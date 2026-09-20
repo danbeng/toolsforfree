@@ -705,17 +705,13 @@ Do not import `preact/hooks`. Do not set `environment: 'jsdom'`.
 
 A3 is the only key-shape risk. Locked text: "Top-level keys on `ui.en` / `ui.zh` (`homeLede`, `langSwitch`, `navPrivacy`, …)". Use **top-level** `navTools` / `navBlog` / `navAbout`, not `nav.tools`. Nested `nav` stays `{ menu, close }` only.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`fill` helper API**
-   - What we know: dirty about/privacy/terms import `{ fill, t }` from `ui`.
-   - What's unclear: exact placeholder tokens inside the not-yet-written chrome strings.
-   - Recommendation: implement `fill` as `{token}` replacement; write chrome strings that use `{name}` and `{email}`; cover with one unit test next to locales/path (can live in `ui` via `errors.test.ts` style or a tiny `ui` assert inside `useToolUi.test.ts`). Do not block planning.
+   - RESOLVED: implement `fill` as `{token}` replacement (`{name}` / `{email}`); write chrome strings that use those tokens; cover with one unit test (in `useToolUi.test.ts` or colocated `ui` assert). Planned in `11-01-PLAN.md` Task 2.
 
 2. **Dirty-tree typecheck vs HEAD typecheck**
-   - What we know: HEAD ToolShell has no `locale` prop; dirty ToolShell does. Completeness tests read files, they do not compile islands.
-   - What's unclear: whether executor runs `astro check` / `tsc` on the dirty tree.
-   - Recommendation: kernel files must typecheck in isolation. Do not "fix" dirty ToolShell. Full `astro build` on dirty main is Phase 14.
+   - RESOLVED: kernel files must typecheck in isolation. Do not "fix" dirty ToolShell. Do not run `astro check` on the dirty tree this phase. Full `astro build` without overlay isolation is Phase 14.
 
 ## Environment Availability
 
