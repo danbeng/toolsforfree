@@ -1,6 +1,6 @@
 ---
 phase: 11-i18n-kernel
-reviewed: 2026-09-20T05:01:21Z
+reviewed: 2026-09-20T05:18:07Z
 depth: standard
 files_reviewed: 7
 files_reviewed_list:
@@ -13,53 +13,28 @@ files_reviewed_list:
   - src/i18n/ui.ts
 findings:
   critical: 0
-  warning: 1
+  warning: 0
   info: 1
-  total: 2
+  total: 1
 status: issues_found
 ---
 
 # Phase 11: Code Review Report
 
-**Reviewed:** 2026-09-20T05:01:21Z
+**Reviewed:** 2026-09-20T05:18:07Z
 **Depth:** standard
 **Files Reviewed:** 7
 **Status:** issues_found
 
 ## Summary
 
-Reviewed the i18n kernel (`locales.ts`, `path.ts`, `ui.ts`, `useToolUi.ts` and colocated tests) against KERN-01–04 and T-11-01–04.
+Re-review after WR-01 fix (`796a8c8`, `fix(11): type UiDict from both locales`). Scope is the i18n kernel (`locales.ts`, `path.ts`, `ui.ts`, `useToolUi.ts` and colocated tests) against KERN-01–04 and T-11-01–04.
 
-Path helpers collapse leading slashes and strip schemes, so results never start with `//`. `useToolUi.err('')` / `err(null)` return `null` before `localizeError`. `Locale` is sourced from `locales.ts` and re-exported from `ui.ts` with no `locales ↔ ui` cycle. `fill()` only reads `{token}` slots from a string record. Required chrome keys, PascalCase `categories`, and original-ten `tools[slug]` entries are present on both locales.
+**WR-01 is fixed.** `export type UiDict = (typeof ui)[Locale]` is in place. `t()` returns `ui[locale]` with no `as UiDict` cast. `npx tsc --noEmit` reports no errors under `src/i18n/`. Leaf strings are the EN|ZH union, not English-only literals.
 
-One type-contract defect fails `tsc --noEmit` on `ui.ts` itself.
+Path helpers still collapse leading slashes and strip schemes, so results never start with `//`. `useToolUi.err('')` / `err(null)` return `null` before `localizeError`. `Locale` is sourced from `locales.ts` and re-exported from `ui.ts` with no `locales ↔ ui` cycle. `fill()` only reads `{token}` slots from a string record. Required chrome keys, PascalCase `categories`, and original-ten `tools[slug]` entries are present on both locales.
 
-## Warnings
-
-### WR-01: `t()` return type is EN-only literals; `tsc` fails under `as const`
-
-**File:** `src/i18n/ui.ts:454-458`
-**Issue:** `export type UiDict = (typeof ui)['en']` captures English string literal types (`langSwitch: 'Language'`, …). `ui` is `as const`, so `ui[locale]` is the EN|ZH union and is not assignable to that EN-only `UiDict`. `npx tsc --noEmit` reports:
-
-```
-src/i18n/ui.ts(457,3): error TS2322: Type '{ …en… } | { …zh… }' is not assignable to type UiDict.
-  Types of property 'langSwitch' are incompatible.
-    Type '"语言"' is not assignable to type '"Language"'.
-```
-
-Runtime `t('zh')` is correct, but the public contract lies (callers type `copy.langSwitch` as `'Language'` even for `zh`) and the kernel file does not typecheck. Phase 12/13 consumers inherit a red `tsc` baseline.
-
-**Fix:** Infer `UiDict` from both locales so `return ui[locale]` typechecks and leaf strings are `string` (or the EN|ZH union), not EN literals:
-
-```ts
-export type UiDict = (typeof ui)[Locale];
-
-export function t(locale: Locale): UiDict {
-  return ui[locale];
-}
-```
-
-Do not silence this with `as UiDict` — that keeps the type lie.
+No new critical or warning defects. The previous info finding (IN-01) is unchanged.
 
 ## Info
 
@@ -75,6 +50,6 @@ expect(switchLocalePath('//evil.com', 'en')).toBe('/evil.com/');
 
 ---
 
-_Reviewed: 2026-09-20T05:01:21Z_
+_Reviewed: 2026-09-20T05:18:07Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
