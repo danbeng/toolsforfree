@@ -50,7 +50,7 @@ Archive: `.planning/milestones/v1.0-ROADMAP.md`
 Archive: `.planning/milestones/v1.1-ROADMAP.md`
 
 - [x] **Phase 11: i18n Kernel** - Locales, path helpers, useToolUi, and EN+ZH chrome keys (completed 2026-09-20)
-- [ ] **Phase 12: Pages + LangSwitch** - ZH tree, header switcher, localized nav, layout locale, sitemap i18n
+- [x] **Phase 12: Pages + LangSwitch** - ZH tree, header switcher, localized nav, layout locale, sitemap i18n (completed 2026-09-20)
 - [ ] **Phase 13: Islands without LED** - Locale Copy/Copied on all 18 tools; no LED chrome
 - [ ] **Phase 14: CI Green on Main** - ci.yml plus npm test and astro build without overlay isolation
 
@@ -87,7 +87,7 @@ Plans:
   4. EN pages pass `locale` to `BaseLayout`; Footer, RelatedTools, 404, content `locale` frontmatter, and sitemap i18n align with locale
   5. `BaseLayout` sets `<html lang>` from locale and passes locale to Header and Footer
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 
 Plans:
 
@@ -107,8 +107,12 @@ Plans:
   3. The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
   4. Completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
 
-**Plans**: TBD
+**Plans:** 1 plan
 **UI hint**: yes
+
+Plans:
+
+- [ ] 13-01-PLAN.md — No-LED ToolShell locale Copy/Copied, ToolIsland required locale, original-ten land, later-eight ToolShell locale
 
 ### Phase 14: CI Green on Main
 
@@ -133,6 +137,6 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
-| 12. Pages + LangSwitch | 1/1 | In Progress|  |
-| 13. Islands without LED | 0/TBD | Not started | - |
+| 12. Pages + LangSwitch | 1/1 | Complete    | 2026-09-20 |
+| 13. Islands without LED | 0/1 | Not started | - |
 | 14. CI Green on Main | 0/TBD | Not started | - |
