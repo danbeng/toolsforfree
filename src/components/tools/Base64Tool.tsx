@@ -1,17 +1,21 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { decodeBase64, encodeBase64 } from '../../lib/base64';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
+import type { Locale } from '../../i18n/locales';
+import { useToolUi } from '../../i18n/useToolUi';
 
 type Mode = 'encode' | 'decode';
 
-export default function Base64Tool() {
+export default function Base64Tool({ locale }: { locale: Locale }) {
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('encode');
+  const { copy, tooLarge, err } = useToolUi(locale);
+  const labels = copy.tools.base64;
 
   const result = useMemo(() => {
     if (isTooLarge(input)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '' };
+      return { error: tooLarge, output: '' };
     }
     if (!input.trim()) {
       return { error: null, output: '' };
@@ -20,13 +24,13 @@ export default function Base64Tool() {
       return { error: null, output: encodeBase64(input) };
     }
     const r = decodeBase64(input);
-    return { error: r.ok ? null : r.error || null, output: r.ok ? r.text : '' };
-  }, [input, mode]);
+    return { error: r.ok ? null : err(r.error || null), output: r.ok ? r.text : '' };
+  }, [input, mode, tooLarge, err]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <fieldset>
-        <legend>Mode</legend>
+        <legend>{labels.mode}</legend>
         <label>
           <input
             type="radio"
@@ -34,7 +38,7 @@ export default function Base64Tool() {
             checked={mode === 'encode'}
             onChange={() => setMode('encode')}
           />
-          Encode
+          {labels.encode}
         </label>
         <label>
           <input
@@ -43,11 +47,11 @@ export default function Base64Tool() {
             checked={mode === 'decode'}
             onChange={() => setMode('decode')}
           />
-          Decode
+          {labels.decode}
         </label>
       </fieldset>
       <label>
-        {mode === 'encode' ? 'Text' : 'Base64'}
+        {mode === 'encode' ? labels.text : labels.base64}
         <textarea
           rows={12}
           value={input}

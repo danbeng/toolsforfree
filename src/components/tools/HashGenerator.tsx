@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { hashText, type HashAlg } from '../../lib/hash';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
+import type { Locale } from '../../i18n/locales';
+import { useToolUi } from '../../i18n/useToolUi';
 
-export default function HashGenerator() {
+export default function HashGenerator({ locale }: { locale: Locale }) {
   const [input, setInput] = useState('');
   const [alg, setAlg] = useState<HashAlg>('SHA-256');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { copy, tooLarge } = useToolUi(locale);
+  const labels = copy.tools['hash-generator'];
 
   useEffect(() => {
     if (isTooLarge(input)) {
-      setError(INPUT_TOO_LARGE_MSG);
+      setError(tooLarge);
       setOutput('');
       return;
     }
@@ -23,12 +27,12 @@ export default function HashGenerator() {
     return () => {
       cancelled = true;
     };
-  }, [input, alg]);
+  }, [input, alg, tooLarge]);
 
   return (
-    <ToolShell error={error} output={output}>
+    <ToolShell error={error} output={output} locale={locale}>
       <label>
-        Algorithm
+        {labels.algorithm}
         <select
           value={alg}
           onChange={(e) => setAlg((e.target as HTMLSelectElement).value as HashAlg)}
@@ -38,7 +42,7 @@ export default function HashGenerator() {
         </select>
       </label>
       <label>
-        Text
+        {labels.text}
         <textarea
           rows={12}
           value={input}

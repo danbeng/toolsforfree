@@ -1,37 +1,41 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { testRegex, type RegexMatch } from '../../lib/regex';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
+import type { Locale } from '../../i18n/locales';
+import { useToolUi } from '../../i18n/useToolUi';
 
-function formatMatch(m: RegexMatch): string {
-  const line = `${m.index}: ${m.text}`;
-  if (!m.groups.length) return line;
-  return `${line}\ngroups: ${m.groups.join(', ')}`;
-}
-
-export default function RegexTester() {
+export default function RegexTester({ locale }: { locale: Locale }) {
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [text, setText] = useState('');
+  const { copy, tooLarge, err } = useToolUi(locale);
+  const labels = copy.tools['regex-tester'];
 
   const result = useMemo(() => {
     if (isTooLarge(pattern) || isTooLarge(text)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '' };
+      return { error: tooLarge, output: '' };
     }
     const r = testRegex(pattern, flags, text);
     if (!r.ok) {
-      return { error: r.error || null, output: '' };
+      return { error: err(r.error || null), output: '' };
     }
     return {
       error: null,
-      output: r.matches.map(formatMatch).join('\n'),
+      output: r.matches
+        .map((m: RegexMatch) => {
+          const line = `${m.index}: ${m.text}`;
+          if (!m.groups.length) return line;
+          return `${line}\n${labels.groups}: ${m.groups.join(', ')}`;
+        })
+        .join('\n'),
     };
-  }, [pattern, flags, text]);
+  }, [pattern, flags, text, tooLarge, err, labels.groups]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <label>
-        Pattern
+        {labels.pattern}
         <input
           type="text"
           value={pattern}
@@ -40,7 +44,7 @@ export default function RegexTester() {
         />
       </label>
       <label>
-        Flags
+        {labels.flags}
         <input
           type="text"
           value={flags}
@@ -49,7 +53,7 @@ export default function RegexTester() {
         />
       </label>
       <label>
-        Test string
+        {labels.testString}
         <textarea
           rows={12}
           value={text}

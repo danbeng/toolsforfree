@@ -1,26 +1,30 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { explainCron } from '../../lib/crontab';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
+import type { Locale } from '../../i18n/locales';
+import { useToolUi } from '../../i18n/useToolUi';
 
-export default function CrontabExplainer() {
+export default function CrontabExplainer({ locale }: { locale: Locale }) {
   const [input, setInput] = useState('');
+  const { copy, tooLarge, err } = useToolUi(locale);
+  const labels = copy.tools['crontab-explainer'];
 
   const result = useMemo(() => {
     if (isTooLarge(input)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '' };
+      return { error: tooLarge, output: '' };
     }
-    const r = explainCron(input);
+    const r = explainCron(input, locale);
     if (!r.ok) {
-      return { error: r.error || null, output: '' };
+      return { error: err(r.error || null), output: '' };
     }
     return { error: null, output: r.lines.join('\n') };
-  }, [input]);
+  }, [input, locale, tooLarge, err]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <label>
-        Five-field cron
+        {labels.fieldLabel}
         <textarea
           rows={4}
           value={input}

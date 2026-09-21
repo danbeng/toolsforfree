@@ -1,14 +1,16 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { parseHex, parseHsl, parseRgb, type ColorResult } from '../../lib/color';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
+import type { Locale } from '../../i18n/locales';
+import { useToolUi } from '../../i18n/useToolUi';
 
 function formatColor(r: Extract<ColorResult, { ok: true }>): string {
   const { hex, rgb, hsl } = r.value;
   return `${hex}\nrgb(${rgb.r}, ${rgb.g}, ${rgb.b})\nhsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
 }
 
-export default function ColorConverter() {
+export default function ColorConverter({ locale }: { locale: Locale }) {
   const [hex, setHex] = useState('');
   const [r, setR] = useState('');
   const [g, setG] = useState('');
@@ -17,21 +19,23 @@ export default function ColorConverter() {
   const [s, setS] = useState('');
   const [l, setL] = useState('');
   const [source, setSource] = useState<'hex' | 'rgb' | 'hsl'>('hex');
+  const { copy, tooLarge, err } = useToolUi(locale);
+  const labels = copy.tools['color-converter'];
 
   const result = useMemo(() => {
     const fields = [hex, r, g, b, h, s, l];
     if (fields.some(isTooLarge)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '' };
+      return { error: tooLarge, output: '' };
     }
     let parsed: ColorResult;
     if (source === 'hex') parsed = parseHex(hex);
     else if (source === 'rgb') parsed = parseRgb(r, g, b);
     else parsed = parseHsl(h, s, l);
     if (!parsed.ok) {
-      return { error: parsed.error || null, output: '' };
+      return { error: err(parsed.error || null), output: '' };
     }
     return { error: null, output: formatColor(parsed) };
-  }, [hex, r, g, b, h, s, l, source]);
+  }, [hex, r, g, b, h, s, l, source, tooLarge, err]);
 
   function apply(parsed: ColorResult) {
     if (!parsed.ok) return;
@@ -68,9 +72,9 @@ export default function ColorConverter() {
   }
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <label>
-        Hex
+        {labels.hex}
         <input
           type="text"
           value={hex}
@@ -80,7 +84,7 @@ export default function ColorConverter() {
         />
       </label>
       <fieldset>
-        <legend>RGB</legend>
+        <legend>{labels.rgb}</legend>
         <label>
           R
           <input
@@ -113,7 +117,7 @@ export default function ColorConverter() {
         </label>
       </fieldset>
       <fieldset>
-        <legend>HSL</legend>
+        <legend>{labels.hsl}</legend>
         <label>
           H
           <input
