@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { generateLorem, MAX_PARAGRAPHS, MAX_WORDS } from '../../lib/lorem';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
 import { t, type Locale } from '../../i18n/ui';
 import { localizeError } from '../../i18n/errors';
 
@@ -29,7 +29,7 @@ export default function LoremIpsum({ locale }: { locale: Locale }) {
       return;
     }
     if (isTooLarge(r.text)) {
-      setError(INPUT_TOO_LARGE_MSG);
+      setError(copy.tooLarge);
       setOutput('');
       return;
     }

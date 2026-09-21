@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { formatSql, type SqlDialect } from '../../lib/sql';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
 import { t, type Locale } from '../../i18n/ui';
 import { localizeError } from '../../i18n/errors';
 
@@ -21,14 +21,14 @@ export default function SqlFormatter({ locale }: { locale: Locale }) {
   const labels = copy.tools['sql-formatter'];
   const result = useMemo(() => {
     if (isTooLarge(input)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '' };
+      return { error: copy.tooLarge, output: '' };
     }
     const r = formatSql(input, dialect);
     return {
       error: r.ok ? null : localizeError(locale, r.error || null),
       output: r.ok ? r.formatted : '',
     };
-  }, [input, dialect, locale]);
+  }, [input, dialect, locale, copy.tooLarge]);
 
   return (
     <ToolShell error={result.error} output={result.output} locale={locale}>

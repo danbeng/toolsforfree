@@ -14,7 +14,7 @@ export default function CrontabExplainer({ locale }: { locale: Locale }) {
     if (isTooLarge(input)) {
       return { error: tooLarge, output: '' };
     }
-    const r = explainCron(input, locale);
+    const r = explainCron(input);
     if (!r.ok) {
       return { error: err(r.error || null), output: '' };
     }

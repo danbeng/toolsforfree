@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { countText } from '../../lib/counter';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
 import { t, type Locale } from '../../i18n/ui';
 
 export default function WordCounter({ locale }: { locale: Locale }) {
@@ -10,7 +10,7 @@ export default function WordCounter({ locale }: { locale: Locale }) {
   const labels = copy.tools['word-counter'];
   const result = useMemo(() => {
     if (isTooLarge(input)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '', metrics: null };
+      return { error: copy.tooLarge, output: '', metrics: null };
     }
     const r = countText(input, locale === 'zh' ? 'zh-Hans' : 'en');
     const output = [
@@ -22,7 +22,7 @@ export default function WordCounter({ locale }: { locale: Locale }) {
       `${labels.paragraphs}: ${r.paragraphs}`,
     ].join('\n');
     return { error: null, output, metrics: r };
-  }, [input, locale, labels]);
+  }, [input, locale, labels, copy.tooLarge]);
 
   const metrics = result.metrics;
 

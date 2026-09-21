@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ToolShell } from '../ToolShell';
 import { convertCases, type CaseValue } from '../../lib/cases';
-import { INPUT_TOO_LARGE_MSG, isTooLarge } from '../../lib/limits';
+import { isTooLarge } from '../../lib/limits';
 import { t, type Locale } from '../../i18n/ui';
 
 const ROW_KEYS = [
@@ -34,14 +34,14 @@ export default function CaseConverter({ locale }: { locale: Locale }) {
 
   const result = useMemo(() => {
     if (isTooLarge(input)) {
-      return { error: INPUT_TOO_LARGE_MSG, output: '', value: null as CaseValue | null };
+      return { error: copy.tooLarge, output: '', value: null as CaseValue | null };
     }
     const r = convertCases(input);
     if (!r.ok) {
       return { error: r.error || null, output: '', value: null as CaseValue | null };
     }
     return { error: null, output: joinCases(r.value), value: r.value };
-  }, [input]);
+  }, [input, copy.tooLarge]);
 
   return (
     <ToolShell error={result.error} output={result.output} locale={locale}>
@@ -60,7 +60,7 @@ export default function CaseConverter({ locale }: { locale: Locale }) {
               {labels[key]}
               <input type="text" value={result.value![key]} readOnly spellcheck={false} />
               <button type="button" onClick={() => onCopyRow(key, result.value![key])}>
-                {copiedKey === key ? 'Copied' : 'Copy'}
+                {copiedKey === key ? copy.copied : copy.copy}
               </button>
             </label>
           ))
