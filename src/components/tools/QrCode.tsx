@@ -130,7 +130,7 @@ export default function QrCode({ locale }: { locale: Locale }) {
   }
 
   return (
-    <ToolShell error={decodeError ?? generate.error} output={payload}>
+    <ToolShell error={decodeError ?? generate.error} output={payload} locale={locale}>
       <h2>{labels.generateSection}</h2>
       <div class="tool-grid split">
         <div>

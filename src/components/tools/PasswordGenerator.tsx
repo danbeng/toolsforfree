@@ -43,7 +43,7 @@ export default function PasswordGenerator({ locale }: { locale: Locale }) {
   }, []);
 
   return (
-    <ToolShell error={error} output={output}>
+    <ToolShell error={error} output={output} locale={locale}>
       <button type="button" onClick={onGenerate}>
         {labels.generate}
       </button>

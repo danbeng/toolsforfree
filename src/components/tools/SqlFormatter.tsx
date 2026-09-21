@@ -31,7 +31,7 @@ export default function SqlFormatter({ locale }: { locale: Locale }) {
   }, [input, dialect, locale]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <label>
         {labels.dialect}
         <select

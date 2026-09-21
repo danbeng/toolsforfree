@@ -26,7 +26,7 @@ export default function MarkdownPreview({ locale }: { locale: Locale }) {
   }, [input, locale]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       <div class="tool-grid split">
         <label>
           {labels.markdown}

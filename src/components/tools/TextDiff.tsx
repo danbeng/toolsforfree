@@ -63,7 +63,7 @@ export default function TextDiff({ locale }: { locale: Locale }) {
   }, [original, changed, ignoreWhitespace, labels]);
 
   return (
-    <ToolShell error={result.error} output={result.output}>
+    <ToolShell error={result.error} output={result.output} locale={locale}>
       {result.view !== 'idle' && result.diff ? (
         <div class="tool-grid card-grid">
           <div class="tool-card">

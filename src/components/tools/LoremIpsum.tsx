@@ -38,7 +38,7 @@ export default function LoremIpsum({ locale }: { locale: Locale }) {
   }
 
   return (
-    <ToolShell error={error} output={output}>
+    <ToolShell error={error} output={output} locale={locale}>
       <label>
         {labels.mode}
         <select
