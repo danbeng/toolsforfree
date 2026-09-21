@@ -24,10 +24,10 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Islands
 
-- [ ] **ISLE-01**: `ToolShell` accepts `locale` and localizes Copy/Copied via `ui.ts`; **no** LED / `tool-panel__chrome`
-- [ ] **ISLE-02**: `ToolIsland` passes `locale` to all 18 islands (currently only the later eight)
-- [ ] **ISLE-03**: The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
-- [ ] **ISLE-04**: Existing completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
+- [x] **ISLE-01**: `ToolShell` accepts `locale` and localizes Copy/Copied via `ui.ts`; **no** LED / `tool-panel__chrome`
+- [x] **ISLE-02**: `ToolIsland` passes `locale` to all 18 islands (currently only the later eight)
+- [x] **ISLE-03**: The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
+- [x] **ISLE-04**: Existing completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
 
 ### CI
 
@@ -71,10 +71,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PAGE-03 | Phase 12 | Complete |
 | PAGE-04 | Phase 12 | Complete |
 | PAGE-05 | Phase 12 | Complete |
-| ISLE-01 | Phase 13 | Pending |
-| ISLE-02 | Phase 13 | Pending |
-| ISLE-03 | Phase 13 | Pending |
-| ISLE-04 | Phase 13 | Pending |
+| ISLE-01 | Phase 13 | Complete |
+| ISLE-02 | Phase 13 | Complete |
+| ISLE-03 | Phase 13 | Complete |
+| ISLE-04 | Phase 13 | Complete |
 | CI-01 | Phase 14 | Pending |
 | CI-02 | Phase 14 | Pending |
 

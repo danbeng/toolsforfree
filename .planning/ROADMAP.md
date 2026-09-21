@@ -107,12 +107,12 @@ Plans:
   3. The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
   4. Completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans executed
 **UI hint**: yes
 
 Plans:
 
-- [ ] 13-01-PLAN.md — No-LED ToolShell locale Copy/Copied, ToolIsland required locale, original-ten land, later-eight ToolShell locale
+- [x] 13-01-PLAN.md — No-LED ToolShell locale Copy/Copied, ToolIsland required locale, original-ten land, later-eight ToolShell locale
 
 ### Phase 14: CI Green on Main
 
@@ -138,5 +138,5 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 |-------|----------------|--------|-----------|
 | 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
 | 12. Pages + LangSwitch | 1/1 | Complete    | 2026-09-20 |
-| 13. Islands without LED | 0/1 | Not started | - |
+| 13. Islands without LED | 1/1 | In Progress|  |
 | 14. CI Green on Main | 0/TBD | Not started | - |

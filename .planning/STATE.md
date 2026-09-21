@@ -4,18 +4,18 @@ milestone: v1.2
 milestone_name: Bilingual Land
 current_phase: 13
 current_phase_name: Islands without LED
-current_plan: Not started
-status: executing
-stopped_at: Phase 12 complete, ready to plan Phase 13
-last_updated: "2026-09-20T15:07:35.528Z"
+current_plan: 1
+status: verifying
+stopped_at: Completed 13-01-PLAN.md
+last_updated: "2026-09-21T09:45:25.450Z"
 last_activity: 2026-09-20
-last_activity_desc: Phase 12 complete, transitioned to Phase 13
-state_head: 0f6f2d91f66ef2642f6b49c55c4557403fbe296f
+last_activity_desc: Phase 13 execution started
+state_head: aff772d44e9889fb54218f1b8cc5b468b7827570
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-20)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 12 — Pages + LangSwitch
+**Current focus:** Phase 13 — Islands without LED
 
 ## Current Position
 
-Phase: 13 (Islands without LED) — READY TO EXECUTE
-Current Plan: Not started
+Phase: 13 (Islands without LED) — EXECUTING
+Current Plan: 1
 Total Plans in Phase: 1
 Plan: 1 of 1
-Status: Ready to execute
-Last activity: 2026-09-20 — Phase 12 complete, transitioned to Phase 13
+Status: Phase complete — ready for verification
+Last activity: 2026-09-20 — Phase 13 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -68,6 +68,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P01 | 9 min | 3 tasks | 2 files |
 | Phase 11 P01 | 17min | 3 tasks | 7 files |
 | Phase 12-pages-langswitch P01 | 8 min | 3 tasks | 35 files |
+| Phase 13-islands-without-led P01 | 5min | 3 tasks | 20 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,10 @@ Full log in PROJECT.md Key Decisions. v1.2 lands ZH + LangSwitch + CI file; LED 
 - [Phase 12]: FaqList heading stripped on both EN and ZH slug pages; FaqList.astro untouched
 - [Phase 12]: ToolCard locale is optional default en so EN catalog cards keep working
 - [Phase 12]: hreflang trio is en, zh-Hans, x-default pointing at EN
+- [Phase 13]: ToolShell is HEAD layout plus required locale; overlay LED chrome was not restaged
+- [Phase 13]: Original ten landed dirty; UuidGenerator keeps t(locale); the other nine use useToolUi
+- [Phase 13]: Later eight keep t(locale)/localizeError; only ToolShell opening tags received locale={locale}
+- [Phase 13]: src/lib/crontab.ts stayed unstaged; stash@{0} and stash@{1} were not popped
 
 ### Pending Todos
 
@@ -104,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-20T11:54:10.615Z
-Stopped at: Phase 12 complete, ready to plan Phase 13
+Last session: 2026-09-21T09:45:25.357Z
+Stopped at: Completed 13-01-PLAN.md
 Resume file: None
