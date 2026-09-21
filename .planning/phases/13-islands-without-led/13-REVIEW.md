@@ -45,6 +45,13 @@ Reviewed the no-LED ToolShell, ToolIsland locale contract, original-ten islands,
 
 Defects are in ZH error/chrome parity on later-eight islands that pass the English `INPUT_TOO_LARGE_MSG` through, hardcoded English Copy/Copied on CaseConverter row buttons, and CrontabExplainer calling a two-argument `explainCron` that the committed lib does not accept.
 
+## Fixes applied (2026-09-21, `e8a8516`)
+
+- WR-01: WordCounter, CaseConverter, LoremIpsum, SqlFormatter now use `copy.tooLarge`.
+- WR-02: CaseConverter row buttons use `copy.copy` / `copy.copied`.
+- WR-03: CrontabExplainer calls `explainCron(input)` against the committed one-arg signature. Dirty two-arg `crontab.ts` remains unstaged (fence).
+- IN-01 / IN-02 left as info.
+
 ## Narrative Findings (AI reviewer)
 
 ## Warnings
