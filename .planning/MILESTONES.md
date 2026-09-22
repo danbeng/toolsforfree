@@ -1,5 +1,21 @@
 # Milestones
 
+## v1.2 Bilingual Land (Shipped: 2026-09-22)
+
+**Phases completed:** 4 phases, 4 plans, 11 tasks
+
+**Key accomplishments:**
+
+- Header LangSwitch plus required-locale BaseLayout, seven ZH routes, EN locale pass, and sitemap i18n (en / zh-Hans)
+- No-LED ToolShell with required locale Copy/Copied, ToolIsland locale on all 18 islands, original-ten useToolUi land, later-eight ToolShell locale={locale}
+- Node 22 GitHub Actions file that runs npm ci, npm test, and astro build, proved locally while crontab.ts stays unstaged
+
+**Closeout type:** verified_closeout
+
+**Known verification overrides:** 0 newly acknowledged, 0 carried forward. Node 22 replaced the original CI-01 Node 20 pin because Astro 7.3.2 requires `>=22.12.0` (user override 2026-09-22).
+
+---
+
 ## v1.1 Frontend Polish (Shipped: 2026-09-19)
 
 **Delivered:** Visual-only polish — FOUC-safe light/dark theme, accessible mobile hamburger, 3-column catalog grid with spacing tokens, and button/panel/FAQ chrome — without touching tool logic or adding packages.

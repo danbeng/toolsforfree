@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish. v1.2 lands the uncommitted ZH tree and LangSwitch so bilingual pages actually build on `main`, plus a GitHub Actions workflow file.
+Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish. v1.2 shipped the ZH tree, LangSwitch, locale tool chrome, and a GitHub Actions workflow file.
 
 ## Core Value
 
@@ -10,7 +10,7 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 
 ## Current State
 
-**Shipped:** v1.0 More Tools (2026-09-14) + v1.1 Frontend Polish (2026-09-19)
+**Shipped:** v1.0 More Tools (2026-09-14) + v1.1 Frontend Polish (2026-09-19) + v1.2 Bilingual Land (2026-09-22)
 
 - 18 catalog tools, featured set of 6, EN unprefixed + `/zh/` tree
 - Theme: `data-theme` on `<html>`, `ThemeInit.astro` first in `<head>`, static `ThemeToggle`, localStorage only on click
@@ -19,16 +19,11 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Chrome: `.tool-panel` shadow + `--sp-4` padding; `.tool-panel button` invert hover / color-mix active; FAQ native `details`/`summary`
 - Stack unchanged: Astro 7 SSG + Preact islands + custom CSS. No Tailwind, no new npm packages this milestone.
 
-**Known debt:** LED `ToolShell.tsx` and unrelated dirty `src/lib/crontab.ts` stay uncommitted. Do not pop `stash@{0}` or `stash@{1}`. Until v1.2 lands, dirty-main `astro build` still needs overlay isolation.
+**Known debt:** Unrelated dirty `src/lib/crontab.ts` stays uncommitted. Do not pop `stash@{0}` or `stash@{1}`. `SITE_ORIGIN` is still `https://example.com`. No GitHub remote yet — `.github/workflows/ci.yml` is a file only.
 
-## Current Milestone: v1.2 Bilingual Land
+## Next Milestone Goals
 
-**Goal:** A visitor (and CI) can run `npm test` and `astro build` on `main` with the ZH tree and LangSwitch committed — no overlay isolation — and a GitHub Actions workflow file exists for the same two commands.
-
-**Target features:**
-- Land `LangSwitch.astro`, `src/pages/zh/`, and the EN/i18n page wiring required for a green `npm test` + `astro build` on `main`
-- Add `.github/workflows/ci.yml` running `npm test` then `astro build` (workflow file only; no `gh repo create`, no remote)
-- Keep LED `ToolShell.tsx` and `src/lib/crontab.ts` uncommitted; do not pop `stash@{0}` or `stash@{1}`
+Not started. `/gsd-new-milestone` when ready. Candidates already deferred: real domain, GitHub remote, three-state theme, committing locale-aware `crontab.ts`.
 
 ## Requirements
 
