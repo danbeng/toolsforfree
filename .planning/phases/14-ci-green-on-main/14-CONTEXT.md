@@ -14,7 +14,7 @@ A clean `main` checkout, and a workflow file, can run `npm test` then `astro bui
 ## Implementation Decisions
 
 ### Workflow triggers
-- **D-Triggers:** `on: [push, pull_request]` to `main` plus `workflow_dispatch`. No remote, no `gh repo create`, no secrets, no deploy job. Node 20 (`actions/setup-node@v4` with `node-version: 20` and `cache: npm`).
+- **D-Triggers:** `on: [push, pull_request]` to `main` plus `workflow_dispatch`. No remote, no `gh repo create`, no secrets, no deploy job. Node 22 (`actions/setup-node@v4` with `node-version: 22` and `cache: npm`). User override 2026-09-22: Astro 7.3.2 `engines.node` is `>=22.12.0`, so CI-01's original Node 20 pin would fail `astro build` on a runner.
 
 ### CI step scope
 - **D-Steps:** Exactly `npm ci`, `npm test`, `npm run build` (`astro build`). Do not add lint, `astro check`, or extra jobs. Use `npm ci` (lockfile present), not `npm install`.

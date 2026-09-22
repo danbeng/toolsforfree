@@ -51,7 +51,7 @@ Archive: `.planning/milestones/v1.1-ROADMAP.md`
 
 - [x] **Phase 11: i18n Kernel** - Locales, path helpers, useToolUi, and EN+ZH chrome keys (completed 2026-09-20)
 - [x] **Phase 12: Pages + LangSwitch** - ZH tree, header switcher, localized nav, layout locale, sitemap i18n (completed 2026-09-20)
-- [ ] **Phase 13: Islands without LED** - Locale Copy/Copied on all 18 tools; no LED chrome
+- [x] **Phase 13: Islands without LED** - Locale Copy/Copied on all 18 tools; no LED chrome (completed 2026-09-22)
 - [ ] **Phase 14: CI Green on Main** - ci.yml plus npm test and astro build without overlay isolation
 
 ## Phase Details
@@ -107,7 +107,7 @@ Plans:
   3. The original ten islands use locale copy + `useToolUi` (or equivalent) and still wrap the no-LED `ToolShell`
   4. Completeness tests stay green: every catalog slug has EN+ZH markdown and a `ToolIsland` `slug ===` branch
 
-**Plans:** 1/1 plans executed
+**Plans:** 1/1 plans complete
 **UI hint**: yes
 
 Plans:
@@ -121,7 +121,7 @@ Plans:
 **Requirements**: CI-01, CI-02
 **Success Criteria** (what must be TRUE):
 
-  1. `.github/workflows/ci.yml` exists and runs Node 20, `npm ci`, `npm test`, then `astro build` (workflow file only; no remote, no `gh repo create`)
+  1. `.github/workflows/ci.yml` exists and runs Node 22, `npm ci`, `npm test`, then `astro build` (workflow file only; no remote, no `gh repo create`)
   2. On `main` without overlay isolation, `npm test` and `astro build` pass
   3. LED `ToolShell`, `tool-panel__chrome`, and `src/lib/crontab.ts` remain uncommitted; `SITE_ORIGIN` is unchanged; no new tools
 
@@ -138,5 +138,5 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 |-------|----------------|--------|-----------|
 | 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
 | 12. Pages + LangSwitch | 1/1 | Complete    | 2026-09-20 |
-| 13. Islands without LED | 1/1 | In Progress|  |
+| 13. Islands without LED | 1/1 | Complete    | 2026-09-22 |
 | 14. CI Green on Main | 0/TBD | Not started | - |
