@@ -31,8 +31,8 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### CI
 
-- [ ] **CI-01**: `.github/workflows/ci.yml` runs Node 22, `npm ci`, `npm test`, `astro build` (file only; no remote). Node 20 was overridden 2026-09-22 because Astro 7.3.2 requires `>=22.12.0`.
-- [ ] **CI-02**: On `main` without overlay isolation, `npm test` and `astro build` pass
+- [x] **CI-01**: `.github/workflows/ci.yml` runs Node 22, `npm ci`, `npm test`, `astro build` (file only; no remote). Node 20 was overridden 2026-09-22 because Astro 7.3.2 requires `>=22.12.0`.
+- [x] **CI-02**: On `main` without overlay isolation, `npm test` and `astro build` pass
 
 ## Future Requirements
 
@@ -75,8 +75,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ISLE-02 | Phase 13 | Complete |
 | ISLE-03 | Phase 13 | Complete |
 | ISLE-04 | Phase 13 | Complete |
-| CI-01 | Phase 14 | Pending |
-| CI-02 | Phase 14 | Pending |
+| CI-01 | Phase 14 | Complete |
+| CI-02 | Phase 14 | Complete |
 
 **Coverage:**
 

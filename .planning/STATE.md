@@ -4,18 +4,18 @@ milestone: v1.2
 milestone_name: Bilingual Land
 current_phase: 14
 current_phase_name: CI Green on Main
-current_plan: Not started
-status: executing
-stopped_at: Phase 13 complete, ready to plan Phase 14
-last_updated: "2026-09-22T01:05:28.994Z"
+current_plan: 1
+status: verifying
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-09-22T01:12:09.035Z"
 last_activity: 2026-09-22
-last_activity_desc: Phase 13 complete, transitioned to Phase 14
-state_head: 3caba03a7ab72c3f53d81d2aad26ad0b5e7b923d
+last_activity_desc: Phase 14 execution started
+state_head: 82d24716eb498a51c7c33e70aed6eb83a298eafb
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 0
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -25,16 +25,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-20)
 
 **Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 13 — Islands without LED
+**Current focus:** Phase 14 — CI Green on Main
 
 ## Current Position
 
-Phase: 14 (CI Green on Main) — READY TO EXECUTE
-Current Plan: Not started
+Phase: 14 (CI Green on Main) — EXECUTING
+Current Plan: 1
 Total Plans in Phase: 1
 Plan: 1 of 1
-Status: Ready to execute
-Last activity: 2026-09-22 — Phase 13 complete, transitioned to Phase 14
+Status: Phase complete — ready for verification
+Last activity: 2026-09-22 — Phase 14 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -70,6 +70,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P01 | 17min | 3 tasks | 7 files |
 | Phase 12-pages-langswitch P01 | 8 min | 3 tasks | 35 files |
 | Phase 13-islands-without-led P01 | 5min | 3 tasks | 20 files |
+| Phase 14 P01 | 5min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,9 @@ Full log in PROJECT.md Key Decisions. v1.2 lands ZH + LangSwitch + CI file; LED 
 - [Phase 13]: Original ten landed dirty; UuidGenerator keeps t(locale); the other nine use useToolUi
 - [Phase 13]: Later eight keep t(locale)/localizeError; only ToolShell opening tags received locale={locale}
 - [Phase 13]: src/lib/crontab.ts stayed unstaged; stash@{0} and stash@{1} were not popped
+- [Phase 14]: CI pins Node 22 with contents read; steps are npm ci, npm test, npm run build
+- [Phase 14]: git.allow_default_branch_commits enabled so branching_strategy none can commit on main
+- [Phase 14]: Phase 14 left src/lib/crontab.ts unstaged and did not pop stash@{0} or stash@{1}
 
 ### Pending Todos
 
@@ -110,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-21T09:45:25.357Z
-Stopped at: Phase 13 complete, ready to plan Phase 14
+Last session: 2026-09-22T01:12:08.929Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None
