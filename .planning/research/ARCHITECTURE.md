@@ -1,603 +1,393 @@
-# Architecture Research: Visual Polish Milestone
+# Architecture Research
 
-**Domain:** Static Astro 7 + Preact site, CSS variable theming, responsive layout, interactive chrome
-**Researched:** 2026-09-15
+**Domain:** Publishing an already-built Astro 7 static bilingual catalog (no app redesign)
+**Researched:** 2026-09-23
 **Confidence:** HIGH
 
-## System Overview: Visual Polish Integration
+This milestone integrates publish/ship into the existing SSG site. It does not add a server, an API, SSR, or a new framework. The site stays `output: 'static'` (Astro default; `astro.config.mjs` does not set `output`).
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        <head> (blocking inline script)           │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │  ThemeInit.astro  ── reads localStorage / matchMedia ──>  │  │
-│  │  sets document.documentElement.dataset.theme BEFORE paint  │  │
-│  └───────────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────────────────┤
-│                        global.css (CSS custom properties)        │
-│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐    │
-│  │ :root (shared)  │  │ :root[data-    │  │ :root[data-    │    │
-│  │ fonts, radius,  │  │ theme="dark"]  │  │ theme="light"] │    │
-│  │ spacing scale   │  │ dark palette   │  │ light palette  │    │
-│  └────────────────┘  └────────────────┘  └────────────────┘    │
-├─────────────────────────────────────────────────────────────────┤
-│                        Astro Components (static)                 │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │ Header.astro  │  │ Footer.astro │  │ FaqList.astro│          │
-│  │ + ThemeToggle │  │ (unchanged)  │  │ → <details>  │          │
-│  │ + MobileMenu  │  │              │  │              │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-├─────────────────────────────────────────────────────────────────┤
-│                        Preact Islands (client:load)              │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │  ToolShell.tsx  ── inherits CSS vars, no theme logic ──>  │   │
-│  │  All 18 tool .tsx components ── CSS-only polish ──>       │   │
-│  └──────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────┘
+## Standard Architecture
+
+### System Overview
+
+```text
+┌──────────────────────────────────────────────────────────────────┐
+│  User-supplied (never invented in code or docs)                 │
+│  GitHub owner/repo · apex domain · DNS login · host account     │
+├──────────────────────────────────────────────────────────────────┤
+│  Repo (modified files only)                                     │
+│  site.ts origin ──► BaseLayout canonical + hreflang             │
+│  astro.config site ─► sitemap-*.xml + robots.txt.ts             │
+│  404.astro path ──► LangSwitch href + hreflang (baked in HTML)  │
+│  ToolCard / RelatedTools ──► ui.tools[slug] (throws if missing) │
+│  .github/workflows/ci.yml  (already: test + build, no deploy)   │
+├──────────────────────────────────────────────────────────────────┤
+│  Build artifact: dist/  (trailingSlash always → page/index.html)│
+│  dist/404.html already exists (confirmed in this repo)          │
+├──────────────────────────────────────────────────────────────────┤
+│  Outside the app                                                │
+│  git remote + push main + tag v1.2  →  GitHub Actions CI        │
+│  static host reads dist/  →  *.pages.dev / *.netlify.app first  │
+│  DNS CNAME / nameservers  →  custom domain + TLS                │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-## Integration Points
+Nothing in this diagram is a new runtime component inside `src/`. Host, DNS, and GitHub are accounts and config. The only code changes are two small guards plus a paired origin string once the user names a domain.
 
-### Where Visual Features Touch Existing Components
+### Component Responsibilities
 
-| Feature | New Files | Modified Files | Integration Mechanism |
-|---------|-----------|----------------|----------------------|
-| Light/dark theme | `ThemeInit.astro`, `ThemeToggle.astro` | `global.css`, `BaseLayout.astro`, `Header.astro` | CSS custom properties + `data-theme` attribute + blocking `<script>` |
-| Mobile hamburger | `MobileMenu.astro` (or inline in Header) | `Header.astro`, `global.css` | CSS `:checked` pseudo-class, no JS framework |
-| 3-col card grid | none | `global.css` | Single `@media` breakpoint addition |
-| Spacing scale | none | `global.css` | CSS custom properties in `:root` |
-| Button/panel polish | none | `global.css` | Existing selectors, enhanced states |
-| FAQ collapsible | none | `FaqList.astro`, `global.css` | `<details>/<summary>` semantic HTML |
+| Component | Responsibility | Typical implementation in this repo |
+|-----------|----------------|-------------------------------------|
+| `src/data/site.ts` `SITE_ORIGIN` | Absolute origin for layout canonical and hreflang | String constant. Today `https://example.com`. Consumed only by `BaseLayout.astro`. |
+| `astro.config.mjs` `site` | Absolute origin for sitemap and `Astro.site` | Same placeholder. `@astrojs/sitemap` and `src/pages/robots.txt.ts` read this, not `SITE_ORIGIN`. |
+| `BaseLayout.astro` | Bakes canonical + en / zh-Hans / x-default from `path` + `SITE_ORIGIN` | `new URL(switchLocalePath(path, locale), SITE_ORIGIN)`. Does not read `Astro.site`. |
+| `LangSwitch.astro` | Bakes locale `href` from the **request pathname at build**, not from the `path` prop | `switchLocalePath(Astro.url.pathname, loc)`. Header mounts it on every page, including 404. |
+| `src/pages/404.astro` | Only 404 route. Passes `path="/404/"` and `localeFromPathname` | No `src/pages/zh/404.astro`. Built file is `dist/404.html`. |
+| `ToolCard.astro` / `RelatedTools.astro` | Catalog labels from `t(locale).tools[slug]` | Cast hides a missing key; `.name` throws. Registry `tool.name` is no longer used for display. |
+| `.github/workflows/ci.yml` | Prove `npm ci`, `npm test`, `npm run build` on push/PR to `main` | Already written. Does not deploy. Does not run until a remote exists and `main` is pushed. |
+| Static host | Serve `dist/` as files. Map unknown paths to `404.html`. Attach the custom domain. | Not in the repo. No adapter. |
+| DNS | Point the user-owned name at that host | Not in the repo. Apex vs `www` is a DNS-provider constraint, not an Astro one. |
 
-## New vs Modified: Explicit List
+## Recommended Project Structure
 
-### NEW Files (2-3 total)
+Do not add folders for this milestone. Keep the existing tree.
 
-| File | Type | Purpose | Why New |
-|------|------|---------|---------|
-| `src/components/ThemeInit.astro` | Astro (inline script) | Blocking `<script is:inline>` in `<head>` that reads `localStorage.theme` and `matchMedia('(prefers-color-scheme: dark)')`, sets `document.documentElement.dataset.theme` before first paint | Must execute synchronously in `<head>` to prevent FOUC; cannot be a Preact island (too late in lifecycle) |
-| `src/components/ThemeToggle.astro` | Astro (static) | Button with sun/moon SVG icons, inline click handler that toggles `data-theme` + writes `localStorage` | Static Astro component, not Preact island; the button is stateless (CSS handles icon visibility via `data-theme` selector) |
-
-### MODIFIED Files (4-6 total)
-
-| File | Changes | Scope of Change |
-|------|---------|-----------------|
-| `src/styles/global.css` | Split `:root` tokens into light/dark via `data-theme` selectors; add spacing scale vars; add 3-col grid breakpoint; enhance button/panel/FAQ styles | Largest change; affects every visual element |
-| `src/layouts/BaseLayout.astro` | Import + render `ThemeInit` in `<head>` (before `<meta charset>` for earliest execution) | 2-line addition |
-| `src/components/Header.astro` | Import `ThemeToggle.astro`; add hamburger menu markup; restructure `.nav-links` for collapse | Moderate restructure of nav section |
-| `src/components/FaqList.astro` | Change `<dl>/<dt>/<dd>` to `<details>/<summary>/<p>` | Template rewrite, no logic change |
-| `src/i18n/ui.ts` | Add `themeLight`, `themeDark`, `menuToggle` string keys to both `en` and `zh` dictionaries | Small addition, i18n parity |
-| `src/data/site.ts` | No change needed | -- |
-
-### UNTOUCHED Files
-
-| Category | Files | Why |
-|----------|-------|-----|
-| Tool logic | `src/lib/*.ts` | Constraint: visual-only milestone |
-| Tool islands | `src/components/tools/*.tsx` | Tool UIs inherit CSS vars automatically; no component-level changes needed |
-| ToolShell | `src/components/ToolShell.tsx` | Already uses CSS classes; will inherit polish from `global.css` |
-| Tool catalog | `src/data/tools.ts` | No routing changes |
-| Content | `src/content/tools/*.md` | SEO copy unchanged |
-| Pages | `src/pages/**/*.astro` | Pages compose from modified components; no page-level changes |
-| Config | `astro.config.mjs` | No integration changes |
-
-## Recommended Architecture
-
-### Pattern 1: `data-theme` Attribute Theming (Not Class-Based)
-
-**What:** Instead of toggling a `.dark` class on `<html>`, set `document.documentElement.dataset.theme = 'light' | 'dark'`. CSS targets via `:root[data-theme="dark"]` and `:root[data-theme="light"]`.
-
-**When to use:** Always for this project.
-
-**Trade-offs:**
-- Pro: More semantic than a class; avoids specificity fights with utility classes
-- Pro: `dataset.theme` is a clean JS API (`element.dataset.theme = 'light'`)
-- Pro: CSS selectors are equally specific to class-based approach
-- Con: Slightly longer CSS selectors than `.dark` (negligible)
-
-**Why not class-based:** The Astro docs use `.dark` on `<html>`, but this project has no utility CSS framework. The `data-theme` attribute is self-documenting and cannot conflict with any class name.
-
-**CSS structure in global.css:**
-
-```css
-/* ── Shared tokens (theme-independent) ── */
-:root {
-  --mono: "IBM Plex Mono", ...;
-  --sans: "IBM Plex Sans", ...;
-  --display: Syne, ...;
-  --content: 64rem;
-  --measure: 42rem;
-  --radius: 10px;
-  --ease: 180ms ease;
-
-  /* ── Spacing scale (new) ── */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-6: 24px;
-  --sp-8: 32px;
-  --sp-12: 48px;
-}
-
-/* ── Dark theme (default + explicit) ── */
-:root,
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0c1014;
-  --bg-elev: #12181f;
-  --panel: #151c24;
-  --text: #e7edf3;
-  --muted: #8b9aab;
-  --border: #243040;
-  --accent: #3ecfbf;
-  --accent-dim: #1a3d3a;
-  --danger: #f07178;
-  --led: #3ecfbf;
-}
-
-/* ── Light theme ── */
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #f8f9fb;
-  --bg-elev: #ffffff;
-  --panel: #ffffff;
-  --text: #1a1f26;
-  --muted: #5a6876;
-  --border: #d8dee6;
-  --accent: #0d9488;
-  --accent-dim: #ccfbf1;
-  --danger: #dc2626;
-  --led: #0d9488;
-}
+```text
+astro.config.mjs                 # MODIFY site when user names the domain
+src/data/site.ts                 # MODIFY SITE_ORIGIN to the same absolute origin
+src/layouts/BaseLayout.astro     # MODIFY only if 404 must suppress hreflang
+src/pages/404.astro              # MODIFY path passed into BaseLayout (preferred)
+src/components/ToolCard.astro    # MODIFY missing-copy guard
+src/components/RelatedTools.astro# MODIFY same guard (WR-01 names both)
+src/i18n/path.ts                 # unchanged; do not special-case 404 here
+src/components/LangSwitch.astro  # unchanged if 404 stops being a localizable path
+.github/workflows/ci.yml         # unchanged; optional later deploy job is a NEW file or NEW job
+public/                          # do not add a second 404.html; src/pages/404.astro already emits dist/404.html
 ```
 
-**Body background grid adaptation for light mode:**
+### New vs modified
 
-```css
-body {
-  background-image:
-    linear-gradient(180deg, rgba(62, 207, 191, 0.04), transparent 28rem),
-    repeating-linear-gradient(
-      90deg, transparent, transparent 47px,
-      rgba(36, 48, 64, 0.35) 47px, rgba(36, 48, 64, 0.35) 48px
-    );
-}
+| Kind | Path | Why |
+|------|------|-----|
+| Modified | `src/data/site.ts` | Real `SITE_ORIGIN`. Layout ignores `astro.config` `site`. |
+| Modified | `astro.config.mjs` | Real `site`. Sitemap and `robots.txt.ts` ignore `SITE_ORIGIN`. |
+| Modified | `src/pages/404.astro` | Stop passing `path="/404/"`, which is what advertises `/zh/404/`. |
+| Modified | `src/components/ToolCard.astro` | Do not throw when `copy.tools[slug]` is missing. |
+| Modified | `src/components/RelatedTools.astro` | Same throw on `.name`. Milestone text names ToolCard; the review names both. Fix both or the related-tools list still crashes. |
+| Unchanged | `.github/workflows/ci.yml` | Already the CI contract. A remote makes it run. Do not fold deploy into this job. |
+| Unchanged | `src/components/LangSwitch.astro`, `src/i18n/path.ts`, `src/pages/robots.txt.ts` | They are correct if callers stop feeding a phantom path and both origins match. |
+| New, outside the app | Git remote, host project, DNS records | User accounts. Not source files. |
+| Optional new, only if CI must also publish | A deploy workflow or `wrangler.jsonc` | Not required to meet "push to main runs tests and the build." Prefer the host's Git connection so CI stays a gate, not a publisher. |
+| Do not add | `@astrojs/cloudflare`, `@astrojs/netlify`, `@astrojs/vercel`, SSR `output`, API routes | Static file hosting only. Adapters are for on-demand rendering. |
 
-:root[data-theme="light"] body {
-  background-image:
-    linear-gradient(180deg, rgba(13, 148, 136, 0.06), transparent 28rem),
-    repeating-linear-gradient(
-      90deg, transparent, transparent 47px,
-      rgba(216, 222, 230, 0.5) 47px, rgba(216, 222, 230, 0.5) 48px
-    );
-}
+### Structure rationale
+
+- **Two origin constants stay two files.** Collapsing them into an import from `site.ts` inside `astro.config.mjs` is possible but not required, and Astro config currently imports no app module. The ship requirement is that the two strings agree, not that a new shared module exists.
+- **404 stays one page.** Do not add `src/pages/zh/404.astro`. Phase 12 locked that absence. The bug is the advertised alternate, not the missing file.
+- **Host config stays out of `src/`.** DNS and the host dashboard are the integration. A `wrangler.jsonc` or `netlify.toml` is optional documentation of build settings, not application architecture.
+
+## Architectural Patterns
+
+### Pattern 1: Paired origins, not one runtime source
+
+**What:** Canonical and hreflang use `SITE_ORIGIN`. Sitemap and robots use Astro `site`. They are independent strings today, both `https://example.com`.
+
+**When to use:** Whenever the public origin changes. Change both in the same commit, after the user names the domain, before or in the same release as the host cutover. Never change only one.
+
+**Trade-offs:** Two assignments can drift. A shared import would remove drift but couples `astro.config.mjs` to `src/data/site.ts` and still would not update DNS. For this milestone, a same-commit pair is the smaller change. Do not invent a build-time env var; this repo has no `.env` and tool logic must not grow a server config surface.
+
+**Evidence in this repo:**
+
+```typescript
+// src/data/site.ts — layout only
+export const SITE_ORIGIN = 'https://example.com';
 ```
 
-### Pattern 2: Blocking Head Script for Theme Init (FOUC Prevention)
-
-**What:** An Astro component with `<script is:inline>` that runs synchronously in `<head>` before the browser paints. Reads `localStorage.theme`; falls back to `matchMedia('(prefers-color-scheme: dark)')`; sets `document.documentElement.dataset.theme`.
-
-**When to use:** Every page load. Must be in `<head>`, before any CSS-triggering elements.
-
-**Why `is:inline`:** Astro's bundled `<script>` tags are deferred by default and execute after DOM parse. Only `is:inline` scripts run synchronously, which is required for FOUC prevention.
-
-**Trade-offs:**
-- Pro: Zero FOUC -- theme is set before first paint
-- Pro: No Preact hydration needed (pure DOM API)
-- Con: Inline script is duplicated on every page (tiny ~200 bytes, acceptable)
-
-**ThemeInit.astro:**
+```javascript
+// astro.config.mjs — sitemap + Astro.site only
+site: 'https://example.com',
+trailingSlash: 'always',
+```
 
 ```astro
 ---
-// No frontmatter needed — pure inline script
+// src/layouts/BaseLayout.astro — does not read Astro.site
+const canonical = new URL(switchLocalePath(path, locale), SITE_ORIGIN).href;
 ---
-<script is:inline>
-  (function () {
-    var t = localStorage.getItem('theme');
-    if (t !== 'light' && t !== 'dark') {
-      t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.dataset.theme = t;
-  })();
-</script>
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang={LOCALE_META.zh.hreflang} href={new URL(switchLocalePath(path, 'zh'), SITE_ORIGIN).href} />
 ```
 
-**Integration in BaseLayout.astro:**
-
-```astro
----
-import ThemeInit from '../components/ThemeInit.astro';
----
-<!doctype html>
-<html lang={LOCALE_META[locale].htmlLang}>
-  <head>
-    <ThemeInit />
-    <meta charset="utf-8" />
-    <!-- rest of head -->
-  </head>
+```typescript
+// src/pages/robots.txt.ts — Astro.site, which comes from astro.config site
+export const GET: APIRoute = ({ site }) => {
+  const sitemapURL = new URL('sitemap-index.xml', site);
 ```
 
-### Pattern 3: Static Theme Toggle (No Preact Island)
+`CONTACT_EMAIL` (`hello@example.com`) is a third placeholder, rendered on about/privacy via `fill()`. It is not part of the origin agreement. Do not silently rewrite it unless the user supplies an address. Leaving `hello@example.com` on a live domain is a content bug, not a canonical bug.
 
-**What:** An Astro component rendering a `<button>` with sun/moon SVG. An inline `<script>` attaches a click handler that toggles `document.documentElement.dataset.theme` and writes to `localStorage`. Icon visibility is CSS-driven via `data-theme` selectors.
+### Pattern 2: 404 is not a localizable path
 
-**When to use:** In `Header.astro`, alongside nav links.
+**What:** `LangSwitch` does not receive the layout `path` prop. It calls `switchLocalePath(Astro.url.pathname, loc)`. At SSG, `src/pages/404.astro` is built with pathname `/404/`, so the Chinese link is `/zh/404/` even though locale detection on that pathname returns `en`.
 
-**Why static (not Preact):** The toggle has no reactive state. The button is always visible; only the icon changes, which CSS handles. A Preact island would add ~3KB of hydration JS for zero benefit.
+**Confirmed in `dist/404.html`:**
 
-**ThemeToggle.astro:**
+- `rel="canonical"` → `https://example.com/404/`
+- `hreflang="zh-Hans"` → `https://example.com/zh/404/`
+- LangSwitch → `<a href="/zh/404/" hreflang="zh-Hans">`
 
-```astro
----
-import type { Locale } from '../i18n/locales';
-import { t } from '../i18n/ui';
+There is no `src/pages/zh/404.astro`. Astro emits one `404.html` for the site, not a localized pair. [Astro pages](https://docs.astro.build/en/basics/astro-pages/) say a `src/pages/404.astro` builds to `404.html` and most deploy services use it. This repo's `dist/404.html` matches that. `trailingSlash: 'always'` did not turn it into `404/index.html`.
 
-interface Props { locale: Locale }
-const { locale } = Astro.props;
-const copy = t(locale);
----
+**When to use:** On this 404 page only. Real routes (`/tools/json-formatter/`, `/zh/tools/json-formatter/`) must keep reciprocal `switchLocalePath` links.
 
-<button id="themeToggle" type="button" aria-label={copy.themeToggle}>
-  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
-    <path class="theme-sun" fill="currentColor" d="M12 17.5a5.5 5.5 0 1 0 0-11 ..."/>
-    <path class="theme-moon" fill="currentColor" d="M16.5 6A10.5 10.5 0 0 1 ..."/>
-  </svg>
-</button>
+**Preferred fix:** Pass a path that exists in both locales into `BaseLayout`, and do not let the 404 document be the switch target. The Phase 12 review's `path="/"` does that: LangSwitch still reads `Astro.url.pathname` (`/404/`), so changing only the `path` prop fixes hreflang/canonical and leaves the visible 中文 link on `/zh/404/`.
 
-<style>
-  #themeToggle {
-    background: none;
-    border: 0;
-    cursor: pointer;
-    padding: 0.4rem;
-    min-height: 44px;
-    min-width: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-  }
-  #themeToggle:hover { color: var(--text); }
-  .theme-sun { display: block; }
-  .theme-moon { display: none; }
-  :root[data-theme="dark"] .theme-sun { display: none; }
-  :root[data-theme="dark"] .theme-moon { display: block; }
-</style>
+That means a complete fix touches both producers:
 
-<script is:inline>
-  document.getElementById('themeToggle')?.addEventListener('click', function () {
-    var el = document.documentElement;
-    var next = el.dataset.theme === 'dark' ? 'light' : 'dark';
-    el.dataset.theme = next;
-    localStorage.setItem('theme', next);
-  });
-</script>
+1. `src/pages/404.astro` — stop passing `path="/404/"`. Pass `/` so canonical and hreflang point at `/` and `/zh/`, which exist (`src/pages/index.astro`, `src/pages/zh/index.astro`). Add `noindex` if the layout grows an optional prop; do not add it by inventing a second layout.
+2. `LangSwitch` on this page only — it must not use `Astro.url.pathname` when that pathname is the 404 document. Smallest hook: an optional prop defaulting to `Astro.url.pathname`, set to `/` from `404.astro` via `Header`. Do not special-case `/404/` inside `switchLocalePath`; that function is the locale kernel for every real route.
+
+Do not "fix" this by adding `src/pages/zh/404.astro`. A static host serves one `404.html` for unknown URLs, including unknown `/zh/...` URLs. A second file would not be selected by the host, and the milestone forbids advertising a route that does not exist.
+
+**Trade-off of pointing 404 alternates at home:** The 404 document's canonical becomes the homepage. That is acceptable if the response is `noindex`. It is better than a canonical of `/404/` plus an alternate that 404s again. Omitting the hreflang trio on 404 (review's other option) is also correct and avoids declaring the homepage as the canonical of an error page. Prefer omit-alternates-plus-noindex if `BaseLayout` can take a flag without changing other pages. Prefer `path="/"` only together with a LangSwitch override and `noindex`.
+
+### Pattern 3: Missing catalog copy fails closed without a white screen
+
+**What:** `ToolCard.astro` line 14 indexes `copy.tools[slug]` and immediately reads `.name` and `.shortDescription`. `RelatedTools.astro` line 21 does the same for `.name`. The `as keyof typeof copy.tools` cast hides a missing key. Today all 18 slugs exist in `src/i18n/ui.ts`; the crash appears when `TOOLS` gains a slug the dictionary does not have.
+
+**When to use:** At the render boundary, not by going back to `tool.name` (English-only, which would break the ZH catalog).
+
+**Milestone requirement vs review wording:** PROJECT.md says ToolCard must not throw. The Phase 12 review's sample `throw new Error(...)` still throws, only with a clearer message. Follow the milestone: do not throw. Skip the card, or render `tool.name` / `tool.shortDescription` from `src/data/tools.ts` as a fallback. Apply the same behavior in `RelatedTools.astro`. A compile-time `Tool['slug']` tied to the dictionary is a later tightening, not a ship blocker, and it fights the current `slug: string` registry.
+
+**Trade-off:** A silent skip hides a content miss. A fallback to registry English is visible and cannot crash the catalog grid. Prefer fallback over skip so a half-translated tool still links. Do not add a network lookup.
+
+### Pattern 4: CI gate, then host publish, then DNS cutover
+
+**What:** `.github/workflows/ci.yml` triggers on `push` to `main`, `pull_request` to `main`, and `workflow_dispatch`. Permissions are `contents: read`. Steps are checkout, Node 22, `npm ci`, `npm test`, `npm run build`. No deploy step. `git remote` is absent, so this file has never run on GitHub.
+
+**When to use:** Push `main` and the existing local tag `v1.2` first. CI going green does not require a domain, DNS, or a host. Origin replacement does not require CI to be green, but it should land in a commit CI can build before that commit is what the host serves.
+
+**Trade-off of adding deploy to `ci.yml`:** One workflow feels simpler and couples a red test run to "no publish," which is good. It also requires host tokens in GitHub secrets and a second build if the host also builds from Git. Prefer:
+
+- Keep `ci.yml` as the test/build gate.
+- Let the static host build from the same repo (`npm run build`, publish `dist`) on `main` only, or deploy `dist` with Wrangler from a separate workflow that `needs` the CI job.
+
+Do not make CI the only publisher unless the user already has the host token. The milestone's CI bullet is "the workflow actually runs," not "Actions uploads the site."
+
+### Pattern 5: Static host, custom domain last
+
+**What:** `astro build` writes `dist/`. [Astro deploy overview](https://docs.astro.build/en/guides/deploy/) lists build command `npm run build` or `astro build` and publish directory `dist` for the common hosts. A static project needs no adapter. [Netlify](https://docs.astro.build/en/guides/deploy/netlify/) says a static Astro site needs no extra configuration. [Cloudflare](https://docs.astro.build/en/guides/deploy/cloudflare/) now recommends Workers for new projects and says the Cloudflare adapter is only for on-demand rendering. Static assets are `./dist`. A custom 404 on Workers needs `assets.not_found_handling: "404-page"` or the platform will not serve `404.html`.
+
+**When to use:** After `dist/` is proven by `npm run build`. Attach the host's default hostname first (`*.pages.dev`, `*.workers.dev`, or `*.netlify.app`). Change `site` / `SITE_ORIGIN` to the custom domain only when that name is chosen. Point DNS only after the host project exists and has told the user which record to create.
+
+**Apex vs subdomain (user-supplied DNS):** [Cloudflare Pages custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/) require an apex name to be a Cloudflare zone on the same account (CNAME flattening). A subdomain can be a CNAME to `<project>.pages.dev` at any DNS host, but the hostname must be added in the Pages project first or the CNAME does not resolve. Workers custom domains are a different dashboard path; do not assume the Pages CNAME target if the user creates a Worker. Netlify's Astro guide does not document DNS; the host dashboard will show the record after the site exists. Do not write a fake CNAME target into the repo.
+
+**Trailing slash:** [Astro configuration](https://docs.astro.build/en/reference/configuration-reference/) says `site` is "Your final, deployed URL" and is used for sitemap and canonical URLs. It also says trailing slashes on prerendered pages are handled by the hosting platform and may not respect `trailingSlash`. This site links with trailing slashes (`localizedPath` always adds one). After cutover, confirm the host does not 301-loop `/tools/` ↔ `/tools`. Do not flip `trailingSlash` to `'never'` in this milestone; every internal link and the ZH tree assume `'always'`.
+
+## Data Flow
+
+### Request flow
+
+There is no request handler for tools. A visitor fetches a file the host already has.
+
+```text
+git push main
+    ↓
+GitHub Actions ci.yml: npm ci → npm test → astro build
+    ↓
+dist/  (index.html, zh/index.html, tools/*/index.html, 404.html, sitemap-*.xml, robots.txt)
+    ↓
+static host (Git build or upload of dist/)
+    ↓
+DNS name → host edge → file
+    ↓
+browser runs Preact islands; src/lib never leaves the client
 ```
 
-### Pattern 4: CSS-Only Mobile Hamburger (Checkbox Trick)
+Unknown paths are not routed by Astro in production. The host maps them to `dist/404.html`. That file was rendered as English (`localeFromPathname('/404/')` is `en`). A missing `/zh/some-typo/` still returns that same English `404.html`. That is accepted. Linking to `/zh/404/` is not, because that URL is also a miss and reloads the same file.
 
-**What:** A hidden checkbox + label styled as a hamburger icon. When `:checked`, sibling `.nav-links` gets `display: flex; flex-direction: column`. Pure CSS, no JS framework.
+### Origin flow (the dual-constant bug)
 
-**When to use:** At `max-width: 640px` breakpoint.
-
-**Why CSS-only over Preact island:**
-- Pro: Zero JS payload; works without hydration
-- Pro: `<input type="checkbox">` is natively keyboard-accessible (Space/Enter to toggle)
-- Pro: Astro SSG outputs static HTML; CSS trick works perfectly
-- Con: Cannot trap focus (acceptable for a simple nav overlay)
-- Con: State is not programmatically accessible (not needed here)
-
-**Markup in Header.astro:**
-
-```astro
-<header class="site">
-  <nav class="wrap nav">
-    <a class="logo" href={localizedPath(locale, '/')}>
-      <span class="logo-mark" aria-hidden="true"></span>
-      {SITE_NAME}
-    </a>
-    <input
-      type="checkbox"
-      id="navToggle"
-      class="nav-toggle"
-      aria-label={copy.menuToggle}
-    />
-    <label for="navToggle" class="nav-hamburger" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </label>
-    <div class="nav-links">
-      <!-- existing nav links + ThemeToggle + LangSwitch -->
-      <a href={...}>{copy.navTools}</a>
-      <a href={...}>{copy.navBlog}</a>
-      <a href={...}>{copy.navAbout}</a>
-      <ThemeToggle locale={locale} />
-      <LangSwitch locale={locale} />
-    </div>
-  </nav>
-</header>
+```text
+user-named domain
+    ├─ write src/data/site.ts SITE_ORIGIN
+    │     └─ BaseLayout canonical, hreflang en, hreflang zh-Hans, x-default
+    └─ write astro.config.mjs site
+          ├─ @astrojs/sitemap absolute <loc> and xhtml:link
+          └─ robots.txt.ts Sitemap: {site}/sitemap-index.xml
 ```
 
-**CSS for hamburger:**
+If only `SITE_ORIGIN` changes, the HTML head is correct and `sitemap-index.xml` still lists `https://example.com/...`. If only `site` changes, crawlers see the new host in the sitemap while every page canonical still points at `example.com`. Both are wrong. Cut over both together, then redeploy `dist/`. DNS pointing at the host before this commit serves a live site whose canonical tells Google the real URL is `example.com`.
 
-```css
-.nav-toggle { display: none; }
+`LangSwitch` hrefs are path-only (`/zh/tools/...`). They do not embed `SITE_ORIGIN`. Origin drift does not break the language switcher. It breaks canonical, hreflang, sitemap, and robots.
 
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-  padding: 0.5rem;
-  min-height: 44px;
-  min-width: 44px;
-  justify-content: center;
-  margin-left: auto;
-}
+### 404 link flow
 
-.nav-hamburger span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--text);
-  transition: transform var(--ease), opacity var(--ease);
-}
-
-@media (max-width: 640px) {
-  .nav-hamburger { display: flex; }
-
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-elev);
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    padding: 0.75rem 1.25rem;
-    gap: 0.25rem;
-  }
-
-  .nav-toggle:checked ~ .nav-links { display: flex; }
-
-  /* Hamburger → X animation */
-  .nav-toggle:checked ~ .nav-hamburger span:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
-  }
-  .nav-toggle:checked ~ .nav-hamburger span:nth-child(2) {
-    opacity: 0;
-  }
-  .nav-toggle:checked ~ .nav-hamburger span:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
-  }
-}
+```text
+src/pages/404.astro
+    path="/404/" ──────────────► BaseLayout
+                                    switchLocalePath("/404/", "zh") → "/zh/404/"
+                                    prefix SITE_ORIGIN → hreflang zh-Hans
+    Astro.url.pathname "/404/" ► Header ► LangSwitch
+                                    switchLocalePath("/404/", "zh") → href="/zh/404/"
+src/pages/zh/404.astro           does not exist
+host 404.html                    one file for every miss
 ```
 
-**Key constraint:** The checkbox `<input>` must be a sibling of `.nav-links` (not a child) for the CSS `~` combinator to work. This means it sits inside `<nav>` but outside `<div class="nav-links">`.
+### Catalog label flow
 
-### Pattern 5: CSS Spacing Scale via Custom Properties
-
-**What:** Define a t-shirt sizing scale as CSS custom properties in `:root`. Replace hardcoded `px`/`rem` values throughout `global.css` with these variables.
-
-**When to use:** All spacing values in the visual layer.
-
-**Scale:** `--sp-1: 4px`, `--sp-2: 8px`, `--sp-3: 12px`, `--sp-4: 16px`, `--sp-6: 24px`, `--sp-8: 32px`, `--sp-12: 48px`. Matches the 4px base grid specified in PROJECT.md.
-
-**Trade-offs:**
-- Pro: Consistent spacing across all components
-- Pro: Single place to adjust the entire site's rhythm
-- Con: Requires a pass over all existing spacing values (one-time cost)
-
-**Migration strategy:** Do not replace every hardcoded value at once. Add the variables first, then migrate selectors that are being touched by the other visual changes (header, card-grid, tool-panel, FAQ). Leave untouched selectors for a follow-up if desired.
-
-### Pattern 6: 3-Column Card Grid Breakpoint
-
-**What:** Add a `@media (min-width: 1080px)` rule to `.card-grid` for 3 columns.
-
-**Current state:** 1-col default, 2-col at 720px.
-
-**Change in global.css:**
-
-```css
-.card-grid {
-  display: grid;
-  gap: var(--sp-2);  /* 8px, migrated from 0.85rem */
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 720px) {
-  .card-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (min-width: 1080px) {
-  .card-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
+```text
+TOOLS[].slug
+    ├─ getStaticPaths → /tools/[slug]/ and /zh/tools/[slug]/   (page still builds)
+    └─ ToolCard / RelatedTools
+          t(locale).tools[slug]
+              ├─ present → name + shortDescription
+              └─ absent  → throw today (must become fallback, not throw)
 ```
 
-### Pattern 7: FAQ `<details>` Collapsible
+Tool pages do not use `ToolCard` for their own title. A missing dictionary key crashes the home grid and the tools index (both locales import `ToolCard`) and the related-tools list on a tool page. It does not crash `src/lib`.
 
-**What:** Replace `<dl>/<dt>/<dd>` with `<details>/<summary>` semantic HTML. CSS styles the expand/collapse with a rotated indicator.
+### State management
 
-**Why `<details>` over Preact toggle:**
-- Natively accessible (keyboard, screen reader)
-- Zero JS
-- Works with SSG output
+No new state. Locale remains a prop. Ads remain the compile-time `ADS_ENABLED` flag. Theme remains `localStorage` on click. Publishing adds no session, cookie, or server store.
 
-**FaqList.astro rewrite:**
+### Key data flows
 
-```astro
-<h2>{heading}</h2>
-<div class="faq">
-  {items.map((item) => (
-    <details class="faq-item">
-      <summary>{item.question}</summary>
-      <p>{item.answer}</p>
-    </details>
-  ))}
-</div>
-```
-
-**CSS:**
-
-```css
-.faq-item {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--panel);
-  margin-bottom: var(--sp-2);
-}
-
-.faq-item summary {
-  padding: var(--sp-4) var(--sp-4);
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--text);
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-}
-
-.faq-item summary::before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-left: 5px solid var(--accent);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  transition: transform var(--ease);
-  flex-shrink: 0;
-}
-
-.faq-item[open] summary::before {
-  transform: rotate(90deg);
-}
-
-.faq-item > p {
-  padding: 0 var(--sp-4) var(--sp-4);
-  margin: 0;
-  color: var(--muted);
-}
-```
-
-## Data Flow: Theme Lifecycle
-
-```
-Page Load
-    │
-    ▼
-ThemeInit.astro <script is:inline>  (synchronous, before paint)
-    │
-    ├─ localStorage.getItem('theme') ──> 'light' | 'dark' | null
-    │
-    ├─ if null: matchMedia('(prefers-color-scheme: dark)').matches
-    │
-    └─ document.documentElement.dataset.theme = result
-    │
-    ▼
-Browser paints with correct theme (no FOUC)
-    │
-    ▼
-User clicks ThemeToggle button
-    │
-    ├─ Toggle dataset.theme
-    ├─ localStorage.setItem('theme', newValue)
-    │
-    └─ CSS vars cascade instantly (no re-render needed)
-```
-
-## Build Order (Dependency-Aware)
-
-### Phase 1: Theme Foundation (No Visual Breakage)
-1. **global.css** -- Split `:root` into shared + dark + light token blocks using `data-theme` selectors. Dark values stay as default (`:root` without attribute), so existing behavior is preserved before ThemeInit runs.
-2. **ThemeInit.astro** -- Create the blocking head script.
-3. **BaseLayout.astro** -- Import and render ThemeInit in `<head>`.
-4. **ThemeToggle.astro** -- Create the toggle button component.
-5. **Header.astro** -- Import and place ThemeToggle in nav.
-6. **i18n/ui.ts** -- Add `themeToggle`, `themeLight`, `themeDark` keys.
-
-**Verification:** Build, open in browser, verify dark mode unchanged. Manually set `document.documentElement.dataset.theme = 'light'` in DevTools to verify light tokens apply.
-
-### Phase 2: Mobile Hamburger (Independent of Theme)
-7. **Header.astro** -- Add checkbox input + hamburger label markup.
-8. **global.css** -- Add hamburger CSS, nav collapse at 640px, X animation.
-9. **i18n/ui.ts** -- Add `menuToggle` key.
-
-**Verification:** Resize to 320px, verify hamburger appears, nav collapses, toggles open/closed. Tab through to verify keyboard access.
-
-### Phase 3: Grid + Spacing (Pure CSS, No Component Changes)
-10. **global.css** -- Add spacing scale variables. Add 1080px breakpoint for 3-col grid. Migrate touched selectors to use spacing vars.
-
-**Verification:** Resize through 720px and 1080px breakpoints; verify card grid columns change.
-
-### Phase 4: Interactive Chrome (Pure CSS + Template)
-11. **global.css** -- Button hover/active/focus-visible polish. Tool-panel border/shadow refinement.
-12. **FaqList.astro** -- Rewrite to `<details>/<summary>`.
-13. **global.css** -- FAQ collapsible styles.
-
-**Verification:** Click FAQ items to expand/collapse. Verify button states on hover/active.
-
-## Anti-Patterns to Avoid
-
-### Anti-Pattern 1: Theme Toggle as Preact Island
-
-**What people do:** Wrap the theme toggle in a Preact component with `useState` and `client:load`.
-
-**Why it's wrong:** The toggle has no reactive state. The icon is CSS-controlled. A Preact island adds ~3KB hydration JS and delays theme application until hydration completes (potential FOUC on slow connections).
-
-**Do this instead:** Use a static Astro component with `<script is:inline>` for the click handler. CSS handles icon visibility via `data-theme` selectors.
-
-### Anti-Pattern 2: `matchMedia` Listener for Theme Changes
-
-**What people do:** Add a `matchMedia('prefers-color-scheme: dark')` change listener that auto-switches theme when the OS preference changes.
-
-**Why it's wrong:** If the user has manually selected a theme via the toggle, an OS preference change would override their choice. This creates a confusing UX where the site "fights" the user.
-
-**Do this instead:** Only read `matchMedia` on initial load (when `localStorage.theme` is null). After the user manually toggles, their choice is persisted and `matchMedia` is ignored.
-
-### Anti-Pattern 3: CSS-Only Theme Without Blocking Script
-
-**What people do:** Use `@media (prefers-color-scheme: dark)` in CSS for the default theme, then toggle a class for manual override.
-
-**Why it's wrong:** There is no way to "override" a `prefers-color-scheme` media query with a class. You would need `!important` or duplicate all CSS rules. This is fragile and unmaintainable.
-
-**Do this instead:** Use CSS custom properties. The blocking script sets the attribute before paint. CSS variables swap values based on the attribute. This is the standard pattern recommended by the Astro docs.
-
-### Anti-Pattern 4: Hamburger via Preact State
-
-**What people do:** Add a `useState(false)` for menu open/close in a Preact island.
-
-**Why it's wrong:** Adds hydration delay; menu flickers if JS loads slowly. The checkbox CSS trick is natively accessible and zero-JS.
-
-**Do this instead:** CSS checkbox trick. `<input type="checkbox">` is keyboard-accessible by default. CSS `:checked ~ .nav-links` handles visibility.
-
-### Anti-Pattern 5: Separate CSS Files Per Theme
-
-**What people do:** Create `light.css` and `dark.css` and conditionally import based on theme.
-
-**Why it's wrong:** Duplicates all non-color styles. Maintenance nightmare. Astro does not support conditional CSS imports at build time based on runtime state.
-
-**Do this instead:** Single `global.css` with `data-theme` selectors for color tokens only. Shared tokens stay in `:root`.
+1. **CI:** `main` push is the only event that matters for the milestone. The workflow file is already on `main` locally; it runs only after that commit is on a GitHub remote.
+2. **Origin:** two write sites, three readers (`BaseLayout`, sitemap, robots). Agreement is a commit invariant, not a runtime lookup.
+3. **404 alternates:** two writers (`path` prop and `Astro.url.pathname`). Fixing one leaves the other advertising `/zh/404/`.
+4. **Labels:** `TOOLS` is the route source of truth; `ui.tools` is the display source of truth. They can drift. The UI must tolerate drift.
 
 ## Scaling Considerations
 
-| Scale | Concern | Approach |
-|-------|---------|----------|
-| Current (18 tools, static) | Theme flash | Blocking inline script + CSS vars (this architecture) |
-| 50+ tools | global.css size | Split into `base.css`, `theme.css`, `components.css`; import all in BaseLayout |
-| If SSR added later | Theme persistence | Same pattern works; `data-theme` is client-side only |
+This is a static catalog. "Scale" here is deploy safety and crawl consistency, not concurrent users.
+
+| Scale | Architecture adjustments |
+|-------|--------------------------|
+| First visitor on the default host URL | Serve `dist/` on the host hostname. Origins may still say `example.com` until the domain is known. No app change. |
+| Custom domain cutover | One commit updates both origins. Redeploy. Then DNS. Confirm `/`, `/zh/`, `/404/` response, and that a nonsense path returns `404.html` without a link to `/zh/404/`. |
+| Repeat deploys | Host builds `main` or a workflow uploads `dist/`. Do not add a server to invalidate cache. HTML is fingerprinted by Astro (`/_astro/*.css`); a new deploy replaces the files. |
+
+### Scaling priorities
+
+1. **First bottleneck:** origin mismatch between HTML and sitemap. Fix by pairing the two constants, not by adding a redirect worker.
+2. **Second bottleneck:** host trailing-slash redirects fighting `trailingSlash: 'always'`. Fix in host settings or by verifying slash redirects once. Do not rewrite the locale path helpers.
+3. **Not a bottleneck:** tool CPU, database, or SSR cold starts. There is no server.
+
+## Anti-Patterns
+
+### Anti-Pattern 1: Change one origin
+
+**What people do:** Set `astro.config.mjs` `site` to the new domain and leave `SITE_ORIGIN`, or the reverse, because the names look redundant.
+
+**Why it's wrong:** Layout and sitemap do not read the same constant. Verified: `BaseLayout.astro` imports `SITE_ORIGIN`; `robots.txt.ts` uses `site` from the config. Sitemap integration requires `site` ([sitemap guide](https://docs.astro.build/en/guides/integrations-guide/sitemap/)).
+
+**Do this instead:** One commit, both strings, same absolute `https://` origin, no path, no trailing slash on the origin itself. Rebuild and diff `dist/sitemap-index.xml` against a page's canonical host.
+
+### Anti-Pattern 2: Add `src/pages/zh/404.astro` to satisfy the language switch
+
+**What people do:** Give LangSwitch a real target by creating the missing page.
+
+**Why it's wrong:** Static hosts serve a single root `404.html` for unknown URLs. A `zh/404/index.html` is just another file; it is not what the host returns for a missing `/zh/...` URL unless extra rewrite rules are added. The milestone says do not advertise `/zh/404/` if that route does not exist. Adding the route widens scope and still does not localize host-level 404s for arbitrary ZH paths.
+
+**Do this instead:** Keep one `404.html`. Point or omit alternates so the document does not link to `/zh/404/`.
+
+### Anti-Pattern 3: Throw on missing tool copy
+
+**What people do:** Replace the undefined read with `throw new Error('Missing ui.tools...')` as in the Phase 12 review sample.
+
+**Why it's wrong:** The active requirement is "ToolCard does not throw." A build-time throw fails the catalog page for every visitor when one slug drifts. That is a louder crash, not a fix.
+
+**Do this instead:** Fall back to `tool.name` and `tool.shortDescription`, or skip the card. Do the same in `RelatedTools.astro`.
+
+### Anti-Pattern 4: Deploy before CI, or block CI on DNS
+
+**What people do:** Add a deploy step to `ci.yml` before any remote exists, or refuse to push until the domain and DNS are ready.
+
+**Why it's wrong:** CI in this file does not need a domain. DNS cannot be verified until a host project exists. A push of `main` is what makes the existing workflow run. Tag `v1.2` does not trigger `ci.yml` (`on.push.branches: [main]` and `pull_request` only). Pushing the tag is still required by the milestone, but it will not by itself turn the workflow green. A branch push or `workflow_dispatch` will.
+
+**Do this instead:** Remote, push `main`, push tag `v1.2`, confirm the Actions run on the `main` push. Domain and DNS are a later step that does not gate that run.
+
+### Anti-Pattern 5: Install a host adapter or switch to SSR
+
+**What people do:** `npx astro add cloudflare` or set `output: 'server'` so the host "supports Astro."
+
+**Why it's wrong:** Adapters exist for on-demand rendering. This site's privacy model is browser-local computation and no tool API. An adapter adds a Worker entry and a new config surface for zero product gain. Current Astro Cloudflare docs say the adapter is only if the site uses on-demand rendering.
+
+**Do this instead:** Publish `dist/` as static assets. If the host is Cloudflare Workers, add `not_found_handling: "404-page"` so `dist/404.html` is actually used. That setting is host config, not an adapter.
+
+### Anti-Pattern 6: Invent the GitHub owner, repo name, or CNAME target
+
+**What people do:** Write `github.com/<guess>/devtoolbox` or a sample CNAME into README, workflow, or `public/CNAME` before the user creates the accounts.
+
+**Why it's wrong:** The remote is execution-time user input. A wrong `CNAME` file on GitHub Pages publishes the wrong name. A guessed Pages target (`*.pages.dev`) is wrong if the user picks Netlify or Workers.
+
+**Do this instead:** Leave owner, repo, domain, and DNS records as parameters. Document the shape (`https://<domain>` with no path; CNAME as shown by the host after the project exists).
+
+### Anti-Pattern 7: Cut DNS over while canonical still says example.com
+
+**What people do:** Attach the custom domain first because the site "works" on the host URL, and update origins later.
+
+**Why it's wrong:** The first crawl of the real domain sees `rel="canonical"` and sitemap URLs on `https://example.com`, which is IANA-reserved and not this site. Google may treat the live host as a duplicate of a non-site.
+
+**Do this instead:** Preview on the host's default hostname if needed (origins may still be placeholders there). Update both origins, rebuild, deploy that artifact, then switch DNS. Order inside the cutover: origin commit → green build → host serving that artifact → DNS.
+
+## Integration Points
+
+### External services
+
+| Service | Integration pattern | Notes |
+|---------|---------------------|-------|
+| GitHub | `git remote add origin <user-supplied url>`, push `main` and tag `v1.2` | No remote today. Do not `gh repo create` with an invented name. Workflow already has `contents: read`; that is enough for CI. |
+| GitHub Actions | Existing `.github/workflows/ci.yml` | Runs on push/PR to `main`, not on tags. Node 22 matches `package.json` engines (`^20.19.0 \|\| >=22.12.0`). |
+| Static host | Git-connected build (`npm run build`, output `dist`) or upload `dist/` | No server process. Netlify: no adapter for static. Cloudflare Workers: `assets.directory: ./dist` plus `not_found_handling: "404-page"`. Cloudflare Pages Git settings from the older Pages guide: framework Astro, build `npm run build`, output `dist`. Confirm which product the user opened; Astro's current Cloudflare page recommends Workers for new projects. |
+| DNS | After the host project exists, create the record the dashboard shows | Apex on Cloudflare Pages must be a Cloudflare zone. Subdomain can be an external CNAME to the host target. User supplies registrar login. |
+| TLS | Host-issued certificate after the hostname is attached | Do not buy or configure a certificate in the repo. CAA records that block the host CA are a DNS concern, not an app concern. |
+
+### Internal boundaries
+
+| Boundary | Communication | Notes |
+|----------|---------------|-------|
+| `SITE_ORIGIN` ↔ `astro.config` `site` | None today. Humans must keep them equal | Do not assume editing one updates the other. |
+| `BaseLayout` `path` ↔ `LangSwitch` | No shared prop. Layout uses `path`. Switch uses `Astro.url.pathname` | 404 must override both, or the Chinese link survives a `path` fix. |
+| `TOOLS` ↔ `ui.tools` | Slug string, unchecked cast | ToolCard and RelatedTools. Fallback, do not throw. |
+| `ci.yml` ↔ host | None | CI green is independent of DNS. Host should build the same commit CI built. |
+| `robots.txt.ts` ↔ sitemap | `new URL('sitemap-index.xml', site)` | Follows `site` only. Trailing slash on `site` is not used; config value has no path. |
+| Pages ↔ `src/lib` | Browser only | Ship work must not add a route under `src/pages/api` or a server endpoint for tools. `robots.txt.ts` is the only `APIRoute`, and it stays a static file. |
+
+## Build order
+
+Dependencies, not a phase plan. Later steps can wait on the user; earlier steps must not wait on DNS.
+
+1. **Code fixes that do not need a domain or a remote.** 404 LangSwitch/hreflang (both producers) and ToolCard plus RelatedTools missing-copy fallback. `npm test` and `npm run build` locally. These are independent of CI and DNS. Do them before the first public deploy so the first `404.html` on the host is not the one that links to `/zh/404/`.
+2. **Git remote and push.** User supplies owner and repo. Push `main` so `ci.yml` runs. Push tag `v1.2` because the milestone asks for it, knowing the tag push does not match `on.push.branches`. Confirm the Actions run for the branch push is green. This does not require a domain.
+3. **Host project on the default hostname.** User supplies the host account. Build command `npm run build`, publish `dist`. No adapter. If Workers, set `not_found_handling` to `404-page`. Smoke-test `/`, `/zh/`, a tool page, and a missing path. Canonical may still say `example.com` on this preview; that is acceptable only on the throwaway hostname.
+4. **User names the domain.** Same commit: `SITE_ORIGIN` and `astro.config.mjs` `site`. Do not change `CONTACT_EMAIL` unless the user names that too. Rebuild. CI on that push must pass before cutover. Check one HTML canonical host equals a sitemap `<loc>` host equals the robots `Sitemap:` host.
+5. **Custom domain and DNS.** Host project must already exist. User creates the record the host displays. Apex vs `www` is their DNS constraint (Cloudflare Pages apex needs the zone on Cloudflare). Attach TLS through the host. Do this after step 4's artifact is what the host will serve, so the first crawl of the real name does not canonicalize to `example.com`.
+6. **Post-cutover check, no new code unless a check fails.** Fetch `/`, `/zh/`, `/robots.txt`, `/sitemap-index.xml`, and a nonsense path. Confirm the 404 body has no `/zh/404/` href or hreflang. Confirm the host does not redirect-loop trailing slashes. Confirm tool islands still run with no network call to an API.
+
+Steps 1 and 2 can proceed in parallel. Step 2 does not depend on step 1 for the workflow to run, but the first green `main` should include step 1 so the host never publishes the known 404 bug. Step 5 depends on steps 3 and 4. Step 4 can be prepared as a one-line pair of edits the moment the user types the domain; it must not be guessed.
+
+### What stays user-supplied
+
+- GitHub owner and repository name (and whether the repo is public).
+- The real apex or `www` domain. Code stores `https://` plus that host, no path.
+- DNS provider login and the choice of apex vs subdomain. The host, not this repo, dictates the record type and target.
+- Host account and product (Workers vs Pages vs Netlify vs other). Do not pick one in code before the user does. Any of them can serve `dist/` if unknown paths return `dist/404.html` and trailing slashes are not rewritten into a loop.
+- Optional contact address. `hello@example.com` is a separate placeholder from `SITE_ORIGIN`.
 
 ## Sources
 
-- Astro official tutorial: Theme toggle with `is:inline` script and `localStorage` -- https://github.com/withastro/docs/blob/main/src/content/docs/en/tutorial/6-islands/2.mdx
-- Astro view transitions: `astro:after-swap` event for theme persistence -- https://github.com/withastro/docs/blob/main/src/content/docs/en/guides/view-transitions.mdx
-- Existing codebase: `src/styles/global.css` (dark-only `:root`), `src/layouts/BaseLayout.astro` (import chain), `src/components/Header.astro` (nav structure)
-- CSS `data-*` attribute selectors: MDN Web Docs
-- `<details>/<summary>` accessibility: MDN Web Docs (natively accessible, no ARIA needed)
+- This repo: `astro.config.mjs`, `src/data/site.ts`, `src/layouts/BaseLayout.astro`, `src/components/LangSwitch.astro`, `src/components/Header.astro`, `src/pages/404.astro`, `src/components/ToolCard.astro`, `src/components/RelatedTools.astro`, `src/i18n/path.ts`, `src/pages/robots.txt.ts`, `.github/workflows/ci.yml`, `dist/404.html` (canonical `https://example.com/404/`, hreflang zh-Hans `https://example.com/zh/404/`, LangSwitch `href="/zh/404/"`).
+- Phase 12 review WR-01 and WR-02: `.planning/milestones/v1.2-phases/12-pages-langswitch/12-REVIEW.md`.
+- [Astro configuration reference — `site` and `trailingSlash`](https://docs.astro.build/en/reference/configuration-reference/) (HIGH). `site` is the final deployed URL used for sitemap and canonicals. Trailing slashes on prerendered pages are handled by the host.
+- [Astro pages — custom 404](https://docs.astro.build/en/basics/astro-pages/) (HIGH). `src/pages/404.astro` builds to `404.html`.
+- [Astro sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/) (HIGH). Requires `site` starting with `http://` or `https://`.
+- [Astro deploy overview](https://docs.astro.build/en/guides/deploy/) (HIGH). Static publish directory `dist`; adapters are for on-demand rendering.
+- [Deploy to Netlify](https://docs.astro.build/en/guides/deploy/netlify/) (HIGH). Static sites need no adapter; build `npm run build`, publish `dist`.
+- [Deploy to Cloudflare](https://docs.astro.build/en/guides/deploy/cloudflare/) (HIGH). Current guide recommends Workers for new projects; adapter only for on-demand rendering; static dir `./dist`; Workers custom 404 needs `not_found_handling: "404-page"`.
+- [Cloudflare Pages custom domains](https://developers.cloudflare.com/pages/configuration/custom-domains/) (HIGH for Pages DNS only). Apex must be a Cloudflare zone on the same account; subdomain may be an external CNAME added after the Pages hostname is linked. Not a substitute for the Workers custom-domain flow if that is the product the user creates.
 
 ---
-*Architecture research for: Devtoolbox v1.1 Frontend Polish*
-*Researched: 2026-09-15*
-*Confidence: HIGH -- all patterns verified against Astro 7 official docs and existing codebase*
+*Architecture research for: shipping the existing Devtoolbox static site*
+*Researched: 2026-09-23*
