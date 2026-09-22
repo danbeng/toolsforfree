@@ -125,7 +125,10 @@ Plans:
   2. On `main` without overlay isolation, `npm test` and `astro build` pass
   3. LED `ToolShell`, `tool-panel__chrome`, and `src/lib/crontab.ts` remain uncommitted; `SITE_ORIGIN` is unchanged; no new tools
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 14-01-PLAN.md — Node 22 ci.yml plus overlay-free npm test and astro build proof
 
 ## Progress
 
@@ -139,4 +142,4 @@ Phase 12 and Phase 13 both depend on Phase 11 and can be planned in either order
 | 11. i18n Kernel | 1/1 | Complete    | 2026-09-20 |
 | 12. Pages + LangSwitch | 1/1 | Complete    | 2026-09-20 |
 | 13. Islands without LED | 1/1 | Complete    | 2026-09-22 |
-| 14. CI Green on Main | 0/TBD | Not started | - |
+| 14. CI Green on Main | 0/1 | Planned | - |
