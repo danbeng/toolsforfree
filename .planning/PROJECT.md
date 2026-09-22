@@ -19,11 +19,18 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Chrome: `.tool-panel` shadow + `--sp-4` padding; `.tool-panel button` invert hover / color-mix active; FAQ native `details`/`summary`
 - Stack unchanged: Astro 7 SSG + Preact islands + custom CSS. No Tailwind, no new npm packages this milestone.
 
-**Known debt:** Unrelated dirty `src/lib/crontab.ts` stays uncommitted. Do not pop `stash@{0}` or `stash@{1}`. `SITE_ORIGIN` is still `https://example.com`. No GitHub remote yet — `.github/workflows/ci.yml` is a file only.
+**Known debt (still fenced):** Unrelated dirty `src/lib/crontab.ts` stays uncommitted. Do not pop `stash@{0}` or `stash@{1}`. LED `ToolShell` stays uncommitted. Placeholder `SITE_ORIGIN` and missing GitHub remote move into v1.3, not into those fences.
 
-## Next Milestone Goals
+## Current Milestone: v1.3 Ship
 
-Not started. `/gsd-new-milestone` when ready. Candidates already deferred: real domain, GitHub remote, three-state theme, committing locale-aware `crontab.ts`.
+**Goal:** A visitor opens a real domain, EN/ZH switch links are real, and a push to main actually runs tests and the build.
+
+**Target features:**
+- Create a GitHub remote and push `main` plus local tag `v1.2` so `.github/workflows/ci.yml` actually runs
+- Replace placeholder `SITE_ORIGIN` / `astro.config.mjs` `site` once the user names a real domain
+- Static hosting plus that custom domain
+- 404 LangSwitch must not advertise missing `/zh/404/` (Phase 12 WR-02)
+- ToolCard must not throw when `copy.tools[slug]` is missing (Phase 12 WR-01)
 
 ## Requirements
 
@@ -58,11 +65,17 @@ Not started. `/gsd-new-milestone` when ready. Candidates already deferred: real 
 - ✓ Button hover/active/focus-visible polish — v1.1
 - ✓ Tool-panel chrome refinement (consistent borders, shadows, spacing) — v1.1
 - ✓ FAQ `<details>` collapsible instead of always-visible `<dl>` — v1.1
+- ✓ Header LangSwitch, seven ZH routes, EN locale pass, sitemap i18n — v1.2
+- ✓ No-LED ToolShell locale Copy/Copied on all 18 islands — v1.2
+- ✓ GitHub Actions workflow file (Node 22, `npm ci`, `npm test`, `astro build`) — v1.2
 
 ### Active
 
-- [ ] Land `LangSwitch.astro` + `src/pages/zh/` + required EN/i18n wiring so `npm test` and `astro build` pass on `main` without overlay isolation
-- [ ] Add GitHub Actions workflow file: `npm test` + `astro build` (no remote, no `gh repo create`)
+- [ ] GitHub remote exists; `main` and local tag `v1.2` are pushed so `.github/workflows/ci.yml` actually runs
+- [ ] `SITE_ORIGIN` and `astro.config.mjs` `site` use a real domain the user names (not `https://example.com`)
+- [ ] Static hosting serves the built site on that custom domain
+- [ ] 404 LangSwitch does not advertise a missing `/zh/404/`
+- [ ] ToolCard does not throw when `copy.tools[slug]` is missing
 
 ### Out of Scope
 
@@ -137,4 +150,4 @@ v1.1 was a visual-only polish pass on the 18-tool catalog: light/dark theme with
 </details>
 
 ---
-*Last updated: 2026-09-19 after starting v1.2 Bilingual Land*
+*Last updated: 2026-09-23 after starting v1.3 Ship*

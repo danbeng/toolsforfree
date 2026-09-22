@@ -1,19 +1,16 @@
 ---
 gsd_state_version: "1.0"
-milestone: v1.2
-milestone_name: Bilingual Land
-status: Awaiting next milestone
-stopped_at: Phase 14 complete — all phases complete
-last_updated: "2026-09-22T01:37:06.696Z"
-last_activity: 2026-09-22
-last_activity_desc: Milestone v1.2 completed and archived
-state_head: e18ec82935e2c4ea56eec3edcdf019e7f19fe7f4
+milestone: v1.3
+milestone_name: Ship
+status: planning
+last_updated: "2026-09-22T16:03:20.749Z"
+last_activity: 2026-09-23
 progress:
-  total_phases: 4
-  completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
-current_phase: 14
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -27,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-09-20)
 
 ## Current Position
 
-Phase: Milestone v1.2 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-09-22 — Milestone v1.2 completed and archived
+Status: Defining requirements
+Last activity: 2026-09-23 — Milestone v1.3 started
 
 ## Performance Metrics
 
