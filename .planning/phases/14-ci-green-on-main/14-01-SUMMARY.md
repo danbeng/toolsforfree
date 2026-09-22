@@ -15,7 +15,7 @@ affects: [future-remote, ship]
 actuals:
   tokens: 96
   tasks: 2
-  commits: 2
+  commits: 4
 
 plan_head_before: af231d53dd6e50e4ddfd426c3c8e20908f9aaeca
 
@@ -92,7 +92,7 @@ Each task was committed atomically:
 1. **Task 1: Write Node 22 CI workflow** - `aa8ab15` (feat)
 2. **Task 2: Prove npm test and astro build without staging crontab** - no product commit (proof only; workflow already committed in Task 1)
 
-**Plan metadata:** `82d2471` (docs: complete plan)
+**Plan metadata:** `82d2471` (docs: complete plan), `964a848` (docs: state and requirements), `05a3efa` (docs: measured commit count)
 
 ## Files Created/Modified
 
