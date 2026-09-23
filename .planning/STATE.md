@@ -2,14 +2,20 @@
 gsd_state_version: "1.0"
 milestone: v1.3
 milestone_name: Ship
-status: planning
-last_updated: "2026-09-23T00:00:00.000Z"
+current_phase: 15
+current_phase_name: 404 wiring and catalog-copy guard
+current_plan: 1
+status: verifying
+stopped_at: Completed 15-01-PLAN.md
+last_updated: "2026-09-23T05:29:48.287Z"
 last_activity: 2026-09-23
+last_activity_desc: v1.3 roadmap created (Phases 15-19)
+state_head: f98fa72e48aa4023a82086d3c127472d664b5295
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 1
+  completed_plans: 1
   percent: 0
 ---
 
@@ -25,8 +31,9 @@ See: .planning/PROJECT.md (updated 2026-09-23)
 ## Current Position
 
 Phase: 15 of 19 (404 wiring and catalog-copy guard)
-Plan: —
-Status: Ready to plan
+Current Plan: 1
+Total Plans in Phase: 1
+Status: Phase complete — ready for verification
 Last activity: 2026-09-23 — v1.3 roadmap created (Phases 15-19)
 
 Progress: [░░░░░░░░░░] 0%
@@ -54,6 +61,12 @@ Progress: [░░░░░░░░░░] 0%
 - Last plans: 17min, 8min, 5min, 5min
 - Trend: Stable
 
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 15 P01 | 23min | 3 tasks | 8 files |
+
 ## Accumulated Context
 
 ### Decisions
@@ -63,6 +76,9 @@ Full log in PROJECT.md Key Decisions. v1.3 roadmap continues at Phase 15 (v1.2 e
 - [Roadmap]: Five phases, requirement split locked: 15 guards, 16 remote+tag, 17 host preview, 18 origin swap, 19 DNS
 - [Roadmap]: CI stays read-only Node 22; deploy is a separate workflow; zero new npm packages
 - [Roadmap]: Do not invent domain, GitHub owner, or mailbox; do not retag v1.2
+- [Phase 15]: 404 LangSwitch override is home (/ and /zh/), not a path.ts special case
+- [Phase 15]: 404 noindex omits hreflang; canonical stays SITE_ORIGIN/404/ without switchLocalePath
+- [Phase 15]: Missing copy.tools[slug] falls back to tool.name and tool.shortDescription via toolLabels
 
 ### Pending Todos
 
@@ -87,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-23
-Stopped at: Roadmap written — ready to plan Phase 15
+Last session: 2026-09-23T05:29:30.425Z
+Stopped at: Completed 15-01-PLAN.md
 Resume file: None

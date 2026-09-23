@@ -9,11 +9,11 @@ Requirements for milestone v1.3 Ship. Each maps to roadmap phases.
 
 ### Publish guards
 
-- [ ] **GUARD-01**: A visitor on the 404 page does not get a LangSwitch link to `/zh/404/`.
-- [ ] **GUARD-02**: The 404 document does not advertise `/zh/404/` in canonical or hreflang.
-- [ ] **GUARD-03**: The 404 document is `noindex`.
-- [ ] **GUARD-04**: ToolCard still renders when `copy.tools[slug]` is missing, using the catalog name and short description.
-- [ ] **GUARD-05**: RelatedTools still renders when `copy.tools[slug]` is missing, using the same fallback. Neither component throws.
+- [x] **GUARD-01**: A visitor on the 404 page does not get a LangSwitch link to `/zh/404/`.
+- [x] **GUARD-02**: The 404 document does not advertise `/zh/404/` in canonical or hreflang.
+- [x] **GUARD-03**: The 404 document is `noindex`.
+- [x] **GUARD-04**: ToolCard still renders when `copy.tools[slug]` is missing, using the catalog name and short description.
+- [x] **GUARD-05**: RelatedTools still renders when `copy.tools[slug]` is missing, using the same fallback. Neither component throws.
 
 ### Remote
 
@@ -74,11 +74,11 @@ Deferred. Not in this roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GUARD-01 | Phase 15 | Pending |
-| GUARD-02 | Phase 15 | Pending |
-| GUARD-03 | Phase 15 | Pending |
-| GUARD-04 | Phase 15 | Pending |
-| GUARD-05 | Phase 15 | Pending |
+| GUARD-01 | Phase 15 | Complete |
+| GUARD-02 | Phase 15 | Complete |
+| GUARD-03 | Phase 15 | Complete |
+| GUARD-04 | Phase 15 | Complete |
+| GUARD-05 | Phase 15 | Complete |
 | REM-01 | Phase 16 | Pending |
 | REM-02 | Phase 16 | Pending |
 | REM-03 | Phase 16 | Pending |
