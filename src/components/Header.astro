@@ -9,9 +9,10 @@ import { t } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
+  langSwitchPath?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, langSwitchPath } = Astro.props;
 const copy = t(locale);
 ---
 <header class="site">
@@ -23,7 +24,11 @@ const copy = t(locale);
       <a href={localizedPath(locale, '/blog/')}>{copy.navBlog}</a>
       <a href={localizedPath(locale, '/about/')}>{copy.navAbout}</a>
     </div>
-    <LangSwitch locale={locale} />
+    {langSwitchPath ? (
+      <LangSwitch locale={locale} path={langSwitchPath} />
+    ) : (
+      <LangSwitch locale={locale} />
+    )}
     <ThemeToggle />
   </nav>
 </header>

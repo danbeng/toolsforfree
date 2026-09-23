@@ -13,10 +13,12 @@ interface Props {
   description: string;
   path: string;
   locale: Locale;
+  noindex?: boolean;
+  langSwitchPath?: string;
 }
 
-const { title, description, path, locale } = Astro.props;
-const canonical = new URL(switchLocalePath(path, locale), SITE_ORIGIN).href;
+const { title, description, path, locale, noindex = false, langSwitchPath } = Astro.props;
+const canonical = new URL(noindex ? path : switchLocalePath(path, locale), SITE_ORIGIN).href;
 const fullTitle = title.includes(SITE_NAME) ? title : `${title} · ${SITE_NAME}`;
 ---
 <!doctype html>
@@ -28,12 +30,18 @@ const fullTitle = title.includes(SITE_NAME) ? title : `${title} · ${SITE_NAME}`
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang={LOCALE_META.en.hreflang} href={new URL(switchLocalePath(path, 'en'), SITE_ORIGIN).href} />
-    <link rel="alternate" hreflang={LOCALE_META.zh.hreflang} href={new URL(switchLocalePath(path, 'zh'), SITE_ORIGIN).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL(switchLocalePath(path, 'en'), SITE_ORIGIN).href} />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="alternate" hreflang={LOCALE_META.en.hreflang} href={new URL(switchLocalePath(path, 'en'), SITE_ORIGIN).href} />
+        <link rel="alternate" hreflang={LOCALE_META.zh.hreflang} href={new URL(switchLocalePath(path, 'zh'), SITE_ORIGIN).href} />
+        <link rel="alternate" hreflang="x-default" href={new URL(switchLocalePath(path, 'en'), SITE_ORIGIN).href} />
+      </>
+    )}
   </head>
   <body>
-    <Header locale={locale} />
+    <Header locale={locale} langSwitchPath={langSwitchPath} />
     <main class="wrap">
       <slot />
     </main>
