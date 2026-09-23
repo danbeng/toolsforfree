@@ -3,10 +3,10 @@ gsd_state_version: "1.0"
 milestone: v1.3
 milestone_name: Ship
 status: planning
-last_updated: "2026-09-22T16:03:20.749Z"
+last_updated: "2026-09-23T00:00:00.000Z"
 last_activity: 2026-09-23
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,23 +17,25 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-20)
+See: .planning/PROJECT.md (updated 2026-09-23)
 
-**Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page — light or dark theme, desktop or mobile — without compromising the browser-local privacy model.
-**Current focus:** Phase 14 — CI Green on Main
+**Core value:** A visitor opens a real domain, EN/ZH switch links are real, and a push to main actually runs tests and the build.
+**Current focus:** Phase 15 — 404 wiring and catalog-copy guard
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 15 of 19 (404 wiring and catalog-copy guard)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-09-23 — Milestone v1.3 started
+Status: Ready to plan
+Last activity: 2026-09-23 — v1.3 roadmap created (Phases 15-19)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 17 (v1.0 + v1.1)
+- Total plans completed: 17 (v1.0–v1.2)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -41,49 +43,26 @@ Last activity: 2026-09-23 — Milestone v1.3 started
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 1–6 | 9 | - | - |
-| 7 | 1 | - | - |
-| 8 | 1 | - | - |
-| 9 | 1 | - | - |
-| 10 | 1 | - | - |
-| 11–14 | TBD | - | - |
-| 11 | 1 | - | - |
-| 12 | 1 | - | - |
-| 13 | 1 | - | - |
-| 14 | 1 | - | - |
+| 11 | 1 | 17min | 17min |
+| 12 | 1 | 8min | 8min |
+| 13 | 1 | 5min | 5min |
+| 14 | 1 | 5min | 5min |
+| 15–19 | TBD | - | - |
 
-**Per-Plan Metrics:**
+**Recent Trend:**
 
-| Plan | Duration | Tasks | Files |
-|------|----------|-------|-------|
-| Phase 07 P01 | 7min | 3 tasks | 5 files |
-| Phase 09 P01 | 9 min | 3 tasks | 3 files |
-| Phase 10 P01 | 9 min | 3 tasks | 2 files |
-| Phase 11 P01 | 17min | 3 tasks | 7 files |
-| Phase 12-pages-langswitch P01 | 8 min | 3 tasks | 35 files |
-| Phase 13-islands-without-led P01 | 5min | 3 tasks | 20 files |
-| Phase 14 P01 | 5min | 2 tasks | 1 files |
+- Last plans: 17min, 8min, 5min, 5min
+- Trend: Stable
 
 ## Accumulated Context
 
 ### Decisions
 
-Full log in PROJECT.md Key Decisions. v1.2 lands ZH + LangSwitch + CI file; LED ToolShell and crontab.ts stay uncommitted.
+Full log in PROJECT.md Key Decisions. v1.3 roadmap continues at Phase 15 (v1.2 ended at 14).
 
-- [Phase 11]: Locale lives in locales.ts; ui.ts re-exports it so Header still compiles
-- [Phase 11]: Path helpers never throw; illegal locale is en; results never start with //
-- [Phase 11]: useToolUi is a pure named function; err('') and err(null) return null
-- [Phase 12]: Canonical uses switchLocalePath(path, locale) so ZH unprefixed path does not collide with EN
-- [Phase 12]: FaqList heading stripped on both EN and ZH slug pages; FaqList.astro untouched
-- [Phase 12]: ToolCard locale is optional default en so EN catalog cards keep working
-- [Phase 12]: hreflang trio is en, zh-Hans, x-default pointing at EN
-- [Phase 13]: ToolShell is HEAD layout plus required locale; overlay LED chrome was not restaged
-- [Phase 13]: Original ten landed dirty; UuidGenerator keeps t(locale); the other nine use useToolUi
-- [Phase 13]: Later eight keep t(locale)/localizeError; only ToolShell opening tags received locale={locale}
-- [Phase 13]: src/lib/crontab.ts stayed unstaged; stash@{0} and stash@{1} were not popped
-- [Phase 14]: CI pins Node 22 with contents read; steps are npm ci, npm test, npm run build
-- [Phase 14]: git.allow_default_branch_commits enabled so branching_strategy none can commit on main
-- [Phase 14]: Phase 14 left src/lib/crontab.ts unstaged and did not pop stash@{0} or stash@{1}
+- [Roadmap]: Five phases, requirement split locked: 15 guards, 16 remote+tag, 17 host preview, 18 origin swap, 19 DNS
+- [Roadmap]: CI stays read-only Node 22; deploy is a separate workflow; zero new npm packages
+- [Roadmap]: Do not invent domain, GitHub owner, or mailbox; do not retag v1.2
 
 ### Pending Todos
 
@@ -91,10 +70,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- Do not commit LED ToolShell / tool-panel__chrome or src/lib/crontab.ts
-- Do not pop stash@{0} or stash@{1}; path-limited git add only
-- No SITE_ORIGIN change, no gh repo create, no new tools; stay Astro + Preact, no Tailwind
-- Until Phase 14, dirty-main astro build may still need overlay isolation
+- Phase 16 blocks until the user names GitHub owner, repo, and visibility
+- Phase 18 blocks until the user names the canonical hostname; mailbox is optional and must not be invented
+- Path-limited git add only. Do not commit crontab.ts or LED ToolShell. Do not pop stash@{0} or stash@{1}
+- Do not paste a Pages sample over ci.yml. Do not retag v1.2. Node 22. Zero new npm packages
 
 ## Deferred Items
 
@@ -103,13 +82,11 @@ None yet.
 | Theme | Three-state toggle (auto/light/dark) | Deferred | 2026-09-15 | v2 |
 | Theme | Smooth theme transition animation | Deferred | 2026-09-15 | v2 |
 | Layout | Card grid 4-col at 1440px | Deferred | 2026-09-15 | v2 |
+| Publish | Preview deploy per pull request | Deferred | 2026-09-23 | v2 |
+| Publish | Search Console after live sitemap is clean | Deferred | 2026-09-23 | v2 |
 
 ## Session Continuity
 
-Last session: 2026-09-22T01:12:08.929Z
-Stopped at: Phase 14 complete — all phases complete
+Last session: 2026-09-23
+Stopped at: Roadmap written — ready to plan Phase 15
 Resume file: None
-
-## Operator Next Steps
-
-- Start the next milestone with /gsd-new-milestone

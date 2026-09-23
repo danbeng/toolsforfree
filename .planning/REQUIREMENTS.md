@@ -74,31 +74,31 @@ Deferred. Not in this roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GUARD-01 | — | Pending |
-| GUARD-02 | — | Pending |
-| GUARD-03 | — | Pending |
-| GUARD-04 | — | Pending |
-| GUARD-05 | — | Pending |
-| REM-01 | — | Pending |
-| REM-02 | — | Pending |
-| REM-03 | — | Pending |
-| HOST-01 | — | Pending |
-| HOST-02 | — | Pending |
-| HOST-03 | — | Pending |
-| ORIG-01 | — | Pending |
-| ORIG-02 | — | Pending |
-| ORIG-03 | — | Pending |
-| CUT-01 | — | Pending |
-| CUT-02 | — | Pending |
-| CUT-03 | — | Pending |
+| GUARD-01 | Phase 15 | Pending |
+| GUARD-02 | Phase 15 | Pending |
+| GUARD-03 | Phase 15 | Pending |
+| GUARD-04 | Phase 15 | Pending |
+| GUARD-05 | Phase 15 | Pending |
+| REM-01 | Phase 16 | Pending |
+| REM-02 | Phase 16 | Pending |
+| REM-03 | Phase 16 | Pending |
+| HOST-01 | Phase 17 | Pending |
+| HOST-02 | Phase 17 | Pending |
+| HOST-03 | Phase 17 | Pending |
+| ORIG-01 | Phase 18 | Pending |
+| ORIG-02 | Phase 18 | Pending |
+| ORIG-03 | Phase 18 | Pending |
+| CUT-01 | Phase 19 | Pending |
+| CUT-02 | Phase 19 | Pending |
+| CUT-03 | Phase 19 | Pending |
 
 **Coverage:**
 
 - v1.3 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17
+- Mapped to phases: 17
+- Unmapped: 0
 
 ---
 
 *Requirements defined: 2026-09-23*
-*Last updated: 2026-09-23 after v1.3 scope lock*
+*Last updated: 2026-09-23 after v1.3 roadmap mapping*
