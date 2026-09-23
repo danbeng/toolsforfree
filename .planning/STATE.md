@@ -2,21 +2,21 @@
 gsd_state_version: "1.0"
 milestone: v1.3
 milestone_name: Ship
-current_phase: 15
-current_phase_name: 404 wiring and catalog-copy guard
-current_plan: 1
-status: verifying
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-09-23T05:29:48.287Z"
+current_phase: 17
+current_phase_name: Host preview on the platform hostname
+current_plan: 1 of 1
+status: phase_complete
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-09-23T14:42:00.000Z"
 last_activity: 2026-09-23
-last_activity_desc: v1.3 roadmap created (Phases 15-19)
-state_head: f98fa72e48aa4023a82086d3c127472d664b5295
+last_activity_desc: Completed 17-01 host preview on the platform hostname
+state_head: 529aab41916c03bca42788c9b550005e83086bdf
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 1
-  completed_plans: 1
-  percent: 0
+  completed_phases: 3
+  total_plans: 3
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -26,23 +26,23 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-23)
 
 **Core value:** A visitor opens a real domain, EN/ZH switch links are real, and a push to main actually runs tests and the build.
-**Current focus:** Phase 15 — 404 wiring and catalog-copy guard
+**Current focus:** Phase 17 — Host preview on the platform hostname
 
 ## Current Position
 
-Phase: 15 of 19 (404 wiring and catalog-copy guard)
-Current Plan: 1
+Phase: 17 of 19 (Host preview on the platform hostname)
+Current Plan: 1 of 1
 Total Plans in Phase: 1
-Status: Phase complete — ready for verification
-Last activity: 2026-09-23 — v1.3 roadmap created (Phases 15-19)
+Status: Phase complete
+Last activity: 2026-09-23 — Completed 17-01-PLAN.md
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 17 (v1.0–v1.2)
+- Total plans completed: 6 (v1.0–v1.2)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -55,6 +55,9 @@ Progress: [░░░░░░░░░░] 0%
 | 13 | 1 | 5min | 5min |
 | 14 | 1 | 5min | 5min |
 | 15–19 | TBD | - | - |
+| 15 | 1 | - | - |
+| 16 | 1 | - | - |
+| 17 | 1 | 12min | 12min |
 
 **Recent Trend:**
 
@@ -66,6 +69,7 @@ Progress: [░░░░░░░░░░] 0%
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 15 P01 | 23min | 3 tasks | 8 files |
+| Phase 17 P01 | 12min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -79,6 +83,9 @@ Full log in PROJECT.md Key Decisions. v1.3 roadmap continues at Phase 15 (v1.2 e
 - [Phase 15]: 404 LangSwitch override is home (/ and /zh/), not a path.ts special case
 - [Phase 15]: 404 noindex omits hreflang; canonical stays SITE_ORIGIN/404/ without switchLocalePath
 - [Phase 15]: Missing copy.tools[slug] falls back to tool.name and tool.shortDescription via toolLabels
+- [Phase 17]: Astro base is /toolsforfree for the project site; Phase 19 must remove it
+- [Phase 17]: deploy.yml publishes dist only after CI succeeds for the same SHA; ci.yml stays contents: read
+- [Phase 17]: SITE_ORIGIN stays https://example.com; no public/CNAME
 
 ### Pending Todos
 
@@ -86,7 +93,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 16 blocks until the user names GitHub owner, repo, and visibility
+- Phase 16 skipped 2026-09-23: user has no GitHub repo for this project yet. Do not run `gh repo create`. Resume only when they name owner, repo, and visibility.
 - Phase 18 blocks until the user names the canonical hostname; mailbox is optional and must not be invented
 - Path-limited git add only. Do not commit crontab.ts or LED ToolShell. Do not pop stash@{0} or stash@{1}
 - Do not paste a Pages sample over ci.yml. Do not retag v1.2. Node 22. Zero new npm packages
@@ -103,6 +110,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-23T05:29:30.425Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-09-23T14:42:00.000Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None

@@ -17,15 +17,15 @@ Requirements for milestone v1.3 Ship. Each maps to roadmap phases.
 
 ### Remote
 
-- [ ] **REM-01**: An empty GitHub repo exists under the account the user names. No guessed owner, name, or visibility.
-- [ ] **REM-02**: `main` is pushed, and the existing `.github/workflows/ci.yml` run on that push is green.
-- [ ] **REM-03**: The existing annotated tag `v1.2` is pushed unchanged. No retag, no `--force`, no `--tags`.
+- [x] **REM-01**: An empty GitHub repo exists under the account the user names. No guessed owner, name, or visibility.
+- [x] **REM-02**: `main` is pushed, and the existing `.github/workflows/ci.yml` run on that push is green.
+- [x] **REM-03**: The existing annotated tag `v1.2` is pushed unchanged. No retag, no `--force`, no `--tags`.
 
 ### Host preview
 
-- [ ] **HOST-01**: A separate deploy workflow publishes `dist/` to GitHub Pages. `ci.yml` stays a read-only Node 22 test/build gate.
-- [ ] **HOST-02**: On the platform hostname, `/`, `/zh/`, and a tool URL with a trailing slash return 200. The unslashed form redirects at most once to the slashed form. No redirect loop.
-- [ ] **HOST-03**: A missing path on the platform hostname is served by the site `404.html`, and that body contains no `/zh/404/` link.
+- [x] **HOST-01**: A separate deploy workflow publishes `dist/` to GitHub Pages. `ci.yml` stays a read-only Node 22 test/build gate.
+- [x] **HOST-02**: On the platform hostname, `/`, `/zh/`, and a tool URL with a trailing slash return 200. The unslashed form redirects at most once to the slashed form. No redirect loop.
+- [x] **HOST-03**: A missing path on the platform hostname is served by the site `404.html`, and that body contains no `/zh/404/` link.
 
 ### Origin
 
@@ -79,12 +79,12 @@ Deferred. Not in this roadmap.
 | GUARD-03 | Phase 15 | Complete |
 | GUARD-04 | Phase 15 | Complete |
 | GUARD-05 | Phase 15 | Complete |
-| REM-01 | Phase 16 | Pending |
-| REM-02 | Phase 16 | Pending |
-| REM-03 | Phase 16 | Pending |
-| HOST-01 | Phase 17 | Pending |
-| HOST-02 | Phase 17 | Pending |
-| HOST-03 | Phase 17 | Pending |
+| REM-01 | Phase 16 | Complete |
+| REM-02 | Phase 16 | Complete |
+| REM-03 | Phase 16 | Complete |
+| HOST-01 | Phase 17 | Complete |
+| HOST-02 | Phase 17 | Complete |
+| HOST-03 | Phase 17 | Complete |
 | ORIG-01 | Phase 18 | Pending |
 | ORIG-02 | Phase 18 | Pending |
 | ORIG-03 | Phase 18 | Pending |

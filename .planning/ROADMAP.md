@@ -72,7 +72,7 @@ Archive: `.planning/milestones/v1.2-ROADMAP.md`
 
 - [x] **Phase 15: 404 wiring and catalog-copy guard** - 404 stops advertising `/zh/404/`; catalog cards survive a missing copy key (completed 2026-09-23)
 - [x] **Phase 16: Remote and tag push** - Empty user-named GitHub repo; `main` pushed; existing tag `v1.2` pushed unchanged (completed 2026-09-23)
-- [ ] **Phase 17: Host preview on the platform hostname** - `dist/` served with trailing slashes and the site 404, before any custom domain
+- [x] **Phase 17: Host preview on the platform hostname** - `dist/` served with trailing slashes and the site 404, before any custom domain (completed 2026-09-23)
 - [ ] **Phase 18: Origin swap** - Placeholder `example.com` replaced with the user-named origin in both constants, then rebuilt
 - [ ] **Phase 19: Custom domain and DNS cutover** - User-named domain serves the origin-swapped site over HTTPS
 
@@ -127,7 +127,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 17-01-PLAN.md — Publish dist/ to the project-site hostname and prove slashed URLs plus the site 404
+- [x] 17-01-PLAN.md — Publish dist/ to the project-site hostname and prove slashed URLs plus the site 404
 
 **Notes:** Prove the host before naming a domain. Placeholder canonicals are tolerated only on this hostname. Do not attach the custom domain. Do not commit `public/CNAME`. The live URL is a project site, so set `base: '/toolsforfree'` (D-03). Phase 19 must drop that base. Do not add a slash-forcing or slash-stripping redirect. Do not flip `trailingSlash`. If Pages 404s slashed directory URLs, switch host — do not change the site to match the host. Deploy build is Node 22, not the Astro action default of 24. Write scopes (`pages: write`, `id-token: write`) live on the deploy workflow only. Zero new npm packages. First order is fixed: remote exists and `main` is green, then add `deploy.yml`, then push again. Gate the live URL with `curl -sI`, not a doc citation. One publisher only.
 
