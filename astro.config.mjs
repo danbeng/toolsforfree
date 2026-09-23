@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://example.com',
+  base: '/toolsforfree',
   trailingSlash: 'always',
   integrations: [
     preact(),
