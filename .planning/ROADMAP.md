@@ -90,7 +90,10 @@ Archive: `.planning/milestones/v1.2-ROADMAP.md`
   3. A catalog card and a related-tools card still render when `copy.tools[slug]` is missing, using the catalog name and short description, and neither component throws
   4. A search of the built site for `zh/404` is empty
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 15-01-PLAN.md — 404 stops advertising `/zh/404/`; catalog cards fall back when UI copy is missing
 
 **Notes:** Fix both producers. `LangSwitch` reads `Astro.url.pathname`, not the layout `path` prop; changing only `path="/404/"` leaves the visible Chinese link. Do not add `src/pages/zh/404.astro`. Do not special-case `/404/` inside `switchLocalePath`. Fall back in both `ToolCard` and `RelatedTools`; a clearer throw is still a throw. Path-limited add only. Do not commit `src/lib/crontab.ts` or LED `ToolShell`. Do not pop stashes. This commit does not change `SITE_ORIGIN`.
 
@@ -163,7 +166,7 @@ Phase 15 does not need a remote. Phase 16 does not wait on DNS and must not incl
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 15. 404 wiring and catalog-copy guard | 0/TBD | Not started | - |
+| 15. 404 wiring and catalog-copy guard | 0/1 | Not started | - |
 | 16. Remote and tag push | 0/TBD | Not started | - |
 | 17. Host preview on the platform hostname | 0/TBD | Not started | - |
 | 18. Origin swap | 0/TBD | Not started | - |
