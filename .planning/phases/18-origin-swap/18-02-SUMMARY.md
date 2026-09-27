@@ -1,3 +1,11 @@
+---
+phase: 18-origin-swap
+plan: 02
+subsystem: seo-origin
+tags: [site-origin, canonical, sitemap, robots, github-pages]
+requirements-completed: [ORIG-01, ORIG-02, ORIG-03, ORIG-04]
+---
+
 # Phase 18 Plan 02: Origin swap and live verify Summary
 
 **Commits:**

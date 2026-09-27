@@ -1,3 +1,11 @@
+---
+phase: 16-remote-and-tag-push
+plan: 01
+subsystem: infra
+tags: [github, remote, ci, tag]
+requirements-completed: [REM-01, REM-02, REM-03]
+---
+
 # Phase 16 Plan 01: Remote and tag push Summary
 
 **Remote:** https://github.com/danbeng/toolsforfree (private, already existed, empty)

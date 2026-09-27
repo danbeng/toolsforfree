@@ -43,6 +43,7 @@ actuals:
   commits: 3
 plan_head_before: d5ca0075f3acebd7d1612a71ad7f1e6600d62f38
 requirements: [ORIG-04]
+requirements-completed: [ORIG-04]
 ---
 
 # Phase 18 Plan 01: Base-aware internal links Summary
