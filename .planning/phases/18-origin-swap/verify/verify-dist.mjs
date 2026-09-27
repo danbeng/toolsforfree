@@ -169,15 +169,16 @@ function checkOrigin() {
     const html = read(f);
     const r = rel(f);
     const canon = linkTag(html, 'canonical');
-    if (canon.length !== 1) {
-      fail(`origin: ${r} has ${canon.length} canonical tags`);
-      continue;
-    }
     if (html.match(/<link\b[^>]*example\.com[^>]*>/)) fail(`origin: ${r} link tag contains example.com`);
     if (r === '404.html') {
-      if (canon[0] !== `${PREFIX}/404/`) fail(`origin: 404 canonical ${canon[0]}`);
+      // D-09 amended 2026-09-24: a noindex 404 must not point a canonical at a URL that 404s.
+      if (canon.length !== 0) fail(`origin: 404 must have no canonical, found ${canon.join(',')}`);
       if (!html.includes('<meta name="robots" content="noindex"')) fail('origin: 404 lost noindex');
       if (linkTag(html, 'alternate').length) fail('origin: 404 has alternates');
+      continue;
+    }
+    if (canon.length !== 1) {
+      fail(`origin: ${r} has ${canon.length} canonical tags`);
       continue;
     }
     if (!r.endsWith('index.html')) continue;
