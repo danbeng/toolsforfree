@@ -1,0 +1,9 @@
+{
+  "command": "npx vitest run src/i18n/catalog-copy.test.ts --reporter=tap",
+  "exitCode": 1,
+  "targetTest": "returns catalog name and short description when the key is missing",
+  "targetFile": "src/i18n/catalog-copy.test.ts",
+  "expected": "A missing key returns tool.name and tool.shortDescription and does not throw.",
+  "actual": "toolLabels throws Error: not implemented before returning catalog fields.",
+  "output": "TAP version 13\n1..3\nnot ok 1 - returns a present UI-copy entry unchanged for en and zh\nnot ok 2 - returns catalog name and short description when the key is missing\nnot ok 3 - does not mix a present key with catalog fields\n# tests 3\n# pass 0\n# fail 3\n"
+}

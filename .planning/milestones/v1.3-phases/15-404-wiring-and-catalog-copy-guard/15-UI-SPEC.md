@@ -1,10 +1,11 @@
 ---
 phase: "15"
 slug: "404-wiring-and-catalog-copy-guard"
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: "2026-09-23"
+reviewed_at: "2026-09-23"
 ---
 
 # Phase 15 — UI Design Contract
@@ -42,7 +43,7 @@ Component Inventory omitted — Tool: none (no installed design-system package t
 
 Unchanged — reuse existing `:root` tokens in `src/styles/global.css`. Do **not** redefine them. Do **not** duplicate them under `:root[data-theme="light"]`. Do **not** add a class or a spacing rule this phase.
 
-Declared values (multiples of 4) already on `:root`. This phase consumes **none of them in new CSS**:
+The consumed scale is the standard set only. This phase consumes **none of these tokens in new CSS**:
 
 | Token | Value | Usage this phase |
 |-------|-------|------------------|
@@ -54,9 +55,12 @@ Declared values (multiples of 4) already on `:root`. This phase consumes **none 
 | 2xl (`--sp-7`) | 48px | Existing only — do not retokenize |
 | 3xl (`--sp-8`) | 64px | Existing only — do not retokenize |
 
-`--sp-3: 12px` and `--sp-9`…`--sp-12` exist. Do **not** use them in new rules. There are no new rules.
+Exceptions (existing pixels — do not apply them, do not retokenize them, do not change them):
 
-Exceptions: none. Do not restyle the 44×44px hamburger or theme toggle. Do not give LangSwitch a 44px hit target. Body grid geometry stays 47px / 48px. `.page-intro` and `ul.related` have no dedicated rules today; leave them unstyled beyond the global `a` color and `.wrap` padding.
+- `--sp-3: 12px` already exists on `:root`. It is not on the consumed scale. Do not use it in a new rule. Do not rewrite it to 8px or 16px. `--sp-9`…`--sp-12` also exist and stay unused by this phase.
+- Hamburger (`#navToggle`) and theme toggle (`#themeToggle`) stay **44×44px** hit targets (WCAG touch target already shipped). 44 is not on the consumed scale. Do not restyle them. Do not give LangSwitch a 44px hit target.
+- Body grid geometry stays **47px / 48px** (`body` `repeating-linear-gradient` stops in `src/styles/global.css`). 47 is not a multiple of 4. It is a hairline grid, not a spacing token. Do not snap it to 48px. Do not retokenize it.
+- `.page-intro` and `ul.related` have no dedicated spacing rules today. Leave them unstyled beyond the global `a` color and `.wrap` padding. Do not add a spacing rule to either.
 
 ---
 
@@ -121,6 +125,10 @@ Accent reserved for (existing rules only — do not extend):
 Accent is **not** for: LangSwitch idle text, LangSwitch `aria-current`, the 404 heading, fallback catalog text, page canvas, header fill, a noindex badge (there is none), or danger.
 
 Do not paint missing-copy cards differently from happy-path cards. Fallback name and short description use the same `--text` / hover `--accent` as a present UI-copy entry.
+
+### 404 screen — visual anchor
+
+The 404 document (`src/pages/404.astro`) has one primary visual anchor: the existing `h1` inside `.page-intro` (`copy.notFoundTitle`). It is the first content in `<main>` and the only heading on that screen. The body paragraph and the tools-index link sit under it and are not competing anchors. Do not restyle that `h1`. Do not add an illustration, a badge, a larger display size, or a second focal element.
 
 ---
 
