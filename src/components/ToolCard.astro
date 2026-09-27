@@ -3,6 +3,7 @@ import type { Tool } from '../data/tools';
 import { toolLabels } from '../i18n/catalog-copy';
 import type { Locale } from '../i18n/locales';
 import { localizedPath } from '../i18n/path';
+import { withBase } from '../i18n/base';
 import { t } from '../i18n/ui';
 
 interface Props {
@@ -14,7 +15,7 @@ const { tool, locale = 'en' } = Astro.props;
 const copy = t(locale);
 const labels = toolLabels(copy.tools, tool);
 ---
-<a class="tool-card" href={localizedPath(locale, `/tools/${tool.slug}/`)}>
+<a class="tool-card" href={withBase(localizedPath(locale, `/tools/${tool.slug}/`))}>
   <strong>{labels.name}</strong>
   <p>{labels.shortDescription}</p>
 </a>

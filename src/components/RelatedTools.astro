@@ -3,6 +3,7 @@ import { getRelatedTools } from '../data/tools';
 import { toolLabels } from '../i18n/catalog-copy';
 import type { Locale } from '../i18n/locales';
 import { localizedPath } from '../i18n/path';
+import { withBase } from '../i18n/base';
 import { t } from '../i18n/ui';
 
 interface Props {
@@ -18,7 +19,7 @@ const copy = t(locale);
 <ul class="related">
   {related.map((tool) => (
     <li>
-      <a href={localizedPath(locale, `/tools/${tool.slug}/`)}>
+      <a href={withBase(localizedPath(locale, `/tools/${tool.slug}/`))}>
         {toolLabels(copy.tools, tool).name}
       </a>
     </li>

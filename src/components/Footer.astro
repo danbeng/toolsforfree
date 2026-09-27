@@ -2,6 +2,7 @@
 import { SITE_NAME } from '../data/site';
 import type { Locale } from '../i18n/locales';
 import { localizedPath } from '../i18n/path';
+import { withBase } from '../i18n/base';
 import { t } from '../i18n/ui';
 
 interface Props {
@@ -14,9 +15,9 @@ const copy = t(locale);
 <footer class="site">
   <div class="wrap footer-row">
     <p>
-      <a href={localizedPath(locale, '/privacy/')}>{copy.navPrivacy}</a> ·
-      <a href={localizedPath(locale, '/terms/')}>{copy.navTerms}</a> ·
-      <a href={localizedPath(locale, '/about/')}>{copy.navAbout}</a>
+      <a href={withBase(localizedPath(locale, '/privacy/'))}>{copy.navPrivacy}</a> ·
+      <a href={withBase(localizedPath(locale, '/terms/'))}>{copy.navTerms}</a> ·
+      <a href={withBase(localizedPath(locale, '/about/'))}>{copy.navAbout}</a>
     </p>
     <p>{copy.footerRuns}</p>
     <p>© {new Date().getFullYear()} {SITE_NAME}</p>

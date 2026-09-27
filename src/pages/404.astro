@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { localizedPath, localeFromPathname } from '../i18n/path';
+import { stripBase, withBase } from '../i18n/base';
 import { t } from '../i18n/ui';
 
-const locale = localeFromPathname(Astro.url.pathname);
+const locale = localeFromPathname(stripBase(Astro.url.pathname));
 const copy = t(locale);
 ---
 <BaseLayout
@@ -18,5 +19,5 @@ const copy = t(locale);
     <h1>{copy.notFoundTitle}</h1>
     <p>{copy.notFoundBody}</p>
   </div>
-  <p><a href={localizedPath(locale, '/tools/')}>{copy.notFoundCta}</a></p>
+  <p><a href={withBase(localizedPath(locale, '/tools/'))}>{copy.notFoundCta}</a></p>
 </BaseLayout>
