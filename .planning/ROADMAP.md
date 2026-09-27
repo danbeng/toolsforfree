@@ -146,10 +146,11 @@ Plans:
   4. With no base configured, link output is unchanged (existing path tests still pass)
   5. `CONTACT_EMAIL` is unchanged. The user supplied no mailbox
 
-**Plans**: 2 plans
+**Plans**: 1/2 plans executed
 
 Plans:
-- [ ] 18-01-PLAN.md — base-aware href helper (tracer: Header + LangSwitch), then every internal link call site (ORIG-04)
+
+- [x] 18-01-PLAN.md — base-aware href helper (tracer: Header + LangSwitch), then every internal link call site (ORIG-04)
 - [ ] 18-02-PLAN.md — github.io origin + base in canonical/hreflang/robots in one commit, push, live link crawl (ORIG-01..04)
 
 **Notes:** User chose the GitHub Pages hostname as the origin on 2026-09-24 because no domain is registered. Phase 17 verified direct URLs only; internal links were built without the base and 404 on the live site. Fix at the href layer with a base-aware helper driven by Astro's configured base. Keep `localizedPath` / `switchLocalePath` returning logical paths so existing tests hold. LangSwitch and `localeFromPathname` must strip the base before reading the locale. Do not flip `trailingSlash`. Do not add redirects. Do not add `src/pages/zh/404.astro`. Do not special-case `/404/` in `path.ts`. Path-limited add only. Do not commit `src/lib/crontab.ts` or LED `ToolShell`. Do not pop stashes. CI must stay Node 22 and green. When a custom domain arrives, the next milestone removes `base` and swaps both origin constants in one commit; the helper then becomes a no-op.
@@ -166,4 +167,4 @@ Phase 15 does not need a remote. Phase 16 does not wait on DNS and must not incl
 | 15. 404 wiring and catalog-copy guard | 1/1 | Complete    | 2026-09-23 |
 | 16. Remote and tag push | 1/0 | Complete    | 2026-09-23 |
 | 17. Host preview on the platform hostname | 1/1 | Complete    | 2026-09-23 |
-| 18. Origin swap | 0/TBD | Not started | - |
+| 18. Origin swap | 1/2 | In Progress|  |

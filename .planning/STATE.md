@@ -6,17 +6,17 @@ current_phase: 18
 current_phase_name: Origin swap
 current_plan: Not started
 status: planning
-stopped_at: Phase 18 context captured — origin is github.io, base-aware links
-last_updated: "2026-09-23T14:47:01.324Z"
-last_activity: 2026-09-23
+stopped_at: Completed 18-01-PLAN.md
+last_updated: "2026-09-27T01:40:46.222Z"
+last_activity: 2026-09-24
 last_activity_desc: Phase 17 complete, transitioned to Phase 18
-state_head: efec3b525618294482a0dd6a6c8b8d670539abcd
+state_head: 0189b995223791e604797695909809c6f04ec1d9
 progress:
-  total_phases: 5
+  total_phases: 4
   completed_phases: 2
-  total_plans: 2
-  completed_plans: 2
-  percent: 40
+  total_plans: 4
+  completed_plans: 3
+  percent: 50
 ---
 
 # Project State
@@ -31,12 +31,12 @@ See: .planning/PROJECT.md (updated 2026-09-23)
 ## Current Position
 
 Phase: 18 of 19 (Origin swap)
-Current Plan: Not started
-Total Plans in Phase: 1
-Status: Planning Phase 18 (github.io origin + base-aware links); custom domain deferred to next milestone
-Last activity: 2026-09-24 — User skipped custom domain; chose https://danbeng.github.io as origin
+Current Plan: 2
+Total Plans in Phase: 2
+Status: Executing Phase 18; 18-01 complete (base-aware links), 18-02 (origin swap + deploy) next
+Last activity: 2026-09-27 — Completed 18-01: withBase helper, all internal hrefs carry /toolsforfree (tracer + links gates PASS)
 
-Progress: [████░░░░░░] 40%
+Progress: [█████░░░░░] 50%
 
 ## Performance Metrics
 
@@ -70,6 +70,7 @@ Progress: [████░░░░░░] 40%
 |------|----------|-------|-------|
 | Phase 15 P01 | 23min | 3 tasks | 8 files |
 | Phase 17 P01 | 12min | 3 tasks | 2 files |
+| Phase 18 P01 | 13 min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,7 @@ Full log in PROJECT.md Key Decisions. v1.3 roadmap continues at Phase 15 (v1.2 e
 - [Phase 17]: Astro base is /toolsforfree for the project site; Phase 19 must remove it
 - [Phase 17]: deploy.yml publishes dist only after CI succeeds for the same SHA; ci.yml stays contents: read
 - [Phase 17]: SITE_ORIGIN stays https://example.com; no public/CNAME
+- [Phase 18]: Base helper in src/i18n/base.ts: withBase/stripBase over BASE_URL; path.ts stays logical
 
 ### Pending Todos
 
@@ -111,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-09-23T14:42:00.000Z
-Stopped at: Phase 17 complete, ready to plan Phase 18
+Last session: 2026-09-27T01:40:45.596Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None
