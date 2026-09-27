@@ -1,6 +1,7 @@
 ---
 import { LOCALES, LOCALE_META, type Locale } from '../i18n/locales';
 import { switchLocalePath } from '../i18n/path';
+import { stripBase, withBase } from '../i18n/base';
 import { t } from '../i18n/ui';
 
 interface Props {
@@ -9,13 +10,13 @@ interface Props {
 }
 
 const { locale, path } = Astro.props;
-const pathname = path ?? Astro.url.pathname;
+const pathname = path ?? stripBase(Astro.url.pathname);
 const copy = t(locale);
 ---
 <nav class="lang-switch" aria-label={copy.langSwitch}>
   {LOCALES.map((loc) => (
     <a
-      href={switchLocalePath(pathname, loc)}
+      href={withBase(switchLocalePath(pathname, loc))}
       hreflang={LOCALE_META[loc].hreflang}
       lang={LOCALE_META[loc].htmlLang}
       aria-current={loc === locale ? 'page' : undefined}
