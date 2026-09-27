@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { title, description, path, locale, noindex = false, langSwitchPath } = Astro.props;
-const canonical = new URL(withBase(noindex ? path : switchLocalePath(path, locale)), SITE_ORIGIN).href;
+const canonical = new URL(withBase(switchLocalePath(path, locale)), SITE_ORIGIN).href;
 const fullTitle = title.includes(SITE_NAME) ? title : `${title} · ${SITE_NAME}`;
 ---
 <!doctype html>
@@ -30,11 +30,11 @@ const fullTitle = title.includes(SITE_NAME) ? title : `${title} · ${SITE_NAME}`
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
     {noindex ? (
       <meta name="robots" content="noindex" />
     ) : (
       <>
+        <link rel="canonical" href={canonical} />
         <link rel="alternate" hreflang={LOCALE_META.en.hreflang} href={new URL(withBase(switchLocalePath(path, 'en')), SITE_ORIGIN).href} />
         <link rel="alternate" hreflang={LOCALE_META.zh.hreflang} href={new URL(withBase(switchLocalePath(path, 'zh')), SITE_ORIGIN).href} />
         <link rel="alternate" hreflang="x-default" href={new URL(withBase(switchLocalePath(path, 'en')), SITE_ORIGIN).href} />
