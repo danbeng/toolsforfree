@@ -29,9 +29,9 @@ Requirements for milestone v1.3 Ship. Each maps to roadmap phases.
 
 ### Origin
 
-- [ ] **ORIG-01**: `SITE_ORIGIN` and `astro.config.mjs` `site` are both `https://danbeng.github.io` (user chose the GitHub Pages hostname on 2026-09-24; no custom domain yet), with no path and no trailing slash on the origin.
-- [ ] **ORIG-02**: A rebuilt `dist/` contains no `example.com` in sitemap, robots, or a page canonical. Canonical, hreflang, and the robots sitemap line include the `/toolsforfree` base.
-- [ ] **ORIG-03**: `CONTACT_EMAIL` changes only if the user supplies a mailbox. It is not invented.
+- [x] **ORIG-01**: `SITE_ORIGIN` and `astro.config.mjs` `site` are both `https://danbeng.github.io` (user chose the GitHub Pages hostname on 2026-09-24; no custom domain yet), with no path and no trailing slash on the origin.
+- [x] **ORIG-02**: A rebuilt `dist/` contains no `example.com` in sitemap, robots, or a page canonical. Canonical, hreflang, and the robots sitemap line include the `/toolsforfree` base.
+- [x] **ORIG-03**: `CONTACT_EMAIL` changes only if the user supplies a mailbox. It is not invented.
 - [x] **ORIG-04**: A visitor clicking a header, footer, catalog card, related tool, home, blog index, 404 CTA, or LangSwitch link on `https://danbeng.github.io/toolsforfree/` lands on a page that exists. Links carry the `/toolsforfree` base, and LangSwitch puts `/zh/` after the base, not before it. With no base set, links are unchanged.
 
 ## v2 Requirements
@@ -87,9 +87,9 @@ Deferred. Not in this roadmap.
 | HOST-01 | Phase 17 | Complete |
 | HOST-02 | Phase 17 | Complete |
 | HOST-03 | Phase 17 | Complete |
-| ORIG-01 | Phase 18 | Pending |
-| ORIG-02 | Phase 18 | Pending |
-| ORIG-03 | Phase 18 | Pending |
+| ORIG-01 | Phase 18 | Complete |
+| ORIG-02 | Phase 18 | Complete |
+| ORIG-03 | Phase 18 | Complete |
 | ORIG-04 | Phase 18 | Complete |
 
 **Coverage:**

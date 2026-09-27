@@ -73,7 +73,7 @@ Archive: `.planning/milestones/v1.2-ROADMAP.md`
 - [x] **Phase 15: 404 wiring and catalog-copy guard** - 404 stops advertising `/zh/404/`; catalog cards survive a missing copy key (completed 2026-09-23)
 - [x] **Phase 16: Remote and tag push** - Empty user-named GitHub repo; `main` pushed; existing tag `v1.2` pushed unchanged (completed 2026-09-23)
 - [x] **Phase 17: Host preview on the platform hostname** - `dist/` served with trailing slashes and the site 404, before any custom domain (completed 2026-09-23)
-- [ ] **Phase 18: Origin swap** - `example.com` replaced with `https://danbeng.github.io`, and every internal link carries the `/toolsforfree` base
+- [x] **Phase 18: Origin swap** - `example.com` replaced with `https://danbeng.github.io`, and every internal link carries the `/toolsforfree` base (completed 2026-09-27)
 
 Custom domain and DNS cutover (was Phase 19) is deferred to the next milestone. The domain is not registered yet (user decision 2026-09-24).
 
@@ -151,7 +151,7 @@ Plans:
 Plans:
 
 - [x] 18-01-PLAN.md — base-aware href helper (tracer: Header + LangSwitch), then every internal link call site (ORIG-04)
-- [ ] 18-02-PLAN.md — github.io origin + base in canonical/hreflang/robots in one commit, push, live link crawl (ORIG-01..04)
+- [x] 18-02-PLAN.md — github.io origin + base in canonical/hreflang/robots in one commit, push, live link crawl (ORIG-01..04)
 
 **Notes:** User chose the GitHub Pages hostname as the origin on 2026-09-24 because no domain is registered. Phase 17 verified direct URLs only; internal links were built without the base and 404 on the live site. Fix at the href layer with a base-aware helper driven by Astro's configured base. Keep `localizedPath` / `switchLocalePath` returning logical paths so existing tests hold. LangSwitch and `localeFromPathname` must strip the base before reading the locale. Do not flip `trailingSlash`. Do not add redirects. Do not add `src/pages/zh/404.astro`. Do not special-case `/404/` in `path.ts`. Path-limited add only. Do not commit `src/lib/crontab.ts` or LED `ToolShell`. Do not pop stashes. CI must stay Node 22 and green. When a custom domain arrives, the next milestone removes `base` and swaps both origin constants in one commit; the helper then becomes a no-op.
 
@@ -167,4 +167,4 @@ Phase 15 does not need a remote. Phase 16 does not wait on DNS and must not incl
 | 15. 404 wiring and catalog-copy guard | 1/1 | Complete    | 2026-09-23 |
 | 16. Remote and tag push | 1/0 | Complete    | 2026-09-23 |
 | 17. Host preview on the platform hostname | 1/1 | Complete    | 2026-09-23 |
-| 18. Origin swap | 1/2 | In Progress|  |
+| 18. Origin swap | 2/2 | Complete    | 2026-09-27 |

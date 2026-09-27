@@ -5,18 +5,18 @@ milestone_name: Ship
 current_phase: 18
 current_phase_name: Origin swap
 current_plan: Not started
-status: planning
-stopped_at: Completed 18-01-PLAN.md
-last_updated: "2026-09-27T01:40:46.222Z"
-last_activity: 2026-09-24
-last_activity_desc: Phase 17 complete, transitioned to Phase 18
-state_head: 0189b995223791e604797695909809c6f04ec1d9
+status: completed
+stopped_at: Phase 18 complete — all phases complete
+last_updated: "2026-09-27T02:13:23.975Z"
+last_activity: 2026-09-27
+last_activity_desc: Phase 18 complete
+state_head: 2e8f6fdd0876561bde7de2b81735b984b4817653
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 4
-  completed_plans: 3
-  percent: 50
+  completed_plans: 4
+  percent: 75
 ---
 
 # Project State
@@ -31,18 +31,18 @@ See: .planning/PROJECT.md (updated 2026-09-23)
 ## Current Position
 
 Phase: 18 of 19 (Origin swap)
-Current Plan: 2
+Current Plan: Not started
 Total Plans in Phase: 2
-Status: Executing Phase 18; 18-01 complete (base-aware links), 18-02 (origin swap + deploy) next
-Last activity: 2026-09-27 — Completed 18-01: withBase helper, all internal hrefs carry /toolsforfree (tracer + links gates PASS)
+Status: All phases complete
+Last activity: 2026-09-27 — Phase 18 complete
 
-Progress: [█████░░░░░] 50%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 7 (v1.0–v1.2)
+- Total plans completed: 9 (v1.0–v1.2)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -58,6 +58,7 @@ Progress: [█████░░░░░] 50%
 | 15 | 1 | - | - |
 | 16 | 1 | - | - |
 | 17 | 1 | - | - |
+| 18 | 2 | - | - |
 
 **Recent Trend:**
 
@@ -114,5 +115,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-09-27T01:40:45.596Z
-Stopped at: Completed 18-01-PLAN.md
+Stopped at: Phase 18 complete — all phases complete
 Resume file: None
