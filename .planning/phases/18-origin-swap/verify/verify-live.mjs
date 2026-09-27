@@ -47,7 +47,12 @@ async function loadSeed(path, expectStatus) {
   let last;
   while (Date.now() < deadline) {
     last = await get(url);
-    const fresh = last.body.includes(`${PREFIX}/`) && !last.body.includes('https://example.com/');
+    // Fresh = serves base-prefixed links and no placeholder origin. Noindex 404 carries no
+    // canonical (D-09 amended), so a stale 404 that still has one cannot pass.
+    const fresh =
+      last.body.includes(`href="${BASE}/"`) &&
+      !last.body.includes('https://example.com/') &&
+      (expectStatus !== 404 || !/<link\b[^>]*rel="canonical"/.test(last.body));
     if (last.status === expectStatus && fresh) return last.body;
     await sleep(15000);
   }
@@ -108,6 +113,12 @@ for (const [path, want] of Object.entries(expectLang)) {
 }
 if (pages['/this-path-is-not-a-tool/'].includes('/zh/404/')) die('404 body links /zh/404/');
 if (!pages['/this-path-is-not-a-tool/'].includes('<meta name="robots" content="noindex"')) die('404 lost noindex');
+if (/<link\b[^>]*rel="canonical"/.test(pages['/this-path-is-not-a-tool/'])) die('404 still has a canonical');
+if (/<link\b[^>]*rel="alternate"/.test(pages['/this-path-is-not-a-tool/'])) die('404 has alternates');
+for (const path of ['/', '/zh/', '/tools/json-formatter/']) {
+  const canon = pages[path].match(/<link\b[^>]*rel="canonical"[^>]*href="([^"]*)"/)?.[1];
+  if (canon !== `${PREFIX}${path}`) die(`canonical on ${path} is ${canon}, want ${PREFIX}${path}`);
+}
 
 targets.add(`${PREFIX}/robots.txt`);
 targets.add(`${PREFIX}/sitemap-index.xml`);
