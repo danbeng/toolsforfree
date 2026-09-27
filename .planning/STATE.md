@@ -2,21 +2,21 @@
 gsd_state_version: "1.0"
 milestone: v1.3
 milestone_name: Ship
-current_phase: 17
-current_phase_name: Host preview on the platform hostname
-current_plan: 1 of 1
-status: phase_complete
-stopped_at: Completed 17-01-PLAN.md
-last_updated: "2026-09-23T14:42:00.000Z"
+current_phase: 18
+current_phase_name: Origin swap
+current_plan: Not started
+status: planning
+stopped_at: Phase 18 context captured — origin is github.io, base-aware links
+last_updated: "2026-09-23T14:47:01.324Z"
 last_activity: 2026-09-23
-last_activity_desc: Completed 17-01 host preview on the platform hostname
-state_head: 529aab41916c03bca42788c9b550005e83086bdf
+last_activity_desc: Phase 17 complete, transitioned to Phase 18
+state_head: efec3b525618294482a0dd6a6c8b8d670539abcd
 progress:
   total_phases: 5
-  completed_phases: 3
-  total_plans: 3
-  completed_plans: 3
-  percent: 60
+  completed_phases: 2
+  total_plans: 2
+  completed_plans: 2
+  percent: 40
 ---
 
 # Project State
@@ -30,19 +30,19 @@ See: .planning/PROJECT.md (updated 2026-09-23)
 
 ## Current Position
 
-Phase: 17 of 19 (Host preview on the platform hostname)
-Current Plan: 1 of 1
+Phase: 18 of 19 (Origin swap)
+Current Plan: Not started
 Total Plans in Phase: 1
-Status: Phase complete
-Last activity: 2026-09-23 — Completed 17-01-PLAN.md
+Status: Planning Phase 18 (github.io origin + base-aware links); custom domain deferred to next milestone
+Last activity: 2026-09-24 — User skipped custom domain; chose https://danbeng.github.io as origin
 
-Progress: [██████░░░░] 60%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 6 (v1.0–v1.2)
+- Total plans completed: 7 (v1.0–v1.2)
 - Average duration: —
 - Total execution time: 0 hours
 
@@ -57,7 +57,7 @@ Progress: [██████░░░░] 60%
 | 15–19 | TBD | - | - |
 | 15 | 1 | - | - |
 | 16 | 1 | - | - |
-| 17 | 1 | 12min | 12min |
+| 17 | 1 | - | - |
 
 **Recent Trend:**
 
@@ -93,8 +93,9 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 16 skipped 2026-09-23: user has no GitHub repo for this project yet. Do not run `gh repo create`. Resume only when they name owner, repo, and visibility.
-- Phase 18 blocks until the user names the canonical hostname; mailbox is optional and must not be invented
+- Phase 16 done 2026-09-23: origin is https://github.com/danbeng/toolsforfree (public). Do not run `gh repo create`.
+- 2026-09-24: domain not registered. User chose https://danbeng.github.io as origin for Phase 18. Custom domain cutover (old Phase 19, CUT-01..03) deferred to next milestone. Do not invent a domain.
+- Phase 17 verified direct URLs only. Internal links lack the /toolsforfree base and LangSwitch emits /zh/toolsforfree/... — fixed in Phase 18 (ORIG-04).
 - Path-limited git add only. Do not commit crontab.ts or LED ToolShell. Do not pop stash@{0} or stash@{1}
 - Do not paste a Pages sample over ci.yml. Do not retag v1.2. Node 22. Zero new npm packages
 
@@ -111,5 +112,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-09-23T14:42:00.000Z
-Stopped at: Completed 17-01-PLAN.md
+Stopped at: Phase 17 complete, ready to plan Phase 18
 Resume file: None

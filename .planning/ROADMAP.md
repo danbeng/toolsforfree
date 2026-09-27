@@ -73,8 +73,9 @@ Archive: `.planning/milestones/v1.2-ROADMAP.md`
 - [x] **Phase 15: 404 wiring and catalog-copy guard** - 404 stops advertising `/zh/404/`; catalog cards survive a missing copy key (completed 2026-09-23)
 - [x] **Phase 16: Remote and tag push** - Empty user-named GitHub repo; `main` pushed; existing tag `v1.2` pushed unchanged (completed 2026-09-23)
 - [x] **Phase 17: Host preview on the platform hostname** - `dist/` served with trailing slashes and the site 404, before any custom domain (completed 2026-09-23)
-- [ ] **Phase 18: Origin swap** - Placeholder `example.com` replaced with the user-named origin in both constants, then rebuilt
-- [ ] **Phase 19: Custom domain and DNS cutover** - User-named domain serves the origin-swapped site over HTTPS
+- [ ] **Phase 18: Origin swap** - `example.com` replaced with `https://danbeng.github.io`, and every internal link carries the `/toolsforfree` base
+
+Custom domain and DNS cutover (was Phase 19) is deferred to the next milestone. The domain is not registered yet (user decision 2026-09-24).
 
 ## Phase Details
 
@@ -124,54 +125,41 @@ Plans:
   2. On the platform hostname, `/`, `/zh/`, and a tool URL with a trailing slash return 200. The unslashed form redirects at most once to the slashed form. No redirect loop
   3. A missing path on the platform hostname is served by the site `404.html`, and that body contains no `/zh/404/` link
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
+
 - [x] 17-01-PLAN.md — Publish dist/ to the project-site hostname and prove slashed URLs plus the site 404
 
 **Notes:** Prove the host before naming a domain. Placeholder canonicals are tolerated only on this hostname. Do not attach the custom domain. Do not commit `public/CNAME`. The live URL is a project site, so set `base: '/toolsforfree'` (D-03). Phase 19 must drop that base. Do not add a slash-forcing or slash-stripping redirect. Do not flip `trailingSlash`. If Pages 404s slashed directory URLs, switch host — do not change the site to match the host. Deploy build is Node 22, not the Astro action default of 24. Write scopes (`pages: write`, `id-token: write`) live on the deploy workflow only. Zero new npm packages. First order is fixed: remote exists and `main` is green, then add `deploy.yml`, then push again. Gate the live URL with `curl -sI`, not a doc citation. One publisher only.
 
 ### Phase 18: Origin swap
 
-**Goal**: Sitemap, robots, and page canonicals use the domain the user named, and a rebuilt `dist/` no longer mentions `example.com`
+**Goal**: A visitor on `https://danbeng.github.io/toolsforfree/` can click every internal link to a real page, and sitemap, robots, canonical, and hreflang point at that live address instead of `example.com`
 **Depends on**: Phase 17
-**Requirements**: ORIG-01, ORIG-02, ORIG-03
+**Requirements**: ORIG-01, ORIG-02, ORIG-03, ORIG-04
 **Success Criteria** (what must be TRUE):
 
-  1. `SITE_ORIGIN` and `astro.config.mjs` `site` are the same `https://` origin the user named, with no path and no trailing slash on the origin
-  2. A rebuilt `dist/` contains no `example.com` in the sitemap, robots, or a page canonical
-  3. `CONTACT_EMAIL` is unchanged unless the user supplied a mailbox. No address was invented
+  1. `SITE_ORIGIN` and `astro.config.mjs` `site` are both `https://danbeng.github.io`, with no path and no trailing slash
+  2. A rebuilt `dist/` contains no `example.com` in the sitemap, robots, or a page canonical. Canonical, hreflang, and the robots sitemap line include `/toolsforfree`
+  3. Header, footer, catalog card, related tool, home, blog index, and 404 CTA links on the live site carry `/toolsforfree` and return 200. LangSwitch goes to `/toolsforfree/zh/...` and back, never `/zh/toolsforfree/...`
+  4. With no base configured, link output is unchanged (existing path tests still pass)
+  5. `CONTACT_EMAIL` is unchanged. The user supplied no mailbox
 
 **Plans**: TBD
 
-**Notes:** Block until the user names the canonical hostname (apex vs `www` decided here, before the string is baked). Change both constants in one commit. Do not invent the domain. Rebuild and grep `dist/` before any DNS change. Do not upload a pre-swap `dist/`. Do not add a slash redirect in this commit. Path-limited add only. Do not commit `src/lib/crontab.ts` or LED `ToolShell`. Do not pop stashes. CI on this push must stay Node 22 and green. `CONTACT_EMAIL` is a third placeholder: ask once; if the user has no mailbox, leave it and record the deferral.
-
-### Phase 19: Custom domain and DNS cutover
-
-**Goal**: A visitor opening the user-named domain gets the origin-swapped site over HTTPS, and the live sitemap does not mention `example.com`
-**Depends on**: Phase 18
-**Requirements**: CUT-01, CUT-02, CUT-03
-**Success Criteria** (what must be TRUE):
-
-  1. The user-named domain serves the origin-swapped site over HTTPS
-  2. One hostname is canonical. The other, if attached, redirects once and keeps the path and trailing slash
-  3. `https://<canonical>/sitemap-index.xml` returns 200 and does not contain `example.com`
-
-**Plans**: TBD
-
-**Notes:** The host must already be serving the origin-swapped artifact. Add the domain in host settings before changing DNS. Use the record the host dashboard shows, not a blog-post copy. Certificate comes from the host, not a cert in the repo. Do not announce the domain while the certificate is pending. Do not force-push to "fix" DNS. Do not add a second publisher. Do not retag `v1.2`. Search Console only after the live sitemap returns 200 and has no `example.com`. Post-cutover check, no new code unless a check fails: `/`, `/zh/`, `/robots.txt`, `/sitemap-index.xml`, and a nonsense path. 404 body has no `/zh/404/` href. No trailing-slash loop.
+**Notes:** User chose the GitHub Pages hostname as the origin on 2026-09-24 because no domain is registered. Phase 17 verified direct URLs only; internal links were built without the base and 404 on the live site. Fix at the href layer with a base-aware helper driven by Astro's configured base. Keep `localizedPath` / `switchLocalePath` returning logical paths so existing tests hold. LangSwitch and `localeFromPathname` must strip the base before reading the locale. Do not flip `trailingSlash`. Do not add redirects. Do not add `src/pages/zh/404.astro`. Do not special-case `/404/` in `path.ts`. Path-limited add only. Do not commit `src/lib/crontab.ts` or LED `ToolShell`. Do not pop stashes. CI must stay Node 22 and green. When a custom domain arrives, the next milestone removes `base` and swaps both origin constants in one commit; the helper then becomes a no-op.
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 15 → 16 → 17 → 18 → 19
+Phases execute in numeric order: 15 → 16 → 17 → 18
 
-Phase 15 does not need a remote. Phase 16 does not wait on DNS and must not include the origin swap. Phase 17 proves the host on a throwaway hostname. Phase 18 bakes the user-named origin before any public DNS. Phase 19 is last.
+Phase 15 does not need a remote. Phase 16 does not wait on DNS and must not include the origin swap. Phase 17 proves the host on the GitHub Pages hostname. Phase 18 makes that hostname the origin and fixes base-aware links. Custom domain cutover is deferred to the next milestone.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 15. 404 wiring and catalog-copy guard | 1/1 | Complete    | 2026-09-23 |
 | 16. Remote and tag push | 1/0 | Complete    | 2026-09-23 |
-| 17. Host preview on the platform hostname | 0/TBD | Not started | - |
+| 17. Host preview on the platform hostname | 1/1 | Complete    | 2026-09-23 |
 | 18. Origin swap | 0/TBD | Not started | - |
-| 19. Custom domain and DNS cutover | 0/TBD | Not started | - |

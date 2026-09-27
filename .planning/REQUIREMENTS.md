@@ -29,15 +29,10 @@ Requirements for milestone v1.3 Ship. Each maps to roadmap phases.
 
 ### Origin
 
-- [ ] **ORIG-01**: After the user names the domain, `SITE_ORIGIN` and `astro.config.mjs` `site` are the same `https://` origin, with no path and no trailing slash on the origin.
-- [ ] **ORIG-02**: A rebuilt `dist/` contains no `example.com` in sitemap, robots, or a page canonical.
+- [ ] **ORIG-01**: `SITE_ORIGIN` and `astro.config.mjs` `site` are both `https://danbeng.github.io` (user chose the GitHub Pages hostname on 2026-09-24; no custom domain yet), with no path and no trailing slash on the origin.
+- [ ] **ORIG-02**: A rebuilt `dist/` contains no `example.com` in sitemap, robots, or a page canonical. Canonical, hreflang, and the robots sitemap line include the `/toolsforfree` base.
 - [ ] **ORIG-03**: `CONTACT_EMAIL` changes only if the user supplies a mailbox. It is not invented.
-
-### Cutover
-
-- [ ] **CUT-01**: The user-named domain serves the origin-swapped site over HTTPS.
-- [ ] **CUT-02**: One hostname is canonical. The other, if attached, redirects once and keeps the path and trailing slash.
-- [ ] **CUT-03**: `https://<canonical>/sitemap-index.xml` returns 200 and does not contain `example.com`.
+- [ ] **ORIG-04**: A visitor clicking a header, footer, catalog card, related tool, home, blog index, 404 CTA, or LangSwitch link on `https://danbeng.github.io/toolsforfree/` lands on a page that exists. Links carry the `/toolsforfree` base, and LangSwitch puts `/zh/` after the base, not before it. With no base set, links are unchanged.
 
 ## v2 Requirements
 
@@ -53,6 +48,13 @@ Deferred. Not in this roadmap.
 
 - **PUB-01**: Preview deploy per pull request
 - **PUB-02**: Search Console submission after the live sitemap is clean
+
+### Custom domain (deferred from v1.3 on 2026-09-24 — domain not registered)
+
+- **CUT-01**: The user-named domain serves the origin-swapped site over HTTPS.
+- **CUT-02**: One hostname is canonical. The other, if attached, redirects once and keeps the path and trailing slash.
+- **CUT-03**: `https://<canonical>/sitemap-index.xml` returns 200 and does not contain `example.com`.
+- Cutover must also remove `base: '/toolsforfree'` and swap `SITE_ORIGIN` / `site` to the new domain in one commit.
 
 ## Out of Scope
 
@@ -88,17 +90,16 @@ Deferred. Not in this roadmap.
 | ORIG-01 | Phase 18 | Pending |
 | ORIG-02 | Phase 18 | Pending |
 | ORIG-03 | Phase 18 | Pending |
-| CUT-01 | Phase 19 | Pending |
-| CUT-02 | Phase 19 | Pending |
-| CUT-03 | Phase 19 | Pending |
+| ORIG-04 | Phase 18 | Pending |
 
 **Coverage:**
 
-- v1.3 requirements: 17 total
-- Mapped to phases: 17
+- v1.3 requirements: 15 total
+- Mapped to phases: 15
 - Unmapped: 0
+- Deferred to next milestone: CUT-01, CUT-02, CUT-03 (domain not registered)
 
 ---
 
 *Requirements defined: 2026-09-23*
-*Last updated: 2026-09-23 after v1.3 roadmap mapping*
+*Last updated: 2026-09-24 after user skipped the custom domain and chose github.io as origin*
