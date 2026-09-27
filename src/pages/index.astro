@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ToolCard from '../components/ToolCard.astro';
 import { SITE_NAME, SITE_TAGLINE } from '../data/site';
 import { getFeaturedTools, getToolsByCategory } from '../data/tools';
+import { withBase } from '../i18n/base';
 
 const locale = 'en' as const;
 const featured = getFeaturedTools();
@@ -13,12 +14,12 @@ const groups = getToolsByCategory();
   <p>{SITE_TAGLINE}</p>
   <p>
     {groups.map((g) => (
-      <a href={`/tools/#category-${g.category.toLowerCase()}`}>{g.category}</a>
+      <a href={withBase(`/tools/#category-${g.category.toLowerCase()}`)}>{g.category}</a>
     ))}
   </p>
   <h2>Featured tools</h2>
   <div class="card-grid">
     {featured.map((tool) => <ToolCard tool={tool} />)}
   </div>
-  <p><a href="/tools/">View all tools</a></p>
+  <p><a href={withBase('/tools/')}>View all tools</a></p>
 </BaseLayout>

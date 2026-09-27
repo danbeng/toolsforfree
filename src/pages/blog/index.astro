@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { t } from '../../i18n/ui';
+import { withBase } from '../../i18n/base';
 
 const locale = 'en' as const;
 const copy = t(locale);
@@ -24,7 +25,7 @@ const posts = (await getCollection('blog')).sort(
     <ul>
       {posts.map((post) => (
         <li>
-          <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+          <a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
         </li>
       ))}
     </ul>
