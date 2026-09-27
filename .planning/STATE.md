@@ -2,41 +2,38 @@
 gsd_state_version: "1.0"
 milestone: v1.3
 milestone_name: Ship
-current_phase: 18
-current_phase_name: Origin swap
-current_plan: Not started
-status: completed
+status: Awaiting next milestone
 stopped_at: Phase 18 complete — all phases complete
-last_updated: "2026-09-27T02:13:23.975Z"
+last_updated: "2026-09-27T08:35:17.223Z"
 last_activity: 2026-09-27
-last_activity_desc: Phase 18 complete
-state_head: 2e8f6fdd0876561bde7de2b81735b984b4817653
+last_activity_desc: Milestone v1.3 completed and archived
+state_head: e69bfb083d17fcbf1ecd510345fdeb5e0c559831
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 4
   completed_plans: 4
-  percent: 75
+  percent: 100
+current_phase: 18
+current_phase_name: Origin swap
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-23)
+See: .planning/PROJECT.md (updated 2026-09-27)
 
-**Core value:** A visitor opens a real domain, EN/ZH switch links are real, and a push to main actually runs tests and the build.
-**Current focus:** Phase 17 — Host preview on the platform hostname
+**Core value:** A visitor gets a polished, accessible, responsive experience across all 18 tools and every page without compromising the browser-local privacy model.
+**Current focus:** None — v1.3 shipped; next milestone not started
+**Live:** https://danbeng.github.io/toolsforfree/
 
 ## Current Position
 
-Phase: 18 of 19 (Origin swap)
-Current Plan: Not started
-Total Plans in Phase: 2
-Status: All phases complete
-Last activity: 2026-09-27 — Phase 18 complete
-
-Progress: [████████░░] 75%
+Phase: Milestone v1.3 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-09-27 — Milestone v1.3 completed and archived
 
 ## Performance Metrics
 
@@ -96,11 +93,10 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 16 done 2026-09-23: origin is https://github.com/danbeng/toolsforfree (public). Do not run `gh repo create`.
-- 2026-09-24: domain not registered. User chose https://danbeng.github.io as origin for Phase 18. Custom domain cutover (old Phase 19, CUT-01..03) deferred to next milestone. Do not invent a domain.
-- Phase 17 verified direct URLs only. Internal links lack the /toolsforfree base and LangSwitch emits /zh/toolsforfree/... — fixed in Phase 18 (ORIG-04).
+- Remote is https://github.com/danbeng/toolsforfree (public). Do not run `gh repo create`.
+- No domain registered. Do not invent one. A future cutover removes `base` and swaps `SITE_ORIGIN` / `site` in one commit.
 - Path-limited git add only. Do not commit crontab.ts or LED ToolShell. Do not pop stash@{0} or stash@{1}
-- Do not paste a Pages sample over ci.yml. Do not retag v1.2. Node 22. Zero new npm packages
+- Do not paste a Pages sample over ci.yml. Do not retag. Node 22. Zero new npm packages
 
 ## Deferred Items
 
@@ -111,9 +107,18 @@ None yet.
 | Layout | Card grid 4-col at 1440px | Deferred | 2026-09-15 | v2 |
 | Publish | Preview deploy per pull request | Deferred | 2026-09-23 | v2 |
 | Publish | Search Console after live sitemap is clean | Deferred | 2026-09-23 | v2 |
+| Publish | Custom domain + DNS cutover (CUT-01..03); remove `base` | Deferred — no domain registered | 2026-09-24 | next |
+| Content | Real `CONTACT_EMAIL` (placeholder `hello@example.com` is public) | Deferred — no mailbox supplied | 2026-09-27 | next |
+| SEO | `robots.txt` only effective at a host root (needs custom domain) | Deferred | 2026-09-27 | next |
+| i18n | Missing `/zh/...` paths show the English root 404 | Accepted | 2026-09-27 | v1.3 |
+| Process | Phases 16-18 have no VALIDATION.md; 15 is draft | Accepted | 2026-09-27 | v1.3 |
 
 ## Session Continuity
 
 Last session: 2026-09-27T01:40:45.596Z
-Stopped at: Phase 18 complete — all phases complete
+Stopped at: v1.3 Ship archived and tagged; awaiting next milestone
 Resume file: None
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone

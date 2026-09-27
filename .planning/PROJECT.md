@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish. v1.2 shipped the ZH tree, LangSwitch, locale tool chrome, and a GitHub Actions workflow file.
+Devtoolbox is a static, bilingual (EN default + `/zh/`) catalog of 18 browser-local developer tools. Computation stays in the visitor's browser; nothing is uploaded. v1.0 shipped the catalog. v1.1 shipped visual polish. v1.2 shipped the ZH tree, LangSwitch, locale tool chrome, and a GitHub Actions workflow file. v1.3 published it: live at https://danbeng.github.io/toolsforfree/ from https://github.com/danbeng/toolsforfree.
 
 ## Core Value
 
@@ -10,7 +10,12 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 
 ## Current State
 
-**Shipped:** v1.0 More Tools (2026-09-14) + v1.1 Frontend Polish (2026-09-19) + v1.2 Bilingual Land (2026-09-22)
+**Shipped:** v1.0 More Tools (2026-09-14) + v1.1 Frontend Polish (2026-09-19) + v1.2 Bilingual Land (2026-09-22) + v1.3 Ship (2026-09-27)
+
+- Live: https://danbeng.github.io/toolsforfree/ (GitHub Pages project site, public repo `danbeng/toolsforfree`)
+- CI: `ci.yml` (Node 22, `contents: read`) on every push/PR to `main`; `deploy.yml` publishes `dist/` only after CI succeeds for the same SHA
+- Origin: `SITE_ORIGIN` and `site` = `https://danbeng.github.io`; `base: '/toolsforfree'`; every internal href, canonical, hreflang, sitemap and robots line goes through `src/i18n/base.ts` (`withBase` / `stripBase`)
+- 404: `noindex`, no canonical, no alternates; LangSwitch to the two home pages
 
 - 18 catalog tools, featured set of 6, EN unprefixed + `/zh/` tree
 - Theme: `data-theme` on `<html>`, `ThemeInit.astro` first in `<head>`, static `ThemeToggle`, localStorage only on click
@@ -19,18 +24,17 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Chrome: `.tool-panel` shadow + `--sp-4` padding; `.tool-panel button` invert hover / color-mix active; FAQ native `details`/`summary`
 - Stack unchanged: Astro 7 SSG + Preact islands + custom CSS. No Tailwind, no new npm packages this milestone.
 
-**Known debt (still fenced):** Unrelated dirty `src/lib/crontab.ts` stays uncommitted. Do not pop `stash@{0}` or `stash@{1}`. LED `ToolShell` stays uncommitted. Placeholder `SITE_ORIGIN` and missing GitHub remote move into v1.3, not into those fences.
+**Known debt (still fenced):** Unrelated dirty `src/lib/crontab.ts` stays uncommitted. Do not pop `stash@{0}` or `stash@{1}`. LED `ToolShell` stays uncommitted.
 
-## Current Milestone: v1.3 Ship
+**Known debt (v1.3):** `CONTACT_EMAIL` is still the placeholder `hello@example.com` and is publicly visible on the about pages. `robots.txt` under a project-site path is not read by crawlers. Missing `/zh/...` paths show the English 404. Phases 16-18 have no VALIDATION.md.
 
-**Goal:** A visitor opens a real domain, EN/ZH switch links are real, and a push to main actually runs tests and the build.
+## Next Milestone Goals
 
-**Target features:**
-- Create a GitHub remote and push `main` plus local tag `v1.2` so `.github/workflows/ci.yml` actually runs
-- Replace placeholder `SITE_ORIGIN` / `astro.config.mjs` `site` once the user names a real domain
-- Static hosting plus that custom domain
-- 404 LangSwitch must not advertise missing `/zh/404/` (Phase 12 WR-02)
-- ToolCard must not throw when `copy.tools[slug]` is missing (Phase 12 WR-01)
+Not started. `/gsd-new-milestone` when ready. Carried forward:
+
+- Custom domain + DNS cutover (CUT-01..03): register a domain, attach it in Pages settings, then in one commit remove `base` and set `SITE_ORIGIN` / `site` to the new origin (`withBase` becomes a no-op)
+- Real contact mailbox, or remove the placeholder address from the about pages
+- Deferred v2: three-state theme, theme animation, 4-col grid at 1440px, preview deploys per PR, Search Console
 
 ## Requirements
 
@@ -69,22 +73,23 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - ✓ No-LED ToolShell locale Copy/Copied on all 18 islands — v1.2
 - ✓ GitHub Actions workflow file (Node 22, `npm ci`, `npm test`, `astro build`) — v1.2
 
+- ✓ 404 LangSwitch/canonical/hreflang never advertise `/zh/404/`; 404 is `noindex` — v1.3 Phase 15 (canonical removed in Phase 18)
+- ✓ ToolCard and RelatedTools fall back to catalog name/description instead of throwing — v1.3 Phase 15
+- ✓ GitHub remote `danbeng/toolsforfree`; `main` and tag `v1.2` pushed; CI runs and is green — v1.3 Phase 16
+- ✓ GitHub Pages deploy gated on CI; trailing-slash URLs and site 404 live — v1.3 Phase 17
+- ✓ Origin `https://danbeng.github.io` with `/toolsforfree` base on every internal link and SEO URL — v1.3 Phase 18
+
 ### Active
 
-- [ ] GitHub remote exists; `main` and local tag `v1.2` are pushed so `.github/workflows/ci.yml` actually runs
-- [ ] `SITE_ORIGIN` and `astro.config.mjs` `site` use a real domain the user names (not `https://example.com`)
-- [ ] Static hosting serves the built site on that custom domain
-- [ ] 404 LangSwitch does not advertise a missing `/zh/404/`
-- [ ] ToolCard does not throw when `copy.tools[slug]` is missing
+None. Next milestone not started.
 
 ### Out of Scope
 
 - LED `ToolShell.tsx` — leave dirty; never commit this chrome
-- `src/lib/crontab.ts` — unrelated dirty file, not this milestone
+- `src/lib/crontab.ts` — unrelated dirty file
 - Popping `stash@{0}` or `stash@{1}`
-- Creating a GitHub remote or `gh repo create` — workflow file only
-- Changing `SITE_ORIGIN` / `https://example.com` — no real domain yet
-- New catalog tools — this milestone is land-and-CI, not More Tools
+- Inventing a domain, GitHub owner, or mailbox — the user supplies them
+- New catalog tools — not planned
 - Three-state theme toggle — deferred v2
 - Smooth theme transition animation — deferred v2
 - Card grid 4-col at 1440px — deferred v2
@@ -100,6 +105,7 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - Catalog (`TOOLS`) drives `getStaticPaths`. Markdown is SEO/how-to/FAQ only.
 - v1.1 closeout: `override_closeout` — phases 7/8/9 verification digest stale after later `global.css` edits; human UAT passed; Phase 10 verification passed; audit 22/22.
 - v1.2 lands the ZH overlay that v1.1 refused to mix into visual commits. LED ToolShell and `crontab.ts` stay out.
+- v1.3 closeout: `verified_closeout` — phases 15, 16, 18 read stale (Phase 18 edited files Phase 15 fingerprinted; summaries gained frontmatter) and were re-verified on current code; all four passed. Audit 15/15, integration PASS, status `tech_debt`.
 
 ## Constraints
 
@@ -107,7 +113,7 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 - **Stack**: Astro + Preact + custom CSS variables — no Tailwind, no new framework
 - **Path-limited add**: Never `git add -A`; do not stage LED ToolShell, `crontab.ts`, or stash contents
 - **Do not pop stashes**: `stash@{0}` `gsd-phase7-overlay-chrome-temp`; `stash@{1}` `pre-02-01-merge unrelated i18n`
-- **CI is a file**: `.github/workflows/` only — this milestone does not create a remote
+- **CI and deploy**: `ci.yml` stays a read-only Node 22 test/build gate; `deploy.yml` is the only publisher and runs only after CI succeeds for the same SHA. Plain pushes only; never force-push or retag
 - **Do not rewrite tools**: Catalog logic and `src/lib` processors stay as shipped (except do not commit dirty `crontab.ts`)
 
 ## Key Decisions
@@ -124,6 +130,10 @@ A visitor gets a polished, accessible, responsive experience across all 18 tools
 | CSS variables for light/dark split (not media-query-only) | Enables manual toggle + system preference + localStorage | ✓ Phase 7 |
 | ThemeInit never writes storage; first visit follows OS until click | THM-05; two-state only | ✓ Phase 7 |
 | Hamburger menu via `<button>` + ARIA (not checkbox hack) | Accessible open/close, Escape, EN+ZH labels | ✓ Phase 8 |
+| Repo public so GitHub Pages can serve it | Private Pages returned HTTP 422 on the user's plan; user chose public (2026-09-23) | ✓ Phase 17 |
+| GitHub Pages hostname as origin, custom domain deferred | No domain registered; user chose github.io over keeping `example.com` (2026-09-24) | ✓ Phase 18; CUT-01..03 carried forward |
+| Base-aware hrefs via `withBase`, path helpers stay logical | Project site needs `/toolsforfree`; `path.ts` tests stay unchanged; helper becomes a no-op when `base` is removed | ✓ Phase 18 |
+| Noindex 404 emits no canonical | `/toolsforfree/404/` really 404s (Astro builds `404.html`); a canonical to a 404 contradicts `noindex` | ✓ Phase 18 (amends Phase 15) |
 
 ## Evolution
 

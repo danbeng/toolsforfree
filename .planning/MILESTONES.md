@@ -1,5 +1,31 @@
 # Milestones
 
+## v1.3 Ship (Shipped: 2026-09-27)
+
+**Delivered:** The bilingual catalog is live at https://danbeng.github.io/toolsforfree/ from a public GitHub repo, with CI gating every deploy and every internal link working under the project-site base.
+
+**Phases completed:** 15-18 (4 phases, 5 plans incl. Phase 16's direct remote push, 6 tasks)
+
+**Key accomplishments:**
+
+- 404 no longer advertises `/zh/404/` (LangSwitch to the two home pages, `noindex`); catalog cards and related tools fall back to catalog name/description instead of throwing
+- Remote https://github.com/danbeng/toolsforfree created by the user; `main` and annotated tag `v1.2` pushed unchanged; CI green. Repo made public 2026-09-23 so GitHub Pages could be enabled (private Pages returned HTTP 422)
+- Separate `deploy.yml` publishes `dist/` to GitHub Pages only after CI succeeds for the same SHA; `ci.yml` untouched; trailing-slash URLs and the site 404 verified live
+- `SITE_ORIGIN` and `site` set to `https://danbeng.github.io`; new `src/i18n/base.ts` makes every internal href, canonical, hreflang, sitemap and robots line carry `/toolsforfree`. 28 live internal URLs verified 200
+
+**Closeout type:** verified_closeout (phases 15, 16, 18 re-verified on current code after a stale check; all four passed)
+
+**Known verification overrides:** 0 newly acknowledged, 0 carried forward.
+
+**Scope changes:**
+
+- Custom domain and DNS cutover (old Phase 19, CUT-01..03) deferred: no domain registered (user decision 2026-09-24). User chose the GitHub Pages hostname as the origin instead.
+- D-09 amended: noindex 404 emits no canonical, because `/toolsforfree/404/` really 404s (Astro builds `404.html`).
+
+**Known tech debt:** placeholder `CONTACT_EMAIL` (`hello@example.com`) is publicly visible on the about pages; `robots.txt` under a project-site path is not read by crawlers; missing `/zh/...` paths show the English 404; Phases 16-18 have no VALIDATION.md.
+
+---
+
 ## v1.2 Bilingual Land (Shipped: 2026-09-22)
 
 **Phases completed:** 4 phases, 4 plans, 11 tasks
