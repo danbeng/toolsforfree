@@ -3,7 +3,7 @@ import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://danbeng.github.io',
   base: '/toolsforfree',
   trailingSlash: 'always',
   integrations: [
